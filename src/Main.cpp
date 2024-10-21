@@ -20,7 +20,21 @@
 
 constexpr int WIDTH = 800;
 constexpr int HEIGHT = 800;
-constexpr int WIDTH_BLOCKS = 16;
+constexpr int WIDTH_BLOCKS = 50;
+constexpr int HEIGHT_BLOCKS = 16;
+/*
+* 0 front
+* 1 back
+* 2 left 
+* 3 right
+* 4 top
+* 5 bottom
+* */
+typedef struct Block{
+  bool active = false;
+  bool faces[6] = {0,0,0,0,0,0};
+} Block;
+
 float deltaTime, lastFrame;
 void processInput(GLFWwindow *window);
 void mouse_callback(GLFWwindow *window, double xpos, double ypos);
@@ -29,14 +43,33 @@ int main(){
   const siv::PerlinNoise::seed_type seed = 123456u;
 	const siv::PerlinNoise perlin{ seed };
 
-  std::vector<glm::vec3> cubePositions;
-  
-  for (int i = 0; i < WIDTH_BLOCKS; i++) {
-    for (int k = 0; k < WIDTH_BLOCKS; k++) {
-      float y = (int) (40.0f*perlin.octave2D_01(((float)i * 0.01), ((float)k * 0.01), 4)) - 20;
-      cubePositions.push_back(glm::vec3((i-WIDTH_BLOCKS/2), y, (k-WIDTH_BLOCKS/2)));
+  std::vector<Block> cubePositions;
+  Block chunck[WIDTH_BLOCKS][HEIGHT_BLOCKS][WIDTH_BLOCKS];
+  for (int x = 0; x < WIDTH_BLOCKS; x++) {
+    for (int z = 0; z < WIDTH_BLOCKS; z++) {
+      float maxY = std::min(std::max((int) (40.0f*perlin.octave2D_01(((float)x * 0.01), ((float)z * 0.01), 4)) - 15, 0), 16);
+      for (int y = 0; y < HEIGHT_BLOCKS; y++) {
+        if (y < maxY){
+          chunck[x][y][z].active = 1;
+          std::fill(chunck[x][y][z].faces, chunck[x][y][z].faces+6, 0);
+        }
+      }
     }
   }
+  for (int x = 0; x < WIDTH_BLOCKS; x++) {
+    for (int z = 0; z < WIDTH_BLOCKS; z++) {
+      for (int y = 0; y < HEIGHT_BLOCKS; y++) {
+        if (!chunck[x][y][z].active) continue;
+        chunck[x][y][z].faces[0] = z+1 >= WIDTH_BLOCKS || !chunck[x][y][z+1].active;
+        chunck[x][y][z].faces[1] = (z-1 < 0 || !chunck[x][y][z-1].active);
+        chunck[x][y][z].faces[2] = (x-1 < 0 || !chunck[x-1][y][z].active);
+        chunck[x][y][z].faces[3] = (x+1 >= WIDTH_BLOCKS || !chunck[x+1][y][z].active);
+        chunck[x][y][z].faces[4] = (y+1 >= HEIGHT_BLOCKS || !chunck[x][y+1][z].active);
+        chunck[x][y][z].faces[5] = (y-1 < 0 || !chunck[x][y-1][z].active);
+      }
+    }
+  }
+
 	// Initialize GLFW
 	glfwInit();
 
@@ -98,8 +131,14 @@ int main(){
 
 
     ResourceManager::GetShader("main_shader").SetMatrix4("view", camera.CameraLookAt(), true);
-    for (int i = 0; i < WIDTH_BLOCKS*WIDTH_BLOCKS; i++) {
-      cubeRenderer.Render(cubePositions[i], 0.0f);
+    
+    for (int x = 0; x < WIDTH_BLOCKS; x++) {
+      for (int z = 0; z < WIDTH_BLOCKS; z++) {
+        for (int y = 0; y < HEIGHT_BLOCKS; y++) {
+          if (chunck[x][y][z].active)
+            cubeRenderer.Render(glm::vec3(x, y, z), chunck[x][y][z].faces);
+        }
+      }
     }
 
 		// Swap the back buffer with the front buffer

@@ -1,5 +1,7 @@
 #include "hFiles/cube_renderer.h"
 #include <glm/ext/matrix_transform.hpp>
+#include <glm/ext/vector_float3.hpp>
+#include <iostream>
 
 float getPosAtlasX(int x){
   return (1.0f/16.0f)*x;
@@ -11,19 +13,38 @@ float getPosAtlasY(int y){
 CubeRenderer::CubeRenderer(Shader &shader, Texture2D &texture){
   this->texture = texture;
   this->shader = shader;
+
+  glm::vec3 faceOffsets[6] = {
+    glm::vec3(0.0, 0.0, 0.5),
+    glm::vec3(0.0, 0.0, -0.5),
+    glm::vec3(-0.5, 0.0, 0.0),
+    glm::vec3(0.5, 0.0, 0.0),
+    glm::vec3(0.0, 0.5, 0.0),
+    glm::vec3(0.0, -0.5, 0.0),
+  };
+  float faceRadiuses[6] = {0, 0, 90, 90, 90, 90};
+  bool faceAxis[6] = {0, 0, 0, 0, 1, 1};
+  for (int i = 0; i < 6; i++) {
+    this->faceOffsets[i] = faceOffsets[i];
+    this->faceRadiuses[i] = faceRadiuses[i];
+    this->faceAxis[i] = faceAxis[i];
+  }
+
   this->initRenderData();
 }
-void CubeRenderer::Render(glm::vec3 position, float rad){
+void CubeRenderer::Render(glm::vec3 position, bool faces[]){
   glActiveTexture(GL_TEXTURE0);
   this->texture.Bind();
   this->shader.Use();
   glBindVertexArray(this->cubeVAO);
-
-  glm::mat4 model = glm::mat4(1.0f);
-  model = glm::translate(model, position);
-  model = glm::rotate(model, glm::radians(rad), glm::vec3(0.5f, 1.0f, 0.0f));
-  shader.SetMatrix4("model", model);
-  glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+  for (int i = 0; i < 6; i++) {
+    if (!faces[i]) continue;
+    glm::mat4 model = glm::mat4(1.0f);
+    model = glm::translate(model, position + this->faceOffsets[i]);
+    model = glm::rotate(model, glm::radians(this->faceRadiuses[i]), glm::vec3((float)(this->faceAxis[i]), (float)(!this->faceAxis[i]), 0.0f));
+    shader.SetMatrix4("model", model);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+  }
 }
 
 
@@ -34,57 +55,16 @@ void CubeRenderer::initRenderData(){
   float blockY = 1-getPosAtlasY(2);
   float vertices[] = {
       // Positions          // Texture Coords
-      // Front face
-      -0.5f, -0.5f,  0.5f,  blockX-offset, blockY-offset,  // Bottom-left
-       0.5f, -0.5f,  0.5f,  blockX, blockY-offset,  // Bottom-right
-       0.5f,  0.5f,  0.5f,  blockX, blockY,  // Top-right
-      -0.5f,  0.5f,  0.5f,  blockX-offset, blockY,  // Top-left
-      // Back face
-      -0.5f, -0.5f, -0.5f,  blockX-offset, blockY-offset,  // Bottom-left
-       0.5f, -0.5f, -0.5f,  blockX, blockY-offset,  // Bottom-right
-       0.5f,  0.5f, -0.5f,  blockX, blockY,  // Top-right
-      -0.5f,  0.5f, -0.5f,  blockX-offset, blockY,  // Top-left
-      // Left face
-      -0.5f, -0.5f, -0.5f,  blockX-offset, blockY-offset,  // Bottom-left
-      -0.5f, -0.5f,  0.5f,  blockX, blockY-offset,  // Bottom-right
-      -0.5f,  0.5f,  0.5f,  blockX, blockY,  // Top-right
-      -0.5f,  0.5f, -0.5f,  blockX-offset, blockY,  // Top-left
-      // Right face
-       0.5f, -0.5f, -0.5f,  blockX-offset, blockY-offset,  // Bottom-left
-       0.5f, -0.5f,  0.5f,  blockX, blockY-offset,  // Bottom-right
-       0.5f,  0.5f,  0.5f,  blockX, blockY,  // Top-right
-       0.5f,  0.5f, -0.5f,  blockX-offset, blockY,  // Top-left
-      // Top face
-      -0.5f,  0.5f,  0.5f,  blockX-offset, blockY-offset,  // Bottom-left
-       0.5f,  0.5f,  0.5f,  blockX, blockY-offset,  // Bottom-right
-       0.5f,  0.5f, -0.5f,  blockX, blockY,  // Top-right
-      -0.5f,  0.5f, -0.5f,  blockX-offset, blockY,  // Top-left
-      // Bottom face
-      -0.5f, -0.5f,  0.5f,  blockX-offset, blockY-offset,  // Bottom-left
-       0.5f, -0.5f,  0.5f,  blockX, blockY-offset,  // Bottom-right
-       0.5f, -0.5f, -0.5f,  blockX, blockY,  // Top-right
-      -0.5f, -0.5f, -0.5f,  blockX-offset, blockY   // Top-left
+       0.5f,  0.5f, 0.0f,   blockX, blockY,   // Top right
+       0.5f, -0.5f, 0.0f,   blockX, blockY-offset,   // Bottom right
+      -0.5f, -0.5f, 0.0f,   blockX-offset, blockY-offset,   // Bottom left
+      -0.5f,  0.5f, 0.0f,   blockX-offset, blockY    // Top left
   };
   unsigned int indices[] = {
-      // Front face
-      0, 1, 2,
-      0, 2, 3,
-      // Back face
-      4, 5, 6,
-      4, 6, 7,
-      // Left face
-      8, 9, 10,
-      8, 10, 11,
-      // Right face
-      12, 13, 14,
-      12, 14, 15,
-      // Top face
-      16, 17, 18,
-      16, 18, 19,
-      // Bottom face
-      20, 21, 22,
-      20, 22, 23
+      0, 1, 3,   // First triangle (top-right)
+      1, 2, 3    // Second triangle (bottom-left)
   };
+
   uint VBO, EBO;
   glGenVertexArrays(1, &this->cubeVAO);
   glGenBuffers(1, &VBO);
