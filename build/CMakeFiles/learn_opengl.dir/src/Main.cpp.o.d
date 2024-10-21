@@ -321,6 +321,7 @@ CMakeFiles/learn_opengl.dir/src/Main.cpp.o: \
  /usr/local/include/glm/trigonometric.hpp \
  /usr/local/include/glm/detail/func_trigonometric.inl \
  /usr/local/include/glm/ext/matrix_transform.inl \
+ /home/fantasy/Programming/openglStuff/openglMinicraft/src/hFiles/chunk.h \
  /home/fantasy/Programming/openglStuff/openglMinicraft/src/hFiles/cube_renderer.h \
  /home/fantasy/Programming/openglStuff/openglMinicraft/src/hFiles/shader.h \
  /usr/local/include/glm/glm.hpp /usr/include/c++/14.2.1/climits \
