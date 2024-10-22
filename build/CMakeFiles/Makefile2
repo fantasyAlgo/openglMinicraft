@@ -81,12 +81,12 @@ clean: CMakeFiles/learn_opengl.dir/clean
 CMakeFiles/learn_opengl.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/learn_opengl.dir/build.make CMakeFiles/learn_opengl.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/learn_opengl.dir/build.make CMakeFiles/learn_opengl.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/fantasy/Programming/openglStuff/openglMinicraft/build/CMakeFiles --progress-num=1,2,3,4,5,6,7,8 "Built target learn_opengl"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/fantasy/Programming/openglStuff/openglMinicraft/build/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9 "Built target learn_opengl"
 .PHONY : CMakeFiles/learn_opengl.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/learn_opengl.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/fantasy/Programming/openglStuff/openglMinicraft/build/CMakeFiles 8
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/fantasy/Programming/openglStuff/openglMinicraft/build/CMakeFiles 9
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/learn_opengl.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/fantasy/Programming/openglStuff/openglMinicraft/build/CMakeFiles 0
 .PHONY : CMakeFiles/learn_opengl.dir/rule

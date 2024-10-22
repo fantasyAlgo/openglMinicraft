@@ -177,6 +177,30 @@ src/camera.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/learn_opengl.dir/build.make CMakeFiles/learn_opengl.dir/src/camera.cpp.s
 .PHONY : src/camera.cpp.s
 
+src/chunk.o: src/chunk.cpp.o
+.PHONY : src/chunk.o
+
+# target to build an object file
+src/chunk.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/learn_opengl.dir/build.make CMakeFiles/learn_opengl.dir/src/chunk.cpp.o
+.PHONY : src/chunk.cpp.o
+
+src/chunk.i: src/chunk.cpp.i
+.PHONY : src/chunk.i
+
+# target to preprocess a source file
+src/chunk.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/learn_opengl.dir/build.make CMakeFiles/learn_opengl.dir/src/chunk.cpp.i
+.PHONY : src/chunk.cpp.i
+
+src/chunk.s: src/chunk.cpp.s
+.PHONY : src/chunk.s
+
+# target to generate assembly for a file
+src/chunk.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/learn_opengl.dir/build.make CMakeFiles/learn_opengl.dir/src/chunk.cpp.s
+.PHONY : src/chunk.cpp.s
+
 src/cube_renderer.o: src/cube_renderer.cpp.o
 .PHONY : src/cube_renderer.o
 
@@ -201,29 +225,29 @@ src/cube_renderer.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/learn_opengl.dir/build.make CMakeFiles/learn_opengl.dir/src/cube_renderer.cpp.s
 .PHONY : src/cube_renderer.cpp.s
 
-src/libs/glad.o: src/libs/glad.c.o
-.PHONY : src/libs/glad.o
+src/glad.o: src/glad.c.o
+.PHONY : src/glad.o
 
 # target to build an object file
-src/libs/glad.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/learn_opengl.dir/build.make CMakeFiles/learn_opengl.dir/src/libs/glad.c.o
-.PHONY : src/libs/glad.c.o
+src/glad.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/learn_opengl.dir/build.make CMakeFiles/learn_opengl.dir/src/glad.c.o
+.PHONY : src/glad.c.o
 
-src/libs/glad.i: src/libs/glad.c.i
-.PHONY : src/libs/glad.i
+src/glad.i: src/glad.c.i
+.PHONY : src/glad.i
 
 # target to preprocess a source file
-src/libs/glad.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/learn_opengl.dir/build.make CMakeFiles/learn_opengl.dir/src/libs/glad.c.i
-.PHONY : src/libs/glad.c.i
+src/glad.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/learn_opengl.dir/build.make CMakeFiles/learn_opengl.dir/src/glad.c.i
+.PHONY : src/glad.c.i
 
-src/libs/glad.s: src/libs/glad.c.s
-.PHONY : src/libs/glad.s
+src/glad.s: src/glad.c.s
+.PHONY : src/glad.s
 
 # target to generate assembly for a file
-src/libs/glad.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/learn_opengl.dir/build.make CMakeFiles/learn_opengl.dir/src/libs/glad.c.s
-.PHONY : src/libs/glad.c.s
+src/glad.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/learn_opengl.dir/build.make CMakeFiles/learn_opengl.dir/src/glad.c.s
+.PHONY : src/glad.c.s
 
 src/resource_manager.o: src/resource_manager.cpp.o
 .PHONY : src/resource_manager.o
@@ -312,12 +336,15 @@ help:
 	@echo "... src/camera.o"
 	@echo "... src/camera.i"
 	@echo "... src/camera.s"
+	@echo "... src/chunk.o"
+	@echo "... src/chunk.i"
+	@echo "... src/chunk.s"
 	@echo "... src/cube_renderer.o"
 	@echo "... src/cube_renderer.i"
 	@echo "... src/cube_renderer.s"
-	@echo "... src/libs/glad.o"
-	@echo "... src/libs/glad.i"
-	@echo "... src/libs/glad.s"
+	@echo "... src/glad.o"
+	@echo "... src/glad.i"
+	@echo "... src/glad.s"
 	@echo "... src/resource_manager.o"
 	@echo "... src/resource_manager.i"
 	@echo "... src/resource_manager.s"

@@ -342,7 +342,7 @@ CMakeFiles/learn_opengl.dir/src/resource_manager.cpp.o: \
  /usr/local/include/glm/ext/vector_uint1_sized.hpp \
  /usr/include/c++/14.2.1/cstring /usr/include/string.h \
  /usr/include/strings.h /usr/local/include/glm/gtc/type_ptr.inl \
- /home/fantasy/Programming/openglStuff/openglMinicraft/src/libs/stb_image.h \
+ /home/fantasy/Programming/openglStuff/openglMinicraft/include/stb_image/stb_image.h \
  /usr/include/c++/14.2.1/stdlib.h /usr/include/c++/14.2.1/math.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/emmintrin.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/xmmintrin.h \

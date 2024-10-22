@@ -3,9 +3,11 @@
 
 #include<iostream>
 #include <algorithm>
+#include <regex>
 #include <type_traits>
 
 #include "hFiles/camera.h"
+#include "hFiles/chunk.h"
 #include "hFiles/cube_renderer.h"
 #include "hFiles/resource_manager.h"
 #include <cmath>
@@ -16,24 +18,13 @@
 #include <glm/ext/vector_float3.hpp>
 #include <vector>
 
-#include "libs/PerlinNoise.hpp"
+#include <PerlinNoise/PerlinNoise.hpp>
 
 constexpr int WIDTH = 800;
 constexpr int HEIGHT = 800;
-constexpr int WIDTH_BLOCKS = 50;
+constexpr int WIDTH_BLOCKS = 16;
 constexpr int HEIGHT_BLOCKS = 16;
-/*
-* 0 front
-* 1 back
-* 2 left 
-* 3 right
-* 4 top
-* 5 bottom
-* */
-typedef struct Block{
-  bool active = false;
-  bool faces[6] = {0,0,0,0,0,0};
-} Block;
+
 
 float deltaTime, lastFrame;
 void processInput(GLFWwindow *window);
@@ -43,32 +34,8 @@ int main(){
   const siv::PerlinNoise::seed_type seed = 123456u;
 	const siv::PerlinNoise perlin{ seed };
 
-  std::vector<Block> cubePositions;
-  Block chunck[WIDTH_BLOCKS][HEIGHT_BLOCKS][WIDTH_BLOCKS];
-  for (int x = 0; x < WIDTH_BLOCKS; x++) {
-    for (int z = 0; z < WIDTH_BLOCKS; z++) {
-      float maxY = std::min(std::max((int) (40.0f*perlin.octave2D_01(((float)x * 0.01), ((float)z * 0.01), 4)) - 15, 0), 16);
-      for (int y = 0; y < HEIGHT_BLOCKS; y++) {
-        if (y < maxY){
-          chunck[x][y][z].active = 1;
-          std::fill(chunck[x][y][z].faces, chunck[x][y][z].faces+6, 0);
-        }
-      }
-    }
-  }
-  for (int x = 0; x < WIDTH_BLOCKS; x++) {
-    for (int z = 0; z < WIDTH_BLOCKS; z++) {
-      for (int y = 0; y < HEIGHT_BLOCKS; y++) {
-        if (!chunck[x][y][z].active) continue;
-        chunck[x][y][z].faces[0] = z+1 >= WIDTH_BLOCKS || !chunck[x][y][z+1].active;
-        chunck[x][y][z].faces[1] = (z-1 < 0 || !chunck[x][y][z-1].active);
-        chunck[x][y][z].faces[2] = (x-1 < 0 || !chunck[x-1][y][z].active);
-        chunck[x][y][z].faces[3] = (x+1 >= WIDTH_BLOCKS || !chunck[x+1][y][z].active);
-        chunck[x][y][z].faces[4] = (y+1 >= HEIGHT_BLOCKS || !chunck[x][y+1][z].active);
-        chunck[x][y][z].faces[5] = (y-1 < 0 || !chunck[x][y-1][z].active);
-      }
-    }
-  }
+  //std::vector<Block> cubePositions;
+  Chunk chunk1 = Chunk(perlin, nullptr);
 
 	// Initialize GLFW
 	glfwInit();
@@ -104,12 +71,8 @@ int main(){
   Camera camera(WIDTH, HEIGHT);
 
   glEnable(GL_DEPTH_TEST);
-
-  //glEnable(GL_CULL_FACE);
-  //glCullFace(GL_FRONT);
-  //glFrontFace(GL_CCW);
-
-
+  glm::vec3 cameraPointer;
+  Block pointer_block;
 
   glm::mat4 proj = glm::mat4(1.0f);
 	proj = glm::perspective(glm::radians(90.0f), (float)(WIDTH / HEIGHT), 0.1f, 100.0f);
@@ -117,29 +80,28 @@ int main(){
   glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 	// Main while loop
+  bool facesDye[] = {1,1,1,  1,1,1};
 	while (!glfwWindowShouldClose(window)){
     float currentFrame = glfwGetTime();
+    camera.updatePointer(chunk1);
     deltaTime = currentFrame - lastFrame;
     lastFrame = currentFrame;
     processInput(window);
-    camera.inputHandling(window, deltaTime);
+    camera.keyboardHandling(window, deltaTime);
+    camera.mouseHandling(window, chunk1, deltaTime);
     //radius += 0.2;
 		// Specify the color of the background
 		glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
 		// Clean the back buffer and assign the new color to it
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-
     ResourceManager::GetShader("main_shader").SetMatrix4("view", camera.CameraLookAt(), true);
-    
-    for (int x = 0; x < WIDTH_BLOCKS; x++) {
-      for (int z = 0; z < WIDTH_BLOCKS; z++) {
-        for (int y = 0; y < HEIGHT_BLOCKS; y++) {
-          if (chunck[x][y][z].active)
-            cubeRenderer.Render(glm::vec3(x, y, z), chunck[x][y][z].faces);
-        }
-      }
-    }
+    chunk1.Render(cubeRenderer);
+    cameraPointer = glm::vec3((int)cameraPointer.x, (int)cameraPointer.y + 1, (int)cameraPointer.z);
+    /*if (camera.active_pointer_block){
+      std::cout << camera.pointer_block.first.x << " | " << camera.pointer_block.first.y << " | " << camera.pointer_block.first.z << std::endl;
+      cubeRenderer.Render(camera.pointer_block.first, facesDye); 
+    }else std::cout << "Not activated" << std::endl;*/
 
 		// Swap the back buffer with the front buffer
 		glfwSwapBuffers(window);

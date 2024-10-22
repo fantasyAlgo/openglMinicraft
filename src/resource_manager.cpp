@@ -11,7 +11,7 @@
 #include "hFiles/resource_manager.h"
 
 #define STB_IMAGE_IMPLEMENTATION
-#include "libs/stb_image.h"
+#include <stb_image/stb_image.h>
 
 #include <iostream>
 #include <sstream>

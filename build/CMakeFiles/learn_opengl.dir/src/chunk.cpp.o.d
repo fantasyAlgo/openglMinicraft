@@ -1,33 +1,28 @@
-CMakeFiles/learn_opengl.dir/src/Main.cpp.o: \
- /home/fantasy/Programming/openglStuff/openglMinicraft/src/Main.cpp \
+CMakeFiles/learn_opengl.dir/src/chunk.cpp.o: \
+ /home/fantasy/Programming/openglStuff/openglMinicraft/src/chunk.cpp \
  /usr/include/stdc-predef.h \
- /home/fantasy/Programming/openglStuff/openglMinicraft/include/glad/glad.h \
- /home/fantasy/Programming/openglStuff/openglMinicraft/include/KHR/khrplatform.h \
- /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stdint.h \
- /usr/include/stdint.h /usr/include/bits/libc-header-start.h \
- /usr/include/features.h /usr/include/features-time64.h \
- /usr/include/bits/wordsize.h /usr/include/bits/timesize.h \
- /usr/include/sys/cdefs.h /usr/include/bits/long-double.h \
- /usr/include/gnu/stubs.h /usr/include/gnu/stubs-64.h \
- /usr/include/bits/types.h /usr/include/bits/typesizes.h \
- /usr/include/bits/time64.h /usr/include/bits/wchar.h \
- /usr/include/bits/stdint-intn.h /usr/include/bits/stdint-uintn.h \
- /usr/include/bits/stdint-least.h /usr/include/GLFW/glfw3.h \
- /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stddef.h \
+ /home/fantasy/Programming/openglStuff/openglMinicraft/src/hFiles/chunk.h \
+ /home/fantasy/Programming/openglStuff/openglMinicraft/src/hFiles/cube_renderer.h \
  /usr/include/c++/14.2.1/iostream \
  /usr/include/c++/14.2.1/bits/requires_hosted.h \
  /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/c++config.h \
  /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/os_defines.h \
+ /usr/include/features.h /usr/include/features-time64.h \
+ /usr/include/bits/wordsize.h /usr/include/bits/timesize.h \
+ /usr/include/sys/cdefs.h /usr/include/bits/long-double.h \
+ /usr/include/gnu/stubs.h /usr/include/gnu/stubs-64.h \
  /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/cpu_defines.h \
  /usr/include/c++/14.2.1/pstl/pstl_config.h \
  /usr/include/c++/14.2.1/ostream /usr/include/c++/14.2.1/ios \
  /usr/include/c++/14.2.1/iosfwd /usr/include/c++/14.2.1/bits/stringfwd.h \
  /usr/include/c++/14.2.1/bits/memoryfwd.h \
  /usr/include/c++/14.2.1/bits/postypes.h /usr/include/c++/14.2.1/cwchar \
- /usr/include/wchar.h /usr/include/bits/floatn.h \
- /usr/include/bits/floatn-common.h \
+ /usr/include/wchar.h /usr/include/bits/libc-header-start.h \
+ /usr/include/bits/floatn.h /usr/include/bits/floatn-common.h \
+ /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stddef.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stdarg.h \
- /usr/include/bits/types/wint_t.h /usr/include/bits/types/mbstate_t.h \
+ /usr/include/bits/wchar.h /usr/include/bits/types/wint_t.h \
+ /usr/include/bits/types/mbstate_t.h \
  /usr/include/bits/types/__mbstate_t.h /usr/include/bits/types/__FILE.h \
  /usr/include/bits/types/FILE.h /usr/include/bits/types/locale_t.h \
  /usr/include/bits/types/__locale_t.h /usr/include/c++/14.2.1/exception \
@@ -45,8 +40,10 @@ CMakeFiles/learn_opengl.dir/src/Main.cpp.o: \
  /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/c++locale.h \
  /usr/include/c++/14.2.1/clocale /usr/include/locale.h \
  /usr/include/bits/locale.h /usr/include/c++/14.2.1/cctype \
- /usr/include/ctype.h /usr/include/bits/endian.h \
- /usr/include/bits/endianness.h /usr/include/c++/14.2.1/bits/ios_base.h \
+ /usr/include/ctype.h /usr/include/bits/types.h \
+ /usr/include/bits/typesizes.h /usr/include/bits/time64.h \
+ /usr/include/bits/endian.h /usr/include/bits/endianness.h \
+ /usr/include/c++/14.2.1/bits/ios_base.h \
  /usr/include/c++/14.2.1/ext/atomicity.h \
  /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/gthr.h \
  /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/gthr-default.h \
@@ -106,13 +103,14 @@ CMakeFiles/learn_opengl.dir/src/Main.cpp.o: \
  /usr/include/c++/14.2.1/ext/string_conversions.h \
  /usr/include/c++/14.2.1/cstdlib /usr/include/stdlib.h \
  /usr/include/bits/waitflags.h /usr/include/bits/waitstatus.h \
- /usr/include/sys/types.h /usr/include/endian.h \
- /usr/include/bits/byteswap.h /usr/include/bits/uintn-identity.h \
- /usr/include/sys/select.h /usr/include/bits/select.h \
- /usr/include/bits/types/sigset_t.h /usr/include/alloca.h \
- /usr/include/bits/stdlib-float.h /usr/include/c++/14.2.1/bits/std_abs.h \
- /usr/include/c++/14.2.1/cstdio /usr/include/stdio.h \
- /usr/include/bits/types/__fpos_t.h /usr/include/bits/types/__fpos64_t.h \
+ /usr/include/sys/types.h /usr/include/bits/stdint-intn.h \
+ /usr/include/endian.h /usr/include/bits/byteswap.h \
+ /usr/include/bits/uintn-identity.h /usr/include/sys/select.h \
+ /usr/include/bits/select.h /usr/include/bits/types/sigset_t.h \
+ /usr/include/alloca.h /usr/include/bits/stdlib-float.h \
+ /usr/include/c++/14.2.1/bits/std_abs.h /usr/include/c++/14.2.1/cstdio \
+ /usr/include/stdio.h /usr/include/bits/types/__fpos_t.h \
+ /usr/include/bits/types/__fpos64_t.h \
  /usr/include/bits/types/struct_FILE.h \
  /usr/include/bits/types/cookie_io_functions_t.h \
  /usr/include/bits/stdio_lim.h /usr/include/c++/14.2.1/cerrno \
@@ -143,61 +141,15 @@ CMakeFiles/learn_opengl.dir/src/Main.cpp.o: \
  /usr/include/c++/14.2.1/bits/basic_ios.tcc \
  /usr/include/c++/14.2.1/bits/ostream.tcc /usr/include/c++/14.2.1/istream \
  /usr/include/c++/14.2.1/bits/istream.tcc \
- /usr/include/c++/14.2.1/algorithm \
- /usr/include/c++/14.2.1/bits/stl_algo.h \
- /usr/include/c++/14.2.1/bits/algorithmfwd.h \
- /usr/include/c++/14.2.1/bits/stl_heap.h \
- /usr/include/c++/14.2.1/bits/uniform_int_dist.h \
- /usr/include/c++/14.2.1/bits/stl_tempbuf.h \
- /usr/include/c++/14.2.1/pstl/glue_algorithm_defs.h \
- /usr/include/c++/14.2.1/pstl/execution_defs.h \
- /usr/include/c++/14.2.1/regex /usr/include/c++/14.2.1/bitset \
- /usr/include/c++/14.2.1/locale \
- /usr/include/c++/14.2.1/bits/locale_facets_nonio.h \
- /usr/include/c++/14.2.1/ctime \
- /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/time_members.h \
- /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/messages_members.h \
- /usr/include/libintl.h /usr/include/c++/14.2.1/bits/codecvt.h \
- /usr/include/c++/14.2.1/bits/locale_facets_nonio.tcc \
- /usr/include/c++/14.2.1/bits/locale_conv.h \
- /usr/include/c++/14.2.1/sstream /usr/include/c++/14.2.1/bits/sstream.tcc \
- /usr/include/c++/14.2.1/stack /usr/include/c++/14.2.1/deque \
- /usr/include/c++/14.2.1/bits/stl_uninitialized.h \
- /usr/include/c++/14.2.1/bits/stl_deque.h \
- /usr/include/c++/14.2.1/bits/deque.tcc \
- /usr/include/c++/14.2.1/bits/stl_stack.h \
- /usr/include/c++/14.2.1/ext/aligned_buffer.h \
- /usr/include/c++/14.2.1/bits/shared_ptr.h \
- /usr/include/c++/14.2.1/bits/shared_ptr_base.h \
- /usr/include/c++/14.2.1/bits/allocated_ptr.h \
- /usr/include/c++/14.2.1/bits/unique_ptr.h \
- /usr/include/c++/14.2.1/ext/concurrence.h \
- /usr/include/c++/14.2.1/bits/std_function.h \
- /usr/include/c++/14.2.1/bits/stl_tree.h \
- /usr/include/c++/14.2.1/bits/node_handle.h \
- /usr/include/c++/14.2.1/bits/stl_map.h \
- /usr/include/c++/14.2.1/bits/stl_vector.h \
- /usr/include/c++/14.2.1/bits/stl_bvector.h \
- /usr/include/c++/14.2.1/bits/vector.tcc \
- /usr/include/c++/14.2.1/bits/regex_constants.h \
- /usr/include/c++/14.2.1/bits/regex_error.h \
- /usr/include/c++/14.2.1/bits/regex_automaton.h \
- /usr/include/c++/14.2.1/bits/regex_automaton.tcc \
- /usr/include/c++/14.2.1/bits/regex_scanner.h \
- /usr/include/c++/14.2.1/bits/regex_scanner.tcc \
- /usr/include/c++/14.2.1/bits/regex_compiler.h \
- /usr/include/c++/14.2.1/bits/regex_compiler.tcc \
- /usr/include/c++/14.2.1/bits/regex.h \
- /usr/include/c++/14.2.1/bits/regex.tcc \
- /usr/include/c++/14.2.1/bits/regex_executor.h \
- /usr/include/c++/14.2.1/bits/regex_executor.tcc \
- /home/fantasy/Programming/openglStuff/openglMinicraft/src/hFiles/camera.h \
- /home/fantasy/Programming/openglStuff/openglMinicraft/src/hFiles/chunk.h \
- /home/fantasy/Programming/openglStuff/openglMinicraft/src/hFiles/cube_renderer.h \
  /home/fantasy/Programming/openglStuff/openglMinicraft/src/hFiles/shader.h \
- /usr/local/include/glm/glm.hpp /usr/local/include/glm/detail/_fixes.hpp \
- /usr/include/c++/14.2.1/cmath /usr/include/math.h \
- /usr/include/bits/math-vector.h /usr/include/bits/libm-simd-decl-stubs.h \
+ /home/fantasy/Programming/openglStuff/openglMinicraft/include/glad/glad.h \
+ /home/fantasy/Programming/openglStuff/openglMinicraft/include/KHR/khrplatform.h \
+ /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stdint.h \
+ /usr/include/stdint.h /usr/include/bits/stdint-uintn.h \
+ /usr/include/bits/stdint-least.h /usr/local/include/glm/glm.hpp \
+ /usr/local/include/glm/detail/_fixes.hpp /usr/include/c++/14.2.1/cmath \
+ /usr/include/math.h /usr/include/bits/math-vector.h \
+ /usr/include/bits/libm-simd-decl-stubs.h \
  /usr/include/bits/flt-eval-method.h /usr/include/bits/fp-logb.h \
  /usr/include/bits/fp-fast.h \
  /usr/include/bits/mathcalls-helper-functions.h \
@@ -249,13 +201,21 @@ CMakeFiles/learn_opengl.dir/src/Main.cpp.o: \
  /usr/local/include/glm/detail/type_vec3.hpp \
  /usr/local/include/glm/detail/type_vec3.inl \
  /usr/local/include/glm/detail/compute_vector_decl.hpp \
- /usr/include/c++/14.2.1/functional /usr/include/c++/14.2.1/unordered_map \
+ /usr/include/c++/14.2.1/functional \
+ /usr/include/c++/14.2.1/bits/std_function.h \
+ /usr/include/c++/14.2.1/unordered_map \
  /usr/include/c++/14.2.1/bits/unordered_map.h \
  /usr/include/c++/14.2.1/bits/hashtable.h \
  /usr/include/c++/14.2.1/bits/hashtable_policy.h \
+ /usr/include/c++/14.2.1/ext/aligned_buffer.h \
  /usr/include/c++/14.2.1/bits/enable_special_members.h \
+ /usr/include/c++/14.2.1/bits/node_handle.h \
  /usr/include/c++/14.2.1/bits/erase_if.h /usr/include/c++/14.2.1/vector \
- /usr/include/c++/14.2.1/array /usr/include/c++/14.2.1/compare \
+ /usr/include/c++/14.2.1/bits/stl_uninitialized.h \
+ /usr/include/c++/14.2.1/bits/stl_vector.h \
+ /usr/include/c++/14.2.1/bits/stl_bvector.h \
+ /usr/include/c++/14.2.1/bits/vector.tcc /usr/include/c++/14.2.1/array \
+ /usr/include/c++/14.2.1/compare \
  /usr/local/include/glm/detail/_vectorize.hpp \
  /usr/local/include/glm/ext/vector_bool3_precision.hpp \
  /usr/local/include/glm/ext/vector_float3.hpp \
@@ -413,7 +373,16 @@ CMakeFiles/learn_opengl.dir/src/Main.cpp.o: \
  /usr/include/c++/14.2.1/cstring /usr/include/string.h \
  /usr/include/strings.h /usr/local/include/glm/gtc/type_ptr.inl \
  /home/fantasy/Programming/openglStuff/openglMinicraft/src/hFiles/texture.h \
+ /usr/include/GLFW/glfw3.h \
  /home/fantasy/Programming/openglStuff/openglMinicraft/include/PerlinNoise/PerlinNoise.hpp \
+ /usr/include/c++/14.2.1/algorithm \
+ /usr/include/c++/14.2.1/bits/stl_algo.h \
+ /usr/include/c++/14.2.1/bits/algorithmfwd.h \
+ /usr/include/c++/14.2.1/bits/stl_heap.h \
+ /usr/include/c++/14.2.1/bits/uniform_int_dist.h \
+ /usr/include/c++/14.2.1/bits/stl_tempbuf.h \
+ /usr/include/c++/14.2.1/pstl/glue_algorithm_defs.h \
+ /usr/include/c++/14.2.1/pstl/execution_defs.h \
  /usr/include/c++/14.2.1/iterator \
  /usr/include/c++/14.2.1/bits/stream_iterator.h \
  /usr/include/c++/14.2.1/numeric \
@@ -421,7 +390,4 @@ CMakeFiles/learn_opengl.dir/src/Main.cpp.o: \
  /usr/include/c++/14.2.1/pstl/glue_numeric_defs.h \
  /usr/include/c++/14.2.1/random /usr/include/c++/14.2.1/bits/random.h \
  /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/opt_random.h \
- /usr/include/c++/14.2.1/bits/random.tcc /usr/include/c++/14.2.1/utility \
- /usr/include/c++/14.2.1/bits/stl_relops.h \
- /home/fantasy/Programming/openglStuff/openglMinicraft/src/hFiles/resource_manager.h \
- /usr/include/c++/14.2.1/map /usr/include/c++/14.2.1/bits/stl_multimap.h
+ /usr/include/c++/14.2.1/bits/random.tcc

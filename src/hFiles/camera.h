@@ -1,14 +1,27 @@
 #pragma once
 
+#include "chunk.h"
 #include <GLFW/glfw3.h>
 #include <glm/ext/matrix_float4x4.hpp>
 #include <glm/ext/matrix_transform.hpp>
 #include <glm/ext/vector_float2.hpp>
 #include <glm/ext/vector_float3.hpp>
+#include <utility>
+
+enum Face {
+  FRONT,
+  BACK,
+  LEFT,
+  RIGHT,
+  UP,
+  BOTTOM
+};
+extern glm::vec3 facesPosition[];
+
 
 class Camera {
 private:
-  bool firstClick;
+  bool firstClick, leftPressed, rightPressed = false;
   float lastX, lastY;
   int HEIGHT, WIDTH;
   float yaw, pitch;
@@ -16,8 +29,18 @@ public:
   glm::vec3 cameraUp;
   glm::vec3 position;
   glm::vec3 direction;
+
+  bool active_pointer_block;
+  std::pair<glm::vec3, Face> pointer_block;
+
   Camera(int WIDTH, int HEIGHT);
-  //void mouse_callback(GLFWwindow* window, double xPos, double yPos);
+
+  
+  // updates active_pointer_block if a block was found, and finds the nearest pointer_block
+  void updatePointer(Chunk &chunk);
+  // Returns the LookAt matrix using the position and direction of the camera
   glm::mat4 CameraLookAt();
-  void inputHandling(GLFWwindow *window, float deltaTime);
+  // Handles input and mouse events
+  void keyboardHandling(GLFWwindow *window, float deltaTime);
+  void mouseHandling(GLFWwindow* window, Chunk &chunk, float deltaTime);
 };

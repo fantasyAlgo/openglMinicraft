@@ -153,19 +153,33 @@ CMakeFiles/learn_opengl.dir/src/camera.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/learn_opengl.dir/src/camera.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/fantasy/Programming/openglStuff/openglMinicraft/src/camera.cpp -o CMakeFiles/learn_opengl.dir/src/camera.cpp.s
 
-CMakeFiles/learn_opengl.dir/src/libs/glad.c.o: CMakeFiles/learn_opengl.dir/flags.make
-CMakeFiles/learn_opengl.dir/src/libs/glad.c.o: /home/fantasy/Programming/openglStuff/openglMinicraft/src/libs/glad.c
-CMakeFiles/learn_opengl.dir/src/libs/glad.c.o: CMakeFiles/learn_opengl.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/fantasy/Programming/openglStuff/openglMinicraft/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/learn_opengl.dir/src/libs/glad.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/learn_opengl.dir/src/libs/glad.c.o -MF CMakeFiles/learn_opengl.dir/src/libs/glad.c.o.d -o CMakeFiles/learn_opengl.dir/src/libs/glad.c.o -c /home/fantasy/Programming/openglStuff/openglMinicraft/src/libs/glad.c
+CMakeFiles/learn_opengl.dir/src/chunk.cpp.o: CMakeFiles/learn_opengl.dir/flags.make
+CMakeFiles/learn_opengl.dir/src/chunk.cpp.o: /home/fantasy/Programming/openglStuff/openglMinicraft/src/chunk.cpp
+CMakeFiles/learn_opengl.dir/src/chunk.cpp.o: CMakeFiles/learn_opengl.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/fantasy/Programming/openglStuff/openglMinicraft/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/learn_opengl.dir/src/chunk.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/learn_opengl.dir/src/chunk.cpp.o -MF CMakeFiles/learn_opengl.dir/src/chunk.cpp.o.d -o CMakeFiles/learn_opengl.dir/src/chunk.cpp.o -c /home/fantasy/Programming/openglStuff/openglMinicraft/src/chunk.cpp
 
-CMakeFiles/learn_opengl.dir/src/libs/glad.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/learn_opengl.dir/src/libs/glad.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/fantasy/Programming/openglStuff/openglMinicraft/src/libs/glad.c > CMakeFiles/learn_opengl.dir/src/libs/glad.c.i
+CMakeFiles/learn_opengl.dir/src/chunk.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/learn_opengl.dir/src/chunk.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/fantasy/Programming/openglStuff/openglMinicraft/src/chunk.cpp > CMakeFiles/learn_opengl.dir/src/chunk.cpp.i
 
-CMakeFiles/learn_opengl.dir/src/libs/glad.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/learn_opengl.dir/src/libs/glad.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/fantasy/Programming/openglStuff/openglMinicraft/src/libs/glad.c -o CMakeFiles/learn_opengl.dir/src/libs/glad.c.s
+CMakeFiles/learn_opengl.dir/src/chunk.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/learn_opengl.dir/src/chunk.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/fantasy/Programming/openglStuff/openglMinicraft/src/chunk.cpp -o CMakeFiles/learn_opengl.dir/src/chunk.cpp.s
+
+CMakeFiles/learn_opengl.dir/src/glad.c.o: CMakeFiles/learn_opengl.dir/flags.make
+CMakeFiles/learn_opengl.dir/src/glad.c.o: /home/fantasy/Programming/openglStuff/openglMinicraft/src/glad.c
+CMakeFiles/learn_opengl.dir/src/glad.c.o: CMakeFiles/learn_opengl.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/fantasy/Programming/openglStuff/openglMinicraft/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/learn_opengl.dir/src/glad.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/learn_opengl.dir/src/glad.c.o -MF CMakeFiles/learn_opengl.dir/src/glad.c.o.d -o CMakeFiles/learn_opengl.dir/src/glad.c.o -c /home/fantasy/Programming/openglStuff/openglMinicraft/src/glad.c
+
+CMakeFiles/learn_opengl.dir/src/glad.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/learn_opengl.dir/src/glad.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/fantasy/Programming/openglStuff/openglMinicraft/src/glad.c > CMakeFiles/learn_opengl.dir/src/glad.c.i
+
+CMakeFiles/learn_opengl.dir/src/glad.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/learn_opengl.dir/src/glad.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/fantasy/Programming/openglStuff/openglMinicraft/src/glad.c -o CMakeFiles/learn_opengl.dir/src/glad.c.s
 
 # Object files for target learn_opengl
 learn_opengl_OBJECTS = \
@@ -175,7 +189,8 @@ learn_opengl_OBJECTS = \
 "CMakeFiles/learn_opengl.dir/src/texture.cpp.o" \
 "CMakeFiles/learn_opengl.dir/src/cube_renderer.cpp.o" \
 "CMakeFiles/learn_opengl.dir/src/camera.cpp.o" \
-"CMakeFiles/learn_opengl.dir/src/libs/glad.c.o"
+"CMakeFiles/learn_opengl.dir/src/chunk.cpp.o" \
+"CMakeFiles/learn_opengl.dir/src/glad.c.o"
 
 # External object files for target learn_opengl
 learn_opengl_EXTERNAL_OBJECTS =
@@ -186,11 +201,12 @@ learn_opengl: CMakeFiles/learn_opengl.dir/src/shader.cpp.o
 learn_opengl: CMakeFiles/learn_opengl.dir/src/texture.cpp.o
 learn_opengl: CMakeFiles/learn_opengl.dir/src/cube_renderer.cpp.o
 learn_opengl: CMakeFiles/learn_opengl.dir/src/camera.cpp.o
-learn_opengl: CMakeFiles/learn_opengl.dir/src/libs/glad.c.o
+learn_opengl: CMakeFiles/learn_opengl.dir/src/chunk.cpp.o
+learn_opengl: CMakeFiles/learn_opengl.dir/src/glad.c.o
 learn_opengl: CMakeFiles/learn_opengl.dir/build.make
 learn_opengl: /usr/local/lib/libglm.a
 learn_opengl: CMakeFiles/learn_opengl.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/fantasy/Programming/openglStuff/openglMinicraft/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking CXX executable learn_opengl"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/fantasy/Programming/openglStuff/openglMinicraft/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Linking CXX executable learn_opengl"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/learn_opengl.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
