@@ -1,30 +1,24 @@
 #pragma once
 
 #include "cube_renderer.h"
+#include "block.h"
+#include <glm/ext/vector_float2.hpp>
 #include <glm/ext/vector_float3.hpp>
 #include <string>
 #include <PerlinNoise/PerlinNoise.hpp>
 
-constexpr int WIDTH_CHUNK = 16;
-constexpr int HEIGHT_CHUNK = 16;
-
-/*
-* 0 front
-* 1 back
-* 2 left 
-* 3 right
-* 4 top
-* 5 bottom
-* */
-typedef struct Block{
-  bool active = false;
-  bool faces[6] = {0,0,0,0,0,0};
-} Block;
-
 class Chunk {
 public:
+  glm::vec2 offset;
+  bool active;
+  bool loaded;
+
+
   Block data[WIDTH_CHUNK][HEIGHT_CHUNK][WIDTH_CHUNK];
-  Chunk(const siv::PerlinNoise &perlin, std::string *fileName = nullptr);
+
+  Chunk();
+  void setOffset(glm::vec2 offset);
+  void InitChunk(const siv::PerlinNoise &perlin, glm::vec2 offset);
   void MakeChunkData(const siv::PerlinNoise &perlin);
   void Render(CubeRenderer &cubeRenderer);
 

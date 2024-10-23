@@ -3,6 +3,8 @@
 #include <iostream>
 #include "shader.h"
 #include "texture.h"
+#include "block.h"
+
 #include <GLFW/glfw3.h>
 #include<glad/glad.h>
 #include <glm/ext/vector_float2.hpp>
@@ -20,5 +22,5 @@ private:
   void initRenderData();
 public:
   CubeRenderer(Shader &shader, Texture2D &texture);
-  void Render(glm::vec3 position, bool faces[]);
+  void Render(glm::vec3 position, Block block);
 };

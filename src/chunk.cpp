@@ -1,19 +1,16 @@
 #include "hFiles/chunk.h"
+#include "hFiles/block.h"
 #include <algorithm>
+#include <glm/ext/vector_float2.hpp>
 
-Chunk::Chunk(const siv::PerlinNoise &perlin, std::string *fileName){
-  if (fileName == nullptr){
-    this->MakeChunkData(perlin);
-  }else {
-    // Todo
-  }
+Chunk::Chunk(): active(false), loaded(false), offset(glm::vec2(0.0f, 0.0f)){
 }
 void Chunk::Render(CubeRenderer &cubeRenderer){
   for (int x = 0; x < WIDTH_CHUNK; x++) {
     for (int z = 0; z < WIDTH_CHUNK; z++) {
       for (int y = 0; y < HEIGHT_CHUNK; y++) {
         if (data[x][y][z].active)
-          cubeRenderer.Render(glm::vec3(x, y, z), data[x][y][z].faces);
+          cubeRenderer.Render(glm::vec3(x, y, z), data[x][y][z]);
       }
     }
   }
@@ -46,18 +43,30 @@ void Chunk::RemoveBlock(glm::vec3 position){
   if (z+1 < WIDTH_CHUNK) data[x][y][z+1].faces[1] = true;
 }
 
+
+void Chunk::InitChunk(const siv::PerlinNoise &perlin, glm::vec2 offset){
+  std::cout << "banana" << std::endl;
+  this->offset = offset;
+  this->MakeChunkData(perlin);
+  this->loaded = true;
+}
+
 void Chunk::MakeChunkData(const siv::PerlinNoise &perlin){
   for (int x = 0; x < WIDTH_CHUNK; x++) {
     for (int z = 0; z < WIDTH_CHUNK; z++) {
-      float maxY = (int) (HEIGHT_CHUNK*perlin.octave2D_01(((float)x * 0.01), ((float)z * 0.01), 4)); 
+      float maxY = (int) (HEIGHT_CHUNK*perlin.octave2D_01(((float)(x+offset.x) * 0.01), ((float)(z+offset.y) * 0.01), 4));
       for (int y = 0; y < HEIGHT_CHUNK; y++) {
-        if (y < maxY){
+        if (y <= maxY){
+          data[x][y][z].type = STONE;
+          if (y > maxY-4) data[x][y][z].type = DIRT;
+          if (y == maxY) data[x][y][z].type = GRASS;
           data[x][y][z].active = 1;
           //std::fill(data[x][y][z].faces, data[x][y][z].faces+6, 1);
         }
       }
     }
   }
+
   for (int x = 0; x < WIDTH_CHUNK; x++) {
     for (int z = 0; z < WIDTH_CHUNK; z++) {
       for (int y = 0; y < HEIGHT_CHUNK; y++) {

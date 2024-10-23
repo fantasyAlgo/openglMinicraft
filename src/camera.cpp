@@ -40,7 +40,7 @@ void Camera::updatePointer(Chunk &chunk){
   while (chunk.isInside(cameraPointer) && !chunk.data[(int)cameraPointer.x][(int)cameraPointer.y][(int)cameraPointer.z].active)
     cameraPointer += this->direction;
   glm::vec3 before = cameraPointer - this->direction;
-  if (chunk.data[(int)cameraPointer.x][(int)cameraPointer.y][(int)cameraPointer.z].active){
+  if (chunk.isInside(cameraPointer) && chunk.data[(int)cameraPointer.x][(int)cameraPointer.y][(int)cameraPointer.z].active){
     this->active_pointer_block = true;
     cameraPointer = glm::vec3((int)cameraPointer.x+0.5, (int)cameraPointer.y + 0.5, (int) cameraPointer.z + 0.5);
     Face face;

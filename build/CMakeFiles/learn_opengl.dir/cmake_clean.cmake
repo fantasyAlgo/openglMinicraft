@@ -1,6 +1,8 @@
 file(REMOVE_RECURSE
   "CMakeFiles/learn_opengl.dir/src/Main.cpp.o"
   "CMakeFiles/learn_opengl.dir/src/Main.cpp.o.d"
+  "CMakeFiles/learn_opengl.dir/src/block.cpp.o"
+  "CMakeFiles/learn_opengl.dir/src/block.cpp.o.d"
   "CMakeFiles/learn_opengl.dir/src/camera.cpp.o"
   "CMakeFiles/learn_opengl.dir/src/camera.cpp.o.d"
   "CMakeFiles/learn_opengl.dir/src/chunk.cpp.o"

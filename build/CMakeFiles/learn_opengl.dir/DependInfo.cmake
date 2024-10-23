@@ -10,6 +10,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/fantasy/Programming/openglStuff/openglMinicraft/src/glad.c" "CMakeFiles/learn_opengl.dir/src/glad.c.o" "gcc" "CMakeFiles/learn_opengl.dir/src/glad.c.o.d"
   "/home/fantasy/Programming/openglStuff/openglMinicraft/src/Main.cpp" "CMakeFiles/learn_opengl.dir/src/Main.cpp.o" "gcc" "CMakeFiles/learn_opengl.dir/src/Main.cpp.o.d"
+  "/home/fantasy/Programming/openglStuff/openglMinicraft/src/block.cpp" "CMakeFiles/learn_opengl.dir/src/block.cpp.o" "gcc" "CMakeFiles/learn_opengl.dir/src/block.cpp.o.d"
   "/home/fantasy/Programming/openglStuff/openglMinicraft/src/camera.cpp" "CMakeFiles/learn_opengl.dir/src/camera.cpp.o" "gcc" "CMakeFiles/learn_opengl.dir/src/camera.cpp.o.d"
   "/home/fantasy/Programming/openglStuff/openglMinicraft/src/chunk.cpp" "CMakeFiles/learn_opengl.dir/src/chunk.cpp.o" "gcc" "CMakeFiles/learn_opengl.dir/src/chunk.cpp.o.d"
   "/home/fantasy/Programming/openglStuff/openglMinicraft/src/cube_renderer.cpp" "CMakeFiles/learn_opengl.dir/src/cube_renderer.cpp.o" "gcc" "CMakeFiles/learn_opengl.dir/src/cube_renderer.cpp.o.d"

@@ -2,9 +2,6 @@
 #include<GLFW/glfw3.h>
 
 #include<iostream>
-#include <algorithm>
-#include <regex>
-#include <type_traits>
 
 #include "hFiles/camera.h"
 #include "hFiles/chunk.h"
@@ -16,26 +13,36 @@
 #include <glm/ext/matrix_transform.hpp>
 #include <glm/ext/vector_float2.hpp>
 #include <glm/ext/vector_float3.hpp>
-#include <vector>
 
 #include <PerlinNoise/PerlinNoise.hpp>
+#include "hFiles/block.h"
 
 constexpr int WIDTH = 800;
 constexpr int HEIGHT = 800;
-constexpr int WIDTH_BLOCKS = 16;
-constexpr int HEIGHT_BLOCKS = 16;
+// This is the number of chunks in the map
+constexpr int MAP_WIDTH = 2;
+constexpr int MAP_HEIGHT = 2;
 
 
 float deltaTime, lastFrame;
+bool isInside(int i, int j);
 void processInput(GLFWwindow *window);
-void mouse_callback(GLFWwindow *window, double xpos, double ypos);
 
 int main(){
   const siv::PerlinNoise::seed_type seed = 123456u;
 	const siv::PerlinNoise perlin{ seed };
 
   //std::vector<Block> cubePositions;
-  Chunk chunk1 = Chunk(perlin, nullptr);
+  //Chunk chunk1 = Chunk();
+  Chunk map[MAP_WIDTH][MAP_HEIGHT];
+  for (int x = 0; x < MAP_WIDTH; x++) {
+    for (int z = 0; z < MAP_HEIGHT; z++) {
+      map[x][z] = Chunk();
+    }
+  }
+
+  int current_chunk_x = MAP_WIDTH/2;
+  int current_chunk_y = MAP_HEIGHT/2;
 
 	// Initialize GLFW
 	glfwInit();
@@ -67,8 +74,11 @@ int main(){
   ResourceManager::LoadTexture("src/Textures/blocksAtlas.png", true, "awesomeface");
   Shader shaderR = ResourceManager::GetShader("main_shader");
   Texture2D textureR = ResourceManager::GetTexture("awesomeface");
+
   CubeRenderer cubeRenderer = CubeRenderer(shaderR, textureR);
+
   Camera camera(WIDTH, HEIGHT);
+  camera.position = glm::vec3(MAP_WIDTH*WIDTH_CHUNK/2, HEIGHT_CHUNK-3, MAP_HEIGHT*WIDTH_CHUNK/2);
 
   glEnable(GL_DEPTH_TEST);
   glm::vec3 cameraPointer;
@@ -81,14 +91,16 @@ int main(){
 
 	// Main while loop
   bool facesDye[] = {1,1,1,  1,1,1};
+  current_chunk_x = camera.position.x/16.0f; current_chunk_y = current_chunk_y/16.0f;
+  map[current_chunk_x][current_chunk_y].InitChunk(perlin, glm::vec2(current_chunk_x*16, current_chunk_y*16));
 	while (!glfwWindowShouldClose(window)){
     float currentFrame = glfwGetTime();
-    camera.updatePointer(chunk1);
+    camera.updatePointer(map[current_chunk_x][current_chunk_y]);
     deltaTime = currentFrame - lastFrame;
     lastFrame = currentFrame;
     processInput(window);
     camera.keyboardHandling(window, deltaTime);
-    camera.mouseHandling(window, chunk1, deltaTime);
+    camera.mouseHandling(window, map[current_chunk_x][current_chunk_y], deltaTime);
     //radius += 0.2;
 		// Specify the color of the background
 		glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
@@ -96,12 +108,21 @@ int main(){
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     ResourceManager::GetShader("main_shader").SetMatrix4("view", camera.CameraLookAt(), true);
-    chunk1.Render(cubeRenderer);
+    for (int i = -1; i < 2; i++){
+      for (int j = -1; j < 2; j++){
+        if (isInside(current_chunk_x+i, current_chunk_y+j) && !map[current_chunk_x+i][current_chunk_y+j].loaded){
+          map[current_chunk_x+i][current_chunk_y+j].InitChunk(perlin, 16.0f*glm::vec2(current_chunk_x+i, current_chunk_y+j));
+        }
+        if (isInside(current_chunk_x+i, current_chunk_y+j)) map[current_chunk_x+i][current_chunk_y+i].Render(cubeRenderer);
+      }
+    }
+
+
     cameraPointer = glm::vec3((int)cameraPointer.x, (int)cameraPointer.y + 1, (int)cameraPointer.z);
-    /*if (camera.active_pointer_block){
-      std::cout << camera.pointer_block.first.x << " | " << camera.pointer_block.first.y << " | " << camera.pointer_block.first.z << std::endl;
-      cubeRenderer.Render(camera.pointer_block.first, facesDye); 
-    }else std::cout << "Not activated" << std::endl;*/
+    //if (camera.active_pointer_block){
+    //  std::cout << camera.pointer_block.first.x << " | " << camera.pointer_block.first.y << " | " << camera.pointer_block.first.z << std::endl;
+    //  cubeRenderer.Render(camera.pointer_block.first, facesDye); 
+    //}else std::cout << "Not activated" << std::endl;
 
 		// Swap the back buffer with the front buffer
 		glfwSwapBuffers(window);
@@ -117,4 +138,7 @@ void processInput(GLFWwindow *window){
   if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
       glfwSetWindowShouldClose(window, true);
 }
-
+bool isInside(int i, int j){
+  return i >= 0 && i < MAP_WIDTH &&
+         j >= 0 && j < MAP_HEIGHT;
+}

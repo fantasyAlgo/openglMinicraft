@@ -12,6 +12,7 @@ add_executable(learn_opengl
   src/cube_renderer.cpp
   src/camera.cpp
   src/chunk.cpp
+  src/block.cpp
   src/glad.c)
 
 

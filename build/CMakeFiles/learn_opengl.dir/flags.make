@@ -7,11 +7,11 @@ C_DEFINES =
 
 C_INCLUDES = -I/home/fantasy/Programming/openglStuff/openglMinicraft/include
 
-C_FLAGS = 
+C_FLAGS = -g
 
 CXX_DEFINES = 
 
 CXX_INCLUDES = -I/home/fantasy/Programming/openglStuff/openglMinicraft/include
 
-CXX_FLAGS = -std=gnu++17
+CXX_FLAGS = -g -std=gnu++17
 
