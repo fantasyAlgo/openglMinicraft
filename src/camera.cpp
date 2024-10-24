@@ -36,11 +36,12 @@ glm::mat4 Camera::CameraLookAt(){
 }
 
 void Camera::updatePointer(Chunk &chunk){
-  glm::vec3 cameraPointer = this->position;
-  while (chunk.isInside(cameraPointer) && !chunk.data[(int)cameraPointer.x][(int)cameraPointer.y][(int)cameraPointer.z].active)
+  glm::vec3 cameraPointer = this->position - glm::vec3(chunk.offset.x, 0, chunk.offset.y);
+  while (chunk.isInside(cameraPointer) && !chunk.get(cameraPointer).active){
     cameraPointer += this->direction;
+  }
   glm::vec3 before = cameraPointer - this->direction;
-  if (chunk.isInside(cameraPointer) && chunk.data[(int)cameraPointer.x][(int)cameraPointer.y][(int)cameraPointer.z].active){
+  if (chunk.isInside(cameraPointer) && chunk.get(cameraPointer).active){
     this->active_pointer_block = true;
     cameraPointer = glm::vec3((int)cameraPointer.x+0.5, (int)cameraPointer.y + 0.5, (int) cameraPointer.z + 0.5);
     Face face;
@@ -49,7 +50,7 @@ void Camera::updatePointer(Chunk &chunk){
     glm::vec3 current;
     for (int i = 0; i < 6; i++) {
       current = cameraPointer + facesPosition[i];
-      if (!chunk.data[(int)current.x][(int)current.y][(int)current.z].active && glm::distance(before, cameraPointer + facesPosition[i]) < minV){
+      if (!chunk.get(current).active && glm::distance(before, cameraPointer + facesPosition[i]) < minV){
         minV = glm::distance(before, cameraPointer + facesPosition[i]);
         minI = i;
       }

@@ -15,13 +15,14 @@
 #include <glm/ext/vector_float3.hpp>
 
 #include <PerlinNoise/PerlinNoise.hpp>
+#include <vector>
 #include "hFiles/block.h"
 
 constexpr int WIDTH = 800;
 constexpr int HEIGHT = 800;
 // This is the number of chunks in the map
-constexpr int MAP_WIDTH = 2;
-constexpr int MAP_HEIGHT = 2;
+constexpr int MAP_WIDTH = 40;
+constexpr int MAP_HEIGHT = 40;
 
 
 float deltaTime, lastFrame;
@@ -34,12 +35,10 @@ int main(){
 
   //std::vector<Block> cubePositions;
   //Chunk chunk1 = Chunk();
-  Chunk map[MAP_WIDTH][MAP_HEIGHT];
-  for (int x = 0; x < MAP_WIDTH; x++) {
-    for (int z = 0; z < MAP_HEIGHT; z++) {
-      map[x][z] = Chunk();
-    }
-  }
+  std::vector<std::vector<Chunk>> map(MAP_WIDTH);
+  //Chunk map[MAP_WIDTH][MAP_HEIGHT];
+  for (int x = 0; x < MAP_WIDTH; x++) 
+    map[x].resize(MAP_HEIGHT);
 
   int current_chunk_x = MAP_WIDTH/2;
   int current_chunk_y = MAP_HEIGHT/2;
@@ -78,7 +77,7 @@ int main(){
   CubeRenderer cubeRenderer = CubeRenderer(shaderR, textureR);
 
   Camera camera(WIDTH, HEIGHT);
-  camera.position = glm::vec3(MAP_WIDTH*WIDTH_CHUNK/2, HEIGHT_CHUNK-3, MAP_HEIGHT*WIDTH_CHUNK/2);
+  camera.position = glm::vec3(MAP_WIDTH*WIDTH_CHUNK/4 - WIDTH_CHUNK/2, HEIGHT_CHUNK-3, MAP_HEIGHT*WIDTH_CHUNK/4 - WIDTH_CHUNK/2);
 
   glEnable(GL_DEPTH_TEST);
   glm::vec3 cameraPointer;
@@ -91,11 +90,15 @@ int main(){
 
 	// Main while loop
   bool facesDye[] = {1,1,1,  1,1,1};
-  current_chunk_x = camera.position.x/16.0f; current_chunk_y = current_chunk_y/16.0f;
-  map[current_chunk_x][current_chunk_y].InitChunk(perlin, glm::vec2(current_chunk_x*16, current_chunk_y*16));
+  current_chunk_x = camera.position.x/WIDTH_CHUNK; current_chunk_y = camera.position.z/WIDTH_CHUNK;
+  std::cout << current_chunk_x << " | " << current_chunk_y << std::endl;
+
+  map[current_chunk_x][current_chunk_y].InitChunk(perlin, glm::vec2(current_chunk_x*WIDTH_CHUNK, current_chunk_y*WIDTH_CHUNK));
 	while (!glfwWindowShouldClose(window)){
+    current_chunk_x = camera.position.x/WIDTH_CHUNK; current_chunk_y = camera.position.z/WIDTH_CHUNK;
     float currentFrame = glfwGetTime();
     camera.updatePointer(map[current_chunk_x][current_chunk_y]);
+    //std::cout << camera.pointer_block.first.x
     deltaTime = currentFrame - lastFrame;
     lastFrame = currentFrame;
     processInput(window);
@@ -111,12 +114,15 @@ int main(){
     for (int i = -1; i < 2; i++){
       for (int j = -1; j < 2; j++){
         if (isInside(current_chunk_x+i, current_chunk_y+j) && !map[current_chunk_x+i][current_chunk_y+j].loaded){
-          map[current_chunk_x+i][current_chunk_y+j].InitChunk(perlin, 16.0f*glm::vec2(current_chunk_x+i, current_chunk_y+j));
+          //std::cout << "iamtranny" << std::endl;
+          map[current_chunk_x+i][current_chunk_y+j].InitChunk(perlin, (float)WIDTH_CHUNK*glm::vec2(current_chunk_x+i, current_chunk_y+j));
         }
-        if (isInside(current_chunk_x+i, current_chunk_y+j)) map[current_chunk_x+i][current_chunk_y+i].Render(cubeRenderer);
+        if (isInside(current_chunk_x+i, current_chunk_y+j)){
+          //std::cout << "c: " << current_chunk_x << " | " << current_chunk_y << std::endl;
+          map[current_chunk_x+i][current_chunk_y+j].Render(cubeRenderer);
+        }
       }
     }
-
 
     cameraPointer = glm::vec3((int)cameraPointer.x, (int)cameraPointer.y + 1, (int)cameraPointer.z);
     //if (camera.active_pointer_block){
