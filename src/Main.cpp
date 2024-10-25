@@ -1,6 +1,7 @@
 #include<glad/glad.h>
 #include<GLFW/glfw3.h>
 
+#include <glm/ext/quaternion_geometric.hpp>
 #include<iostream>
 
 #include "hFiles/camera.h"
@@ -21,11 +22,12 @@
 constexpr int WIDTH = 800;
 constexpr int HEIGHT = 800;
 // This is the number of chunks in the map
-constexpr int MAP_WIDTH = 40;
-constexpr int MAP_HEIGHT = 40;
+constexpr int MAP_WIDTH = 20;
+constexpr int MAP_HEIGHT = 20;
 
 
 float deltaTime, lastFrame;
+
 bool isInside(int i, int j);
 void processInput(GLFWwindow *window);
 
@@ -91,11 +93,12 @@ int main(){
 	// Main while loop
   bool facesDye[] = {1,1,1,  1,1,1};
   current_chunk_x = camera.position.x/WIDTH_CHUNK; current_chunk_y = camera.position.z/WIDTH_CHUNK;
-  std::cout << current_chunk_x << " | " << current_chunk_y << std::endl;
+  //std::cout << current_chunk_x << " | " << current_chunk_y << std::endl;
 
-  map[current_chunk_x][current_chunk_y].InitChunk(perlin, glm::vec2(current_chunk_x*WIDTH_CHUNK, current_chunk_y*WIDTH_CHUNK));
+  //map[current_chunk_x][current_chunk_y].InitChunk(perlin, glm::vec2(current_chunk_x*WIDTH_CHUNK, current_chunk_y*WIDTH_CHUNK), );
 	while (!glfwWindowShouldClose(window)){
     current_chunk_x = camera.position.x/WIDTH_CHUNK; current_chunk_y = camera.position.z/WIDTH_CHUNK;
+    //std::cout << camera.position.x << " | " << camera.position.z << std::endl;
     float currentFrame = glfwGetTime();
     camera.updatePointer(map[current_chunk_x][current_chunk_y]);
     //std::cout << camera.pointer_block.first.x
@@ -113,12 +116,17 @@ int main(){
     ResourceManager::GetShader("main_shader").SetMatrix4("view", camera.CameraLookAt(), true);
     for (int i = -1; i < 2; i++){
       for (int j = -1; j < 2; j++){
-        if (isInside(current_chunk_x+i, current_chunk_y+j) && !map[current_chunk_x+i][current_chunk_y+j].loaded){
-          //std::cout << "iamtranny" << std::endl;
-          map[current_chunk_x+i][current_chunk_y+j].InitChunk(perlin, (float)WIDTH_CHUNK*glm::vec2(current_chunk_x+i, current_chunk_y+j));
+        if (isInside(current_chunk_x+i, current_chunk_y+j) && !map[current_chunk_x+i][current_chunk_y+j].isLoaded){
+          std::cout << "Chunk: " <<current_chunk_x+i << " " << current_chunk_y+j << " Loaded"  << std::endl;
+          map[current_chunk_x+i][current_chunk_y+j].InitChunk(perlin, (float)WIDTH_CHUNK*glm::vec2(current_chunk_x+i, current_chunk_y+j),
+                                                            &map[current_chunk_x+i][current_chunk_y+j+1], &map[current_chunk_x+i][current_chunk_y+j-1],
+                                                            &map[current_chunk_x+i-1][current_chunk_y+j], &map[current_chunk_x+i+1][current_chunk_y+j]);
         }
-        if (isInside(current_chunk_x+i, current_chunk_y+j)){
+
+        if (isInside(current_chunk_x+i, current_chunk_y+j) && 
+          (glm::dot(glm::vec2(i, j), glm::vec2(camera.direction.x, camera.direction.z)) > -0.2 || (i == 0 && j == 0))){
           //std::cout << "c: " << current_chunk_x << " | " << current_chunk_y << std::endl;
+          map[current_chunk_x+i][current_chunk_y+j].updateFaces();
           map[current_chunk_x+i][current_chunk_y+j].Render(cubeRenderer);
         }
       }

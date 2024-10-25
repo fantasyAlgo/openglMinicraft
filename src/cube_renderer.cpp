@@ -38,8 +38,8 @@ void CubeRenderer::Render(glm::vec3 position, Block block){
   this->texture.Bind();
   this->shader.Use();
   glBindVertexArray(this->cubeVAO);
-  //if (block.type >= END_BLOCK) return;
-  std::cout << position.x << " | " << position.y << "| " << position.z << std::endl;
+  if (block.type >= END_BLOCK) return;
+  //std::cout << position.x << " | " << position.y << "| " << position.z << std::endl;
   shader.SetVector2f("texture_pos", type_position[(int)block.type]);
   for (int i = 0; i < 6; i++) {
     if (!block.faces[i]) continue;

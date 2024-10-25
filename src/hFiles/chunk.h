@@ -16,23 +16,27 @@ class Chunk {
 public:
   glm::vec2 offset;
   bool active;
-  bool loaded;
+  bool isLoaded;
 
 
   //Block data[WIDTH_CHUNK][HEIGHT_CHUNK][WIDTH_CHUNK];
   std::vector<Block> data;
+  Chunk *upChunk, *bottomChunk, *leftChunk, *rightChunk;
 
   Chunk();
   void setOffset(glm::vec2 offset);
-  void InitChunk(const siv::PerlinNoise &perlin, glm::vec2 offset);
+  void InitChunk(const siv::PerlinNoise &perlin, glm::vec2 offset, Chunk *up, Chunk *down, Chunk *left, Chunk *right);
   void MakeChunkData(const siv::PerlinNoise &perlin);
   void Render(CubeRenderer &cubeRenderer);
 
+  void updateFaces();
   void AddBlock(glm::vec3 position);
   void RemoveBlock(glm::vec3 position);
 
   Block get(int x, int y, int z);
   Block get(glm::vec3 vec);
+  bool getActive(int x, int y, int z);
+
   void setActive(int x, int y, int z, bool active);
   void setFaces(int x, int y, int z, bool faces[]);
   void setFace(int x, int y, int z, int face, bool active);

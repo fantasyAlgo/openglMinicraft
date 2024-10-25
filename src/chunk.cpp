@@ -3,7 +3,7 @@
 #include <algorithm>
 #include <glm/ext/vector_float2.hpp>
 
-Chunk::Chunk(): active(false), loaded(false), offset(glm::vec2(0.0f, 0.0f)){
+Chunk::Chunk(): active(false), isLoaded(false), offset(glm::vec2(0.0f, 0.0f)){
   data.resize(WIDTH_CHUNK*WIDTH_CHUNK*HEIGHT_CHUNK);
 }
 void Chunk::Render(CubeRenderer &cubeRenderer){
@@ -22,12 +22,12 @@ void Chunk::AddBlock(glm::vec3 position){
   //std::cout << "pos: " << x << " | " << y << " | " << z << std::endl;
   this->setActive(x, y, z, true);
   bool new_faces[] = {
-    z+1 >= WIDTH_CHUNK || !this->get(x,y,z+1).active,
-    (z-1 < 0 || !this->get(x,y,z-1).active),
-    (x-1 < 0 || !this->get(x-1, y, z).active),
-    (x+1 >= WIDTH_CHUNK || !this->get(x+1, y, z).active),
-    (y+1 >= HEIGHT_CHUNK || !this->get(x, y+1, z).active),
-    (y-1 < 0 || !this->get(x, y-1, z).active)
+    !this->getActive(x, y, z+1),
+    !this->getActive(x, y, z-1),
+    !this->getActive(x-1, y, z),
+    !this->getActive(x+1, y, z),
+    !this->getActive(x, y+1, z),
+    !this->getActive(x, y-1, z)
   };
   this->setFaces(x, y, z, new_faces);
 
@@ -40,7 +40,7 @@ void Chunk::AddBlock(glm::vec3 position){
 }
 void Chunk::RemoveBlock(glm::vec3 position){
   int x = position.x; int y = position.y; int z = position.z;
-  std::cout << x << " | " << y << " | " << z << std::endl;
+  //std::cout << x << " | " << y << " | " << z << std::endl;
   this->setActive(x, y, z, false);
   if (x-1 >= 0) this->setFace(x-1, y, z, 3, true);
   if (x+1 < WIDTH_CHUNK) this->setFace(x+1, y, z, 2, true);
@@ -51,11 +51,15 @@ void Chunk::RemoveBlock(glm::vec3 position){
 }
 
 
-void Chunk::InitChunk(const siv::PerlinNoise &perlin, glm::vec2 offset){
-  int A = 0;
+void Chunk::InitChunk(const siv::PerlinNoise &perlin, glm::vec2 offset, Chunk *up, Chunk *down, Chunk *left, Chunk *right){
+  this->upChunk = up;
+  this->bottomChunk = down;
+  this->leftChunk = left;
+  this->rightChunk = right;
+
   this->offset = offset;
   this->MakeChunkData(perlin);
-  this->loaded = true;
+  this->isLoaded = true;
 }
 
 void Chunk::MakeChunkData(const siv::PerlinNoise &perlin){
@@ -73,42 +77,61 @@ void Chunk::MakeChunkData(const siv::PerlinNoise &perlin){
       }
     }
   }
+  this->updateFaces();
+}
 
+void Chunk::updateFaces(){
   for (int x = 0; x < WIDTH_CHUNK; x++) {
     for (int z = 0; z < WIDTH_CHUNK; z++) {
       for (int y = 0; y < HEIGHT_CHUNK; y++) {
         bool new_faces[] = {
-          z+1 >= WIDTH_CHUNK || !this->get(x,y,z+1).active,
-          (z-1 < 0 || !this->get(x,y,z-1).active),
-          (x-1 < 0 || !this->get(x-1, y, z).active),
-          (x+1 >= WIDTH_CHUNK || !this->get(x+1, y, z).active),
-          (y+1 >= HEIGHT_CHUNK || !this->get(x, y+1, z).active),
-          (y-1 < 0 || !this->get(x, y-1, z).active)
+          !this->getActive(x, y, z+1),
+          !this->getActive(x, y, z-1),
+          !this->getActive(x-1, y, z),
+          !this->getActive(x+1, y, z),
+          !this->getActive(x, y+1, z),
+          !this->getActive(x, y-1, z)
         };
         this->setFaces(x, y, z, new_faces);
+
       }
     }
   }
 }
 
+bool Chunk::getActive(int x, int y, int z){
+  if (x < 0) return this->leftChunk->isLoaded ? this->leftChunk->getActive(WIDTH_CHUNK-1, y, z): true;
+  if (x >= WIDTH_CHUNK) return this->rightChunk->isLoaded ? this->rightChunk->getActive(0, y, z): true;
+  if (z < 0) return this->bottomChunk->isLoaded ? this->bottomChunk->getActive(x, y, WIDTH_CHUNK-1): true;
+  if (z >= WIDTH_CHUNK) return this->upChunk->isLoaded ? this->upChunk->getActive(x, y, 0): true;
+
+  if (y < 0) return true;
+  if (y >= HEIGHT_CHUNK) return false;
+
+  return data[z*HEIGHT_CHUNK*WIDTH_CHUNK + y*WIDTH_CHUNK + x].active;
+}
 
 Block Chunk::get(int x, int y, int z){
-  return data[z*HEIGHT_CHUNK*WIDTH_CHUNK + y*HEIGHT_CHUNK + x];
+  Block block; block.active = false;
+  if (x < 0 || y < 0 || z < 0) return block;
+  if (x >= WIDTH_CHUNK || y >= HEIGHT_CHUNK || z >= WIDTH_CHUNK) return block;
+
+  return data[z*HEIGHT_CHUNK*WIDTH_CHUNK + y*WIDTH_CHUNK + x];
 }
 Block Chunk::get(glm::vec3 vec){
-  return data[(int)vec.z*HEIGHT_CHUNK*WIDTH_CHUNK + (int)vec.y*HEIGHT_CHUNK + (int)vec.x];
+  return data[(int)vec.z*HEIGHT_CHUNK*WIDTH_CHUNK + (int)vec.y*WIDTH_CHUNK + (int)vec.x];
 }
 void Chunk::setActive(int x, int y, int z, bool active){
-  data[z*HEIGHT_CHUNK*WIDTH_CHUNK + y*HEIGHT_CHUNK + x].active = true;
+  data[z*HEIGHT_CHUNK*WIDTH_CHUNK + y*WIDTH_CHUNK + x].active = true;
 }
 void Chunk::setFaces(int x, int y, int z, bool faces[]){
   for (int i = 0; i < 6; i++) 
-      data[z * HEIGHT_CHUNK * WIDTH_CHUNK + y * HEIGHT_CHUNK + x].faces[i] = faces[i];
+      data[z * HEIGHT_CHUNK * WIDTH_CHUNK + y * WIDTH_CHUNK + x].faces[i] = faces[i];
 }
 void Chunk::setFace(int x, int y, int z, int face, bool active){
-  data[z*HEIGHT_CHUNK*WIDTH_CHUNK + y*HEIGHT_CHUNK + x].faces[face] = active;
+  data[z*HEIGHT_CHUNK*WIDTH_CHUNK + y*WIDTH_CHUNK + x].faces[face] = active;
 }
 void Chunk::setType(int x, int y, int z, BLOCK_TYPE type){
-  data[z*HEIGHT_CHUNK*WIDTH_CHUNK + y*HEIGHT_CHUNK + x].type = type;
+  data[z*HEIGHT_CHUNK*WIDTH_CHUNK + y*WIDTH_CHUNK + x].type = type;
 }
 
