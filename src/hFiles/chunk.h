@@ -15,6 +15,7 @@
 class Chunk {
 public:
   glm::vec2 offset;
+  glm::vec2 map_pos;
   bool active;
   bool isLoaded;
 

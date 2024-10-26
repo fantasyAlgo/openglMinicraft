@@ -1,3 +1,9 @@
+
+#include "imgui.h"
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl3.h"
+
+#include <algorithm>
 #include<glad/glad.h>
 #include<GLFW/glfw3.h>
 
@@ -18,13 +24,14 @@
 #include <PerlinNoise/PerlinNoise.hpp>
 #include <vector>
 #include "hFiles/block.h"
+#include "hFiles/UI.h"
+
 
 constexpr int WIDTH = 800;
 constexpr int HEIGHT = 800;
 // This is the number of chunks in the map
 constexpr int MAP_WIDTH = 20;
 constexpr int MAP_HEIGHT = 20;
-
 
 float deltaTime, lastFrame;
 
@@ -82,6 +89,11 @@ int main(){
   camera.position = glm::vec3(MAP_WIDTH*WIDTH_CHUNK/4 - WIDTH_CHUNK/2, HEIGHT_CHUNK-3, MAP_HEIGHT*WIDTH_CHUNK/4 - WIDTH_CHUNK/2);
 
   glEnable(GL_DEPTH_TEST);
+
+  glCullFace(GL_FRONT);
+  glCullFace(GL_BACK);
+  glFrontFace(GL_CCW);
+
   glm::vec3 cameraPointer;
   Block pointer_block;
 
@@ -92,10 +104,23 @@ int main(){
 
 	// Main while loop
   bool facesDye[] = {1,1,1,  1,1,1};
+  Block noBlock = Block();
+  noBlock.type = END_BLOCK;
+  std::fill(noBlock.faces, noBlock.faces+6, 1);
+
   current_chunk_x = camera.position.x/WIDTH_CHUNK; current_chunk_y = camera.position.z/WIDTH_CHUNK;
   //std::cout << current_chunk_x << " | " << current_chunk_y << std::endl;
 
   //map[current_chunk_x][current_chunk_y].InitChunk(perlin, glm::vec2(current_chunk_x*WIDTH_CHUNK, current_chunk_y*WIDTH_CHUNK), );
+
+  IMGUI_CHECKVERSION();
+  ImGui::CreateContext();
+  ImGuiIO& io = ImGui::GetIO(); (void)io;
+  ImGui::StyleColorsDark();
+  ImGui_ImplGlfw_InitForOpenGL(window, true);
+  ImGui_ImplOpenGL3_Init("#version 330");
+
+
 	while (!glfwWindowShouldClose(window)){
     current_chunk_x = camera.position.x/WIDTH_CHUNK; current_chunk_y = camera.position.z/WIDTH_CHUNK;
     //std::cout << camera.position.x << " | " << camera.position.z << std::endl;
@@ -106,6 +131,9 @@ int main(){
     lastFrame = currentFrame;
     processInput(window);
     camera.keyboardHandling(window, deltaTime);
+    /*camera.mouseHandling(window,
+                         camera.active_pointer_block ? map[current_chunk_x][current_chunk_y] : map[(int) camera.pointer_block.chunk_pos.x][(int)camera.pointer_block.chunk_pos.y], 
+                         deltaTime);*/
     camera.mouseHandling(window, map[current_chunk_x][current_chunk_y], deltaTime);
     //radius += 0.2;
 		// Specify the color of the background
@@ -113,36 +141,49 @@ int main(){
 		// Clean the back buffer and assign the new color to it
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+    ImGui_ImplOpenGL3_NewFrame();
+    ImGui_ImplGlfw_NewFrame();
+    ImGui::NewFrame();
+
     ResourceManager::GetShader("main_shader").SetMatrix4("view", camera.CameraLookAt(), true);
+    //if (camera.active_pointer_block)
+    //  cubeRenderer.Render(camera.pointer_block.first +glm::vec3(map[current_chunk_x][current_chunk_y].offset.x, 0, map[current_chunk_x][current_chunk_y].offset.y) + 0.0f, noBlock);
+    
+    camera.active_pointer_block = false;
     for (int i = -1; i < 2; i++){
       for (int j = -1; j < 2; j++){
         if (isInside(current_chunk_x+i, current_chunk_y+j) && !map[current_chunk_x+i][current_chunk_y+j].isLoaded){
-          std::cout << "Chunk: " <<current_chunk_x+i << " " << current_chunk_y+j << " Loaded"  << std::endl;
-          map[current_chunk_x+i][current_chunk_y+j].InitChunk(perlin, (float)WIDTH_CHUNK*glm::vec2(current_chunk_x+i, current_chunk_y+j),
+          map[current_chunk_x+i][current_chunk_y+j].InitChunk(perlin, glm::vec2(current_chunk_x+i, current_chunk_y+j),
                                                             &map[current_chunk_x+i][current_chunk_y+j+1], &map[current_chunk_x+i][current_chunk_y+j-1],
                                                             &map[current_chunk_x+i-1][current_chunk_y+j], &map[current_chunk_x+i+1][current_chunk_y+j]);
         }
-
         if (isInside(current_chunk_x+i, current_chunk_y+j) && 
           (glm::dot(glm::vec2(i, j), glm::vec2(camera.direction.x, camera.direction.z)) > -0.2 || (i == 0 && j == 0))){
-          //std::cout << "c: " << current_chunk_x << " | " << current_chunk_y << std::endl;
+          //if (!camera.active_pointer_block) camera.updatePointer(map[current_chunk_x+i][current_chunk_y+j]);
           map[current_chunk_x+i][current_chunk_y+j].updateFaces();
           map[current_chunk_x+i][current_chunk_y+j].Render(cubeRenderer);
         }
       }
     }
-
+  
     cameraPointer = glm::vec3((int)cameraPointer.x, (int)cameraPointer.y + 1, (int)cameraPointer.z);
-    //if (camera.active_pointer_block){
-    //  std::cout << camera.pointer_block.first.x << " | " << camera.pointer_block.first.y << " | " << camera.pointer_block.first.z << std::endl;
-    //  cubeRenderer.Render(camera.pointer_block.first, facesDye); 
-    //}else std::cout << "Not activated" << std::endl;
+
+    //UI::RenderUI();
+
+    UI::RenderUI(WIDTH, HEIGHT);
+    ImGui::Render();
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
 		// Swap the back buffer with the front buffer
 		glfwSwapBuffers(window);
 		// Take care of all GLFW events
 		glfwPollEvents();
 	}
+
+  ImGui_ImplOpenGL3_Shutdown();
+  ImGui_ImplGlfw_Shutdown();
+  ImGui::DestroyContext();
+
 	glfwDestroyWindow(window);
 	glfwTerminate();
 	return 0;
@@ -156,3 +197,5 @@ bool isInside(int i, int j){
   return i >= 0 && i < MAP_WIDTH &&
          j >= 0 && j < MAP_HEIGHT;
 }
+
+

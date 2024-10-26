@@ -18,10 +18,16 @@ enum Face {
 };
 extern glm::vec3 facesPosition[];
 
+struct BlockPointer {
+  glm::vec3 pos;
+  Face face;
+  glm::vec2 chunk_pos;
+};
+
 
 class Camera {
 private:
-  bool firstClick, leftPressed, rightPressed = false;
+  bool firstClick, leftPressed, rightPressed, sprint = false;
   float lastX, lastY;
   int HEIGHT, WIDTH;
   float yaw, pitch;
@@ -31,7 +37,7 @@ public:
   glm::vec3 direction;
 
   bool active_pointer_block;
-  std::pair<glm::vec3, Face> pointer_block;
+  BlockPointer pointer_block;
 
   Camera(int WIDTH, int HEIGHT);
 

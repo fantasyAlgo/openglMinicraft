@@ -5,7 +5,7 @@
 #include <glm/ext/vector_float3.hpp>
 
 constexpr int WIDTH_CHUNK = 16;
-constexpr int HEIGHT_CHUNK = 16;
+constexpr int HEIGHT_CHUNK = 32;
 
 enum BLOCK_TYPE {
   GRASS,

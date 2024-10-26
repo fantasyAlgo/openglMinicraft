@@ -392,4 +392,27 @@ CMakeFiles/learn_opengl.dir/src/camera.cpp.o: \
  /usr/include/c++/14.2.1/random /usr/include/c++/14.2.1/bits/random.h \
  /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/opt_random.h \
  /usr/include/c++/14.2.1/bits/random.tcc /usr/include/c++/14.2.1/utility \
- /usr/include/c++/14.2.1/bits/stl_relops.h
+ /usr/include/c++/14.2.1/bits/stl_relops.h \
+ /usr/include/c++/14.2.1/complex /usr/include/c++/14.2.1/sstream \
+ /usr/include/c++/14.2.1/bits/sstream.tcc \
+ /usr/include/c++/14.2.1/filesystem /usr/include/c++/14.2.1/bits/fs_fwd.h \
+ /usr/include/c++/14.2.1/bits/chrono.h /usr/include/c++/14.2.1/ratio \
+ /usr/include/c++/14.2.1/ctime \
+ /usr/include/c++/14.2.1/bits/parse_numbers.h \
+ /usr/include/c++/14.2.1/bits/fs_path.h /usr/include/c++/14.2.1/locale \
+ /usr/include/c++/14.2.1/bits/locale_facets_nonio.h \
+ /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/time_members.h \
+ /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/messages_members.h \
+ /usr/include/libintl.h /usr/include/c++/14.2.1/bits/codecvt.h \
+ /usr/include/c++/14.2.1/bits/locale_facets_nonio.tcc \
+ /usr/include/c++/14.2.1/bits/locale_conv.h \
+ /usr/include/c++/14.2.1/iomanip \
+ /usr/include/c++/14.2.1/bits/quoted_string.h \
+ /usr/include/c++/14.2.1/codecvt \
+ /usr/include/c++/14.2.1/ext/concurrence.h \
+ /usr/include/c++/14.2.1/bits/shared_ptr.h \
+ /usr/include/c++/14.2.1/bits/shared_ptr_base.h \
+ /usr/include/c++/14.2.1/bits/allocated_ptr.h \
+ /usr/include/c++/14.2.1/bits/unique_ptr.h \
+ /usr/include/c++/14.2.1/bits/fs_dir.h \
+ /usr/include/c++/14.2.1/bits/fs_ops.h
