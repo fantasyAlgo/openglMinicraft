@@ -40,9 +40,11 @@ void CubeRenderer::Render(glm::vec3 position, Block block){
   glBindVertexArray(this->cubeVAO);
   if (block.type > END_BLOCK) return;
   //std::cout << position.x << " | " << position.y << "| " << position.z << std::endl;
-  shader.SetVector2f("texture_pos", type_position[(int)block.type]);
+  shader.SetVector2f("texture_pos", type_position[(int)block.type][0]);
   for (int i = 0; i < 6; i++) {
     if (!block.faces[i]) continue;
+    if (i >= 4)
+      shader.SetVector2f("texture_pos", type_position[(int)block.type][i-3]);
     glm::mat4 model = glm::mat4(1.0f);
     model = glm::translate(model, position + this->faceOffsets[i]);
     model = glm::rotate(model, glm::radians(this->faceRadiuses[i]), glm::vec3((float)(this->faceAxis[i]), (float)(!this->faceAxis[i]), 0.0f));

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "block.h"
 #include "chunk.h"
 #include <GLFW/glfw3.h>
 #include <glm/ext/matrix_float4x4.hpp>
@@ -33,6 +34,7 @@ private:
   int HEIGHT, WIDTH;
   float yaw, pitch;
 public:
+  BLOCK_TYPE place_type = GRASS;
   glm::vec3 cameraUp;
   glm::vec3 position;
   glm::vec3 direction;

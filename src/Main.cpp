@@ -4,6 +4,7 @@
 #include "imgui_impl_opengl3.h"
 
 #include <algorithm>
+#include <cstdlib>
 #include<glad/glad.h>
 #include<GLFW/glfw3.h>
 
@@ -32,6 +33,7 @@ constexpr int HEIGHT = 800;
 // This is the number of chunks in the map
 constexpr int MAP_WIDTH = 20;
 constexpr int MAP_HEIGHT = 20;
+BLOCK_TYPE place_type = GRASS;
 
 float deltaTime, lastFrame;
 
@@ -39,6 +41,7 @@ bool isInside(int i, int j);
 void processInput(GLFWwindow *window);
 
 int main(){
+  srand(1000);
   const siv::PerlinNoise::seed_type seed = 123456u;
 	const siv::PerlinNoise perlin{ seed };
 
@@ -86,7 +89,7 @@ int main(){
   CubeRenderer cubeRenderer = CubeRenderer(shaderR, textureR);
 
   Camera camera(WIDTH, HEIGHT);
-  camera.position = glm::vec3(MAP_WIDTH*WIDTH_CHUNK/4 - WIDTH_CHUNK/2, HEIGHT_CHUNK-3, MAP_HEIGHT*WIDTH_CHUNK/4 - WIDTH_CHUNK/2);
+  camera.position = glm::vec3(MAP_WIDTH*WIDTH_CHUNK/4 - WIDTH_CHUNK/2, HEIGHT_CHUNK/2, MAP_HEIGHT*WIDTH_CHUNK/4 - WIDTH_CHUNK/2);
 
   glEnable(GL_DEPTH_TEST);
 
@@ -122,6 +125,7 @@ int main(){
 
 
 	while (!glfwWindowShouldClose(window)){
+    camera.place_type = place_type;
     current_chunk_x = camera.position.x/WIDTH_CHUNK; current_chunk_y = camera.position.z/WIDTH_CHUNK;
     //std::cout << camera.position.x << " | " << camera.position.z << std::endl;
     float currentFrame = glfwGetTime();
@@ -137,7 +141,7 @@ int main(){
     //camera.mouseHandling(window, map[current_chunk_x][current_chunk_y], deltaTime);
     //radius += 0.2;
 		// Specify the color of the background
-		glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
+		glClearColor(0.5333, 0.8, 0.858823, 1.0f);
 		// Clean the back buffer and assign the new color to it
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -160,7 +164,7 @@ int main(){
                                                             isInside(current_chunk_x+i+1, current_chunk_y+j) ? &map[current_chunk_x+i+1][current_chunk_y+j] : nullptr);
         }
         if (isInside(current_chunk_x+i, current_chunk_y+j) && 
-          (glm::dot(glm::vec2(i, j), glm::vec2(camera.direction.x, camera.direction.z)) > -0.2 || (i == 0 && j == 0))){
+          (glm::dot(glm::vec2(i, j), glm::vec2(camera.direction.x, camera.direction.z)) > -0.5 || (i == 0 && j == 0))){
           map[current_chunk_x+i][current_chunk_y+j].updateFaces();
           map[current_chunk_x+i][current_chunk_y+j].Render(cubeRenderer);
         }
@@ -193,6 +197,9 @@ int main(){
 void processInput(GLFWwindow *window){
   if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
       glfwSetWindowShouldClose(window, true);
+  for (int i = 0; i < (int)END_BLOCK; i++) {
+    if (glfwGetKey(window, GLFW_KEY_0 + i) == GLFW_PRESS) place_type = (BLOCK_TYPE) i;
+  }
 }
 bool isInside(int i, int j){
   return i >= 0 && i < MAP_WIDTH &&

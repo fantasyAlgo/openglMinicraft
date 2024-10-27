@@ -141,9 +141,9 @@ void Camera::updatePointer(Chunk &initialChunk){
   if (lastAxisCollided == 2) this->pointer_block.face = (Face) (vStep.z == 1 ? 1 : 0);
   this->pointer_block.chunk_pos = chunk->map_pos;
   if (sprint){
-    std::cout << "vMa: " << vMapCheck.x << " " << vMapCheck.y << " " << vMapCheck.z << std::endl;
-    std::cout << "vS: " << vStep.x << " " << vStep.y << " " << vStep.z << std::endl;
-    std::cout << "faces: " << this->pointer_block.face << std::endl;
+    //std::cout << "vMa: " << vMapCheck.x << " " << vMapCheck.y << " " << vMapCheck.z << std::endl;
+    //std::cout << "vS: " << vStep.x << " " << vStep.y << " " << vStep.z << std::endl;
+    //std::cout << "faces: " << this->pointer_block.face << std::endl;
   }
   this->pointer_block.pos = vMapCheck;
   this->active_pointer_block = true;
@@ -159,25 +159,25 @@ void Camera::mouseHandling(GLFWwindow* window, Chunk &chunk, float deltaTime){
     if (this->pointer_block.pos.x == 0 && this->pointer_block.face == RIGHT){
       this->pointer_block.pos.x = WIDTH_CHUNK-1;
       this->pointer_block.face = NO_FACE;
-      chunk.leftChunk->AddBlock(this->pointer_block.pos);
+      chunk.leftChunk->AddBlock(this->pointer_block.pos, place_type);
     }
     else if (this->pointer_block.pos.x == WIDTH_CHUNK-1 && this->pointer_block.face == LEFT){
       this->pointer_block.pos.x = 0;
       this->pointer_block.face = NO_FACE;
-      chunk.rightChunk->AddBlock(this->pointer_block.pos);
+      chunk.rightChunk->AddBlock(this->pointer_block.pos, place_type);
     }
     if (this->pointer_block.pos.z == 0 && this->pointer_block.face == BACK){
       this->pointer_block.pos.z = WIDTH_CHUNK-1;
       this->pointer_block.face = NO_FACE;
-      chunk.bottomChunk->AddBlock(this->pointer_block.pos);
+      chunk.bottomChunk->AddBlock(this->pointer_block.pos, place_type);
     }
     else if (this->pointer_block.pos.z == WIDTH_CHUNK-1 && this->pointer_block.face == FRONT){
       this->pointer_block.pos.z = 0;
       this->pointer_block.face = NO_FACE;
-      chunk.upChunk->AddBlock(this->pointer_block.pos);
+      chunk.upChunk->AddBlock(this->pointer_block.pos, place_type);
     }
 
-    chunk.AddBlock(this->pointer_block.pos + 2.0f*facesPosition[(int)this->pointer_block.face]);
+    chunk.AddBlock(this->pointer_block.pos + 2.0f*facesPosition[(int)this->pointer_block.face], place_type);
     rightPressed = true;
   }
   if (!firstClick && !leftPressed && this->active_pointer_block && glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS){

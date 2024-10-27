@@ -1,6 +1,8 @@
 #include "hFiles/chunk.h"
 #include "hFiles/block.h"
 #include <algorithm>
+#include <any>
+#include <cstdlib>
 #include <glm/ext/vector_float2.hpp>
 
 Chunk::Chunk(): active(false), isLoaded(false), offset(glm::vec2(0.0f, 0.0f)){
@@ -17,10 +19,11 @@ void Chunk::Render(CubeRenderer &cubeRenderer){
   }
 }
 
-void Chunk::AddBlock(glm::vec3 position){
+void Chunk::AddBlock(glm::vec3 position, BLOCK_TYPE type){
   int x = position.x; int y = position.y; int z = position.z;
   //std::cout << "pos: " << x << " | " << y << " | " << z << std::endl;
   this->setActive(x, y, z, true);
+  this->setType(x, y, z, type);
   bool new_faces[] = {
     !this->getActive(x, y, z+1),
     !this->getActive(x, y, z-1),
@@ -63,17 +66,51 @@ void Chunk::InitChunk(const siv::PerlinNoise &perlin, glm::vec2 chunk_pos, Chunk
   this->isLoaded = true;
 }
 
+
+void Chunk::MakeTrees(int x, int startY, int z){
+  int howTall = rand()%6+ 4;
+  int width = 3;
+  int heightLeaves = 3;
+  for (int y = startY; y < (int)startY+howTall; y++) {
+    this->setType(x, y, z, TREE_BLOCK);
+    this->setActive(x, y, z, true);
+  }
+  for (int i = -width/2; i <= width/2; i++) {
+    for (int j = -width/2 ; j <= width/2; j++) {
+      for (int k = 0; k < heightLeaves; k++) {
+        this->setType(x+i, startY+howTall+k, z+j, LEAVES);
+        this->setActive(x+i, startY+howTall+k, z+j, true);
+      }
+    }
+  }
+
+
+}
 void Chunk::MakeChunkData(const siv::PerlinNoise &perlin){
+  float maxY, cavePerlin, treeY;
+  cavePerlin = 1.0f;
   for (int x = 0; x < WIDTH_CHUNK; x++) {
     for (int z = 0; z < WIDTH_CHUNK; z++) {
-      float maxY = (int) (HEIGHT_CHUNK*perlin.octave2D_01(((float)(x+offset.x) * 0.05), ((float)(z+offset.y) * 0.05), 4));
-      for (int y = 0; y < HEIGHT_CHUNK; y++) {
-        if (y <= maxY){
-          this->setType(x, y, z, STONE);
-          if (y > maxY-4) this->setType(x, y, z, DIRT);
-          if (y == maxY) this->setType(x, y, z, GRASS);
+      maxY = (int) (HEIGHT_CHUNK*perlin.octave2D_01(((float)(x+offset.x) * 0.025), ((float)(z+offset.y) * 0.025), 4));
+      if (maxY >= WATER_LEVEL+SAND_LEVEL && rand()/100000000.0f < 0.4)
+        this->MakeTrees(x, maxY, z);
+      for (int y = 0; y <= HEIGHT_CHUNK; y++) {
+        //cavePerlin = perlin.octave2D_01(((float)(x+offset.x) * 0.04), ((float)(z+offset.y) * 0.04), y*0.1);
+        //std::cout << cavePerlin << std::endl;
+        if (maxY < WATER_LEVEL && y <= WATER_LEVEL){
+          this->setType(x, y, z, WATER_BASIC);
           this->setActive(x, y, z, true);
-          //std::fill(this->setType(x, y, z, STONE.faces, data[x][y][z].faces+6, 1);
+        }
+        if (y <= maxY && cavePerlin > 0.34){
+          if (maxY >= WATER_LEVEL && maxY < WATER_LEVEL+SAND_LEVEL){
+            this->setType(x, y, z, SAND);
+            this->setActive(x, y, z, true);
+          }else{
+            this->setType(x, y, z, STONE);
+            if (y > maxY-4) this->setType(x, y, z, DIRT);
+            if (y == maxY) this->setType(x, y, z, GRASS);
+            this->setActive(x, y, z, true);
+          }
         }
       }
     }
@@ -101,11 +138,11 @@ void Chunk::updateFaces(){
 }
 
 bool Chunk::getActive(int x, int y, int z){
-  //if (this == nullptr) return false;
-  if (x < 0) return this->leftChunk->isLoaded ? this->leftChunk->getActive(WIDTH_CHUNK-1, y, z): true;
-  if (x >= WIDTH_CHUNK) return this->rightChunk->isLoaded ? this->rightChunk->getActive(0, y, z): true;
-  if (z < 0) return this->bottomChunk->isLoaded ? this->bottomChunk->getActive(x, y, WIDTH_CHUNK-1): true;
-  if (z >= WIDTH_CHUNK) return this->upChunk->isLoaded ? this->upChunk->getActive(x, y, 0): true;
+  if (!this->isLoaded) return false;
+  if (x < 0) return            this->leftChunk != nullptr && this->leftChunk->isLoaded ? this->leftChunk->getActive(WIDTH_CHUNK-1, y, z): true;
+  if (x >= WIDTH_CHUNK) return this->rightChunk != nullptr && this->rightChunk->isLoaded ? this->rightChunk->getActive(0, y, z): true;
+  if (z < 0) return            this->bottomChunk != nullptr && this->bottomChunk->isLoaded ? this->bottomChunk->getActive(x, y, WIDTH_CHUNK-1): true;
+  if (z >= WIDTH_CHUNK) return this->upChunk != nullptr && this->upChunk->isLoaded ? this->upChunk->getActive(x, y, 0): true;
 
   if (y < 0) return true;
   if (y >= HEIGHT_CHUNK) return false;
@@ -115,10 +152,10 @@ bool Chunk::getActive(int x, int y, int z){
 
 Block Chunk::get(int x, int y, int z){
   Block block; block.active = true;
-  if (x < 0) return this->leftChunk->isLoaded ? this->leftChunk->get(WIDTH_CHUNK-1, y, z): block;
-  if (x >= WIDTH_CHUNK) return this->rightChunk->isLoaded ? this->rightChunk->get(0, y, z): block;
-  if (z < 0) return this->bottomChunk->isLoaded ? this->bottomChunk->get(x, y, WIDTH_CHUNK-1): block;
-  if (z >= WIDTH_CHUNK) return this->upChunk->isLoaded ? this->upChunk->get(x, y, 0): block;
+  if (x < 0) return this->leftChunk != nullptr && this->leftChunk->isLoaded ? this->leftChunk->get(WIDTH_CHUNK-1, y, z): block;
+  if (x >= WIDTH_CHUNK) return this->rightChunk != nullptr && this->rightChunk->isLoaded ? this->rightChunk->get(0, y, z): block;
+  if (z < 0) return this->bottomChunk != nullptr && this->bottomChunk->isLoaded ? this->bottomChunk->get(x, y, WIDTH_CHUNK-1): block;
+  if (z >= WIDTH_CHUNK) return this->upChunk != nullptr && this->upChunk->isLoaded ? this->upChunk->get(x, y, 0): block;
 
   if (x < 0 || y < 0 || z < 0) return block;
   if (x >= WIDTH_CHUNK || y >= HEIGHT_CHUNK || z >= WIDTH_CHUNK) return block;
@@ -129,6 +166,23 @@ Block Chunk::get(glm::vec3 vec){
   return data[(int)vec.z*HEIGHT_CHUNK*WIDTH_CHUNK + (int)vec.y*WIDTH_CHUNK + (int)vec.x];
 }
 void Chunk::setActive(int x, int y, int z, bool active){
+  if (x < 0){
+    if (this->leftChunk->isLoaded) this->leftChunk->setActive(WIDTH_CHUNK-1, y, z, active);
+    return;
+  }
+  if (x >= WIDTH_CHUNK){
+    if (this->rightChunk->isLoaded) this->rightChunk->setActive(0, y, z, active);
+    return;
+  }
+  if (z < 0){
+    if (this->bottomChunk->isLoaded) this->bottomChunk->setActive(x, y, WIDTH_CHUNK-1, active);
+    return;
+  }
+  if (z >= WIDTH_CHUNK){
+    if (this->upChunk->isLoaded) this->upChunk->setActive(x, y, 0, active);
+    return;
+  }
+
   data[z*HEIGHT_CHUNK*WIDTH_CHUNK + y*WIDTH_CHUNK + x].active = active;
 }
 void Chunk::setFaces(int x, int y, int z, bool faces[]){
@@ -172,6 +226,23 @@ void Chunk::setFace(int x, int y, int z, int face, bool active){
   data[z*HEIGHT_CHUNK*WIDTH_CHUNK + y*WIDTH_CHUNK + x].faces[face] = active;
 }
 void Chunk::setType(int x, int y, int z, BLOCK_TYPE type){
+  if (x < 0){
+    if (this->leftChunk->isLoaded) this->leftChunk->setType(WIDTH_CHUNK-1, y, z, type);
+    return;
+  }
+  if (x >= WIDTH_CHUNK){
+    if (this->rightChunk->isLoaded) this->rightChunk->setType(0, y, z, type);
+    return;
+  }
+  if (z < 0){
+    if (this->bottomChunk->isLoaded) this->bottomChunk->setType(x, y, WIDTH_CHUNK-1, type);
+    return;
+  }
+  if (z >= WIDTH_CHUNK){
+    if (this->upChunk->isLoaded) this->upChunk->setType(x, y, 0, type);
+    return;
+  }
+
   data[z*HEIGHT_CHUNK*WIDTH_CHUNK + y*WIDTH_CHUNK + x].type = type;
 }
 

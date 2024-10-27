@@ -27,11 +27,12 @@ public:
   Chunk();
   void setOffset(glm::vec2 offset);
   void InitChunk(const siv::PerlinNoise &perlin, glm::vec2 offset, Chunk *up, Chunk *down, Chunk *left, Chunk *right);
+  void MakeTrees(int x, int startY, int z);
   void MakeChunkData(const siv::PerlinNoise &perlin);
   void Render(CubeRenderer &cubeRenderer);
 
   void updateFaces();
-  void AddBlock(glm::vec3 position);
+  void AddBlock(glm::vec3 position, BLOCK_TYPE type);
   void RemoveBlock(glm::vec3 position);
 
   Block get(int x, int y, int z);
