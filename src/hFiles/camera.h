@@ -14,7 +14,8 @@ enum Face {
   LEFT,
   RIGHT,
   UP,
-  BOTTOM
+  BOTTOM,
+  NO_FACE
 };
 extern glm::vec3 facesPosition[];
 

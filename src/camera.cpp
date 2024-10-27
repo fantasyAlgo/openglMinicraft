@@ -1,6 +1,8 @@
 #include "hFiles/camera.h"
+#include "hFiles/block.h"
 #include "hFiles/chunk.h"
 #include <GLFW/glfw3.h>
+#include <climits>
 #include <cmath>
 #include <complex>
 #include <cstddef>
@@ -20,7 +22,8 @@ glm::vec3 facesPosition[] = {
   glm::vec3(0.5, 0.0, 0.0),
   glm::vec3(-0.5, 0.0, 0.0),
   glm::vec3(0.0, 0.5, 0.0),
-  glm::vec3(0.0, -0.5, 0.0)
+  glm::vec3(0.0, -0.5, 0.0),
+  glm::vec3(0.0f, 0.0f, 0.0f)
 };
 
 
@@ -39,10 +42,12 @@ glm::mat4 Camera::CameraLookAt(){
   return glm::lookAt(position, position + direction, this->cameraUp);
 }
 
-void Camera::updatePointer(Chunk &chunk){
+void Camera::updatePointer(Chunk &initialChunk){
   //std::cout << "####################################" << std::endl;
-  glm::vec3 cameraPointer = this->position - glm::vec3(chunk.offset.x, 0, chunk.offset.y);
+  Chunk* chunk = &initialChunk;
+  glm::vec3 cameraPointer = this->position - glm::vec3(chunk->offset.x, 0, chunk->offset.y);
   this->direction = glm::normalize(this->direction);
+
   //std::cout << "camera: " << cameraPointer.x << " " << cameraPointer.y << " " << cameraPointer.z << std::endl;
   //std::cout << "direction: " << direction.x << " " << direction.y << " " << direction.z << std::endl;
   glm::vec3 unitStepSize = glm::vec3(sqrt(1 + (direction.y/direction.x)*(direction.y/direction.x) + (direction.z/direction.x)*(direction.z/direction.x) ),
@@ -50,7 +55,6 @@ void Camera::updatePointer(Chunk &chunk){
                                      sqrt(1 + (direction.x/direction.z)*(direction.x/direction.z) + (direction.y/direction.z)*(direction.y/direction.z) ));
   //glm::vec3 unitStepSize = glm::vec3(abs(1.0f/direction.x), abs(1.0f/direction.y), abs(1.0f/direction.z));
   //;std::cout << "unitStep: " << unitStepSize.x << " " << unitStepSize.y << " " << unitStepSize.z << std::endl;
-  
   glm::vec3 vMapCheck = glm::vec3((int)cameraPointer.x, (int)cameraPointer.y, (int)cameraPointer.z);
   //std::cout << "pos: " << vMapCheck.x << " " << vMapCheck.y << " " << vMapCheck.z << std::endl;
   glm::vec3 vRayLength1D;
@@ -75,6 +79,7 @@ void Camera::updatePointer(Chunk &chunk){
   //std::cout << "Passages: " << std::endl;
   while (!bTileFound && fDistance < fMaxDistance && times < 1000){
     //std::cout << vMapCheck.x << " " << vMapCheck.y << " " << vMapCheck.z << std::endl;
+    if (!chunk->isLoaded) break;
     times++;
     if (vRayLength1D.x < std::min(vRayLength1D.y, vRayLength1D.z)){
       vMapCheck.x += vStep.x;
@@ -94,7 +99,33 @@ void Camera::updatePointer(Chunk &chunk){
       vRayLength1D.z += unitStepSize.z;
       lastAxisCollided = 2;
     }
-    if (chunk.isInside(vMapCheck) && chunk.getActive(vMapCheck.x, vMapCheck.y, vMapCheck.z)){
+
+    if (vMapCheck.x < 0){
+      vMapCheck.x = WIDTH_CHUNK-1;
+      if (chunk->leftChunk != nullptr && chunk->leftChunk->isLoaded) chunk = chunk->leftChunk;
+      else break;
+    }
+    if (vMapCheck.x > WIDTH_CHUNK){
+      vMapCheck.x = 0;
+      //std::cout << chunk->rightChunk
+      if (chunk->rightChunk != nullptr && chunk->rightChunk->isLoaded) chunk = chunk->rightChunk;
+      else break;
+    }
+    if (vMapCheck.z < 0){
+      vMapCheck.z = WIDTH_CHUNK-1;
+      if (chunk->bottomChunk != nullptr && chunk->bottomChunk->isLoaded) chunk = chunk->bottomChunk;
+      else break;
+    }
+
+    if (vMapCheck.z > WIDTH_CHUNK){
+      vMapCheck.z = 0;
+      if (chunk->upChunk != nullptr && chunk->upChunk->isLoaded){
+        chunk = chunk->upChunk;
+      }
+      else break;
+    }
+
+    if (chunk->isInside(vMapCheck) && chunk->getActive(vMapCheck.x, vMapCheck.y, vMapCheck.z)){
       bTileFound = true;
     }
   }
@@ -102,28 +133,56 @@ void Camera::updatePointer(Chunk &chunk){
   if (!bTileFound){
     //std::cout << "############### Not found ############" << std::endl;
     return;
-  }
+  }//else std::cout << "############### Found! ############" << std::endl;
   glm::vec3 intrx = cameraPointer + direction*fDistance;
   //std::cout << "intersection: " << intrx.x << " " << intrx.y << " " << intrx.z << std::endl;
-  this->pointer_block.pos = vMapCheck;
   if (lastAxisCollided == 0) this->pointer_block.face = (Face) (vStep.x == 1 ? 3 : 2);
   if (lastAxisCollided == 1) this->pointer_block.face = (Face) (vStep.y == 1 ? 5 : 4);
   if (lastAxisCollided == 2) this->pointer_block.face = (Face) (vStep.z == 1 ? 1 : 0);
-  this->pointer_block.chunk_pos = chunk.map_pos;
+  this->pointer_block.chunk_pos = chunk->map_pos;
+  if (sprint){
+    std::cout << "vMa: " << vMapCheck.x << " " << vMapCheck.y << " " << vMapCheck.z << std::endl;
+    std::cout << "vS: " << vStep.x << " " << vStep.y << " " << vStep.z << std::endl;
+    std::cout << "faces: " << this->pointer_block.face << std::endl;
+  }
+  this->pointer_block.pos = vMapCheck;
   this->active_pointer_block = true;
-
 }
 
 void Camera::mouseHandling(GLFWwindow* window, Chunk &chunk, float deltaTime){
   // Hides mouse cursor
   if (!firstClick && !rightPressed && this->active_pointer_block && glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS){
-    std::cout << "Right pressed!" << std::endl;
+    //std::cout << "Right pressed!" << std::endl;
+    //std::cout << this->pointer_block.pos.x << " " << this->pointer_block.pos.y << " " << this->pointer_block.pos.z << std::endl;
+    //std::cout << "chunk:  " << this->pointer_block.chunk_pos.x << " " << this->pointer_block.chunk_pos.y << std::endl;
+    //std::cout << "taken pos: " << chunk.map_pos.x << " " << chunk.map_pos.y << std::endl;
+    if (this->pointer_block.pos.x == 0 && this->pointer_block.face == RIGHT){
+      this->pointer_block.pos.x = WIDTH_CHUNK-1;
+      this->pointer_block.face = NO_FACE;
+      chunk.leftChunk->AddBlock(this->pointer_block.pos);
+    }
+    else if (this->pointer_block.pos.x == WIDTH_CHUNK-1 && this->pointer_block.face == LEFT){
+      this->pointer_block.pos.x = 0;
+      this->pointer_block.face = NO_FACE;
+      chunk.rightChunk->AddBlock(this->pointer_block.pos);
+    }
+    if (this->pointer_block.pos.z == 0 && this->pointer_block.face == BACK){
+      this->pointer_block.pos.z = WIDTH_CHUNK-1;
+      this->pointer_block.face = NO_FACE;
+      chunk.bottomChunk->AddBlock(this->pointer_block.pos);
+    }
+    else if (this->pointer_block.pos.z == WIDTH_CHUNK-1 && this->pointer_block.face == FRONT){
+      this->pointer_block.pos.z = 0;
+      this->pointer_block.face = NO_FACE;
+      chunk.upChunk->AddBlock(this->pointer_block.pos);
+    }
+
     chunk.AddBlock(this->pointer_block.pos + 2.0f*facesPosition[(int)this->pointer_block.face]);
     rightPressed = true;
   }
   if (!firstClick && !leftPressed && this->active_pointer_block && glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS){
-    std::cout << "Left pressed!" << std::endl;
-    std::cout << "pos: " << this->pointer_block.pos.x << " " << this->pointer_block.pos.y << " " << this->pointer_block.pos.z << std::endl;
+    //std::cout << "Left pressed!" << std::endl;
+    //std::cout << "pos: " << this->pointer_block.pos.x << " " << this->pointer_block.pos.y << " " << this->pointer_block.pos.z << std::endl;
     chunk.RemoveBlock(this->pointer_block.pos);
     leftPressed = true;
   }

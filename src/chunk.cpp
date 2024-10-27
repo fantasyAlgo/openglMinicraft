@@ -101,6 +101,7 @@ void Chunk::updateFaces(){
 }
 
 bool Chunk::getActive(int x, int y, int z){
+  //if (this == nullptr) return false;
   if (x < 0) return this->leftChunk->isLoaded ? this->leftChunk->getActive(WIDTH_CHUNK-1, y, z): true;
   if (x >= WIDTH_CHUNK) return this->rightChunk->isLoaded ? this->rightChunk->getActive(0, y, z): true;
   if (z < 0) return this->bottomChunk->isLoaded ? this->bottomChunk->getActive(x, y, WIDTH_CHUNK-1): true;

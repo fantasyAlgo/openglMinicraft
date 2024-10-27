@@ -131,10 +131,10 @@ int main(){
     lastFrame = currentFrame;
     processInput(window);
     camera.keyboardHandling(window, deltaTime);
-    /*camera.mouseHandling(window,
-                         camera.active_pointer_block ? map[current_chunk_x][current_chunk_y] : map[(int) camera.pointer_block.chunk_pos.x][(int)camera.pointer_block.chunk_pos.y], 
-                         deltaTime);*/
-    camera.mouseHandling(window, map[current_chunk_x][current_chunk_y], deltaTime);
+    camera.mouseHandling(window,
+                         !camera.active_pointer_block ? map[current_chunk_x][current_chunk_y] : map[(int) camera.pointer_block.chunk_pos.x][(int)camera.pointer_block.chunk_pos.y], 
+                         deltaTime);
+    //camera.mouseHandling(window, map[current_chunk_x][current_chunk_y], deltaTime);
     //radius += 0.2;
 		// Specify the color of the background
 		glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
@@ -154,12 +154,13 @@ int main(){
       for (int j = -1; j < 2; j++){
         if (isInside(current_chunk_x+i, current_chunk_y+j) && !map[current_chunk_x+i][current_chunk_y+j].isLoaded){
           map[current_chunk_x+i][current_chunk_y+j].InitChunk(perlin, glm::vec2(current_chunk_x+i, current_chunk_y+j),
-                                                            &map[current_chunk_x+i][current_chunk_y+j+1], &map[current_chunk_x+i][current_chunk_y+j-1],
-                                                            &map[current_chunk_x+i-1][current_chunk_y+j], &map[current_chunk_x+i+1][current_chunk_y+j]);
+                                                            isInside(current_chunk_x+i, current_chunk_y+j+1) ? &map[current_chunk_x+i][current_chunk_y+j+1] : nullptr, 
+                                                            isInside(current_chunk_x+i, current_chunk_y+j-1) ? &map[current_chunk_x+i][current_chunk_y+j-1] : nullptr,
+                                                            isInside(current_chunk_x+i-1, current_chunk_y+j) ? &map[current_chunk_x+i-1][current_chunk_y+j] : nullptr, 
+                                                            isInside(current_chunk_x+i+1, current_chunk_y+j) ? &map[current_chunk_x+i+1][current_chunk_y+j] : nullptr);
         }
         if (isInside(current_chunk_x+i, current_chunk_y+j) && 
           (glm::dot(glm::vec2(i, j), glm::vec2(camera.direction.x, camera.direction.z)) > -0.2 || (i == 0 && j == 0))){
-          //if (!camera.active_pointer_block) camera.updatePointer(map[current_chunk_x+i][current_chunk_y+j]);
           map[current_chunk_x+i][current_chunk_y+j].updateFaces();
           map[current_chunk_x+i][current_chunk_y+j].Render(cubeRenderer);
         }
