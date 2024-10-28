@@ -10,11 +10,13 @@
 ******************************************************************/
 #include "hFiles/shader.h"
 
+#include <GL/gl.h>
 #include <iostream>
 
 Shader &Shader::Use(){
-    glUseProgram(this->ID);
-    return *this;
+  glUseProgram(this->ID);
+  //std::cout << "user id: " << this->ID << " error?: " << glGetError() << std::endl;
+  return *this;
 }
 
 void Shader::Compile(const char* vertexSource, const char* fragmentSource, const char* geometrySource){

@@ -97,10 +97,24 @@ CMakeFiles/learn_opengl.dir/src/Main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/learn_opengl.dir/src/Main.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/fantasy/Programming/openglStuff/openglMinicraft/src/Main.cpp -o CMakeFiles/learn_opengl.dir/src/Main.cpp.s
 
+CMakeFiles/learn_opengl.dir/src/Game.cpp.o: CMakeFiles/learn_opengl.dir/flags.make
+CMakeFiles/learn_opengl.dir/src/Game.cpp.o: /home/fantasy/Programming/openglStuff/openglMinicraft/src/Game.cpp
+CMakeFiles/learn_opengl.dir/src/Game.cpp.o: CMakeFiles/learn_opengl.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/fantasy/Programming/openglStuff/openglMinicraft/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/learn_opengl.dir/src/Game.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/learn_opengl.dir/src/Game.cpp.o -MF CMakeFiles/learn_opengl.dir/src/Game.cpp.o.d -o CMakeFiles/learn_opengl.dir/src/Game.cpp.o -c /home/fantasy/Programming/openglStuff/openglMinicraft/src/Game.cpp
+
+CMakeFiles/learn_opengl.dir/src/Game.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/learn_opengl.dir/src/Game.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/fantasy/Programming/openglStuff/openglMinicraft/src/Game.cpp > CMakeFiles/learn_opengl.dir/src/Game.cpp.i
+
+CMakeFiles/learn_opengl.dir/src/Game.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/learn_opengl.dir/src/Game.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/fantasy/Programming/openglStuff/openglMinicraft/src/Game.cpp -o CMakeFiles/learn_opengl.dir/src/Game.cpp.s
+
 CMakeFiles/learn_opengl.dir/src/resource_manager.cpp.o: CMakeFiles/learn_opengl.dir/flags.make
 CMakeFiles/learn_opengl.dir/src/resource_manager.cpp.o: /home/fantasy/Programming/openglStuff/openglMinicraft/src/resource_manager.cpp
 CMakeFiles/learn_opengl.dir/src/resource_manager.cpp.o: CMakeFiles/learn_opengl.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/fantasy/Programming/openglStuff/openglMinicraft/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/learn_opengl.dir/src/resource_manager.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/fantasy/Programming/openglStuff/openglMinicraft/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/learn_opengl.dir/src/resource_manager.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/learn_opengl.dir/src/resource_manager.cpp.o -MF CMakeFiles/learn_opengl.dir/src/resource_manager.cpp.o.d -o CMakeFiles/learn_opengl.dir/src/resource_manager.cpp.o -c /home/fantasy/Programming/openglStuff/openglMinicraft/src/resource_manager.cpp
 
 CMakeFiles/learn_opengl.dir/src/resource_manager.cpp.i: cmake_force
@@ -114,7 +128,7 @@ CMakeFiles/learn_opengl.dir/src/resource_manager.cpp.s: cmake_force
 CMakeFiles/learn_opengl.dir/src/shader.cpp.o: CMakeFiles/learn_opengl.dir/flags.make
 CMakeFiles/learn_opengl.dir/src/shader.cpp.o: /home/fantasy/Programming/openglStuff/openglMinicraft/src/shader.cpp
 CMakeFiles/learn_opengl.dir/src/shader.cpp.o: CMakeFiles/learn_opengl.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/fantasy/Programming/openglStuff/openglMinicraft/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/learn_opengl.dir/src/shader.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/fantasy/Programming/openglStuff/openglMinicraft/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/learn_opengl.dir/src/shader.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/learn_opengl.dir/src/shader.cpp.o -MF CMakeFiles/learn_opengl.dir/src/shader.cpp.o.d -o CMakeFiles/learn_opengl.dir/src/shader.cpp.o -c /home/fantasy/Programming/openglStuff/openglMinicraft/src/shader.cpp
 
 CMakeFiles/learn_opengl.dir/src/shader.cpp.i: cmake_force
@@ -128,7 +142,7 @@ CMakeFiles/learn_opengl.dir/src/shader.cpp.s: cmake_force
 CMakeFiles/learn_opengl.dir/src/texture.cpp.o: CMakeFiles/learn_opengl.dir/flags.make
 CMakeFiles/learn_opengl.dir/src/texture.cpp.o: /home/fantasy/Programming/openglStuff/openglMinicraft/src/texture.cpp
 CMakeFiles/learn_opengl.dir/src/texture.cpp.o: CMakeFiles/learn_opengl.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/fantasy/Programming/openglStuff/openglMinicraft/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/learn_opengl.dir/src/texture.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/fantasy/Programming/openglStuff/openglMinicraft/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/learn_opengl.dir/src/texture.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/learn_opengl.dir/src/texture.cpp.o -MF CMakeFiles/learn_opengl.dir/src/texture.cpp.o.d -o CMakeFiles/learn_opengl.dir/src/texture.cpp.o -c /home/fantasy/Programming/openglStuff/openglMinicraft/src/texture.cpp
 
 CMakeFiles/learn_opengl.dir/src/texture.cpp.i: cmake_force
@@ -142,7 +156,7 @@ CMakeFiles/learn_opengl.dir/src/texture.cpp.s: cmake_force
 CMakeFiles/learn_opengl.dir/src/cube_renderer.cpp.o: CMakeFiles/learn_opengl.dir/flags.make
 CMakeFiles/learn_opengl.dir/src/cube_renderer.cpp.o: /home/fantasy/Programming/openglStuff/openglMinicraft/src/cube_renderer.cpp
 CMakeFiles/learn_opengl.dir/src/cube_renderer.cpp.o: CMakeFiles/learn_opengl.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/fantasy/Programming/openglStuff/openglMinicraft/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/learn_opengl.dir/src/cube_renderer.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/fantasy/Programming/openglStuff/openglMinicraft/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/learn_opengl.dir/src/cube_renderer.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/learn_opengl.dir/src/cube_renderer.cpp.o -MF CMakeFiles/learn_opengl.dir/src/cube_renderer.cpp.o.d -o CMakeFiles/learn_opengl.dir/src/cube_renderer.cpp.o -c /home/fantasy/Programming/openglStuff/openglMinicraft/src/cube_renderer.cpp
 
 CMakeFiles/learn_opengl.dir/src/cube_renderer.cpp.i: cmake_force
@@ -156,7 +170,7 @@ CMakeFiles/learn_opengl.dir/src/cube_renderer.cpp.s: cmake_force
 CMakeFiles/learn_opengl.dir/src/camera.cpp.o: CMakeFiles/learn_opengl.dir/flags.make
 CMakeFiles/learn_opengl.dir/src/camera.cpp.o: /home/fantasy/Programming/openglStuff/openglMinicraft/src/camera.cpp
 CMakeFiles/learn_opengl.dir/src/camera.cpp.o: CMakeFiles/learn_opengl.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/fantasy/Programming/openglStuff/openglMinicraft/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/learn_opengl.dir/src/camera.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/fantasy/Programming/openglStuff/openglMinicraft/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/learn_opengl.dir/src/camera.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/learn_opengl.dir/src/camera.cpp.o -MF CMakeFiles/learn_opengl.dir/src/camera.cpp.o.d -o CMakeFiles/learn_opengl.dir/src/camera.cpp.o -c /home/fantasy/Programming/openglStuff/openglMinicraft/src/camera.cpp
 
 CMakeFiles/learn_opengl.dir/src/camera.cpp.i: cmake_force
@@ -170,7 +184,7 @@ CMakeFiles/learn_opengl.dir/src/camera.cpp.s: cmake_force
 CMakeFiles/learn_opengl.dir/src/chunk.cpp.o: CMakeFiles/learn_opengl.dir/flags.make
 CMakeFiles/learn_opengl.dir/src/chunk.cpp.o: /home/fantasy/Programming/openglStuff/openglMinicraft/src/chunk.cpp
 CMakeFiles/learn_opengl.dir/src/chunk.cpp.o: CMakeFiles/learn_opengl.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/fantasy/Programming/openglStuff/openglMinicraft/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/learn_opengl.dir/src/chunk.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/fantasy/Programming/openglStuff/openglMinicraft/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/learn_opengl.dir/src/chunk.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/learn_opengl.dir/src/chunk.cpp.o -MF CMakeFiles/learn_opengl.dir/src/chunk.cpp.o.d -o CMakeFiles/learn_opengl.dir/src/chunk.cpp.o -c /home/fantasy/Programming/openglStuff/openglMinicraft/src/chunk.cpp
 
 CMakeFiles/learn_opengl.dir/src/chunk.cpp.i: cmake_force
@@ -184,7 +198,7 @@ CMakeFiles/learn_opengl.dir/src/chunk.cpp.s: cmake_force
 CMakeFiles/learn_opengl.dir/src/block.cpp.o: CMakeFiles/learn_opengl.dir/flags.make
 CMakeFiles/learn_opengl.dir/src/block.cpp.o: /home/fantasy/Programming/openglStuff/openglMinicraft/src/block.cpp
 CMakeFiles/learn_opengl.dir/src/block.cpp.o: CMakeFiles/learn_opengl.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/fantasy/Programming/openglStuff/openglMinicraft/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/learn_opengl.dir/src/block.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/fantasy/Programming/openglStuff/openglMinicraft/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/learn_opengl.dir/src/block.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/learn_opengl.dir/src/block.cpp.o -MF CMakeFiles/learn_opengl.dir/src/block.cpp.o.d -o CMakeFiles/learn_opengl.dir/src/block.cpp.o -c /home/fantasy/Programming/openglStuff/openglMinicraft/src/block.cpp
 
 CMakeFiles/learn_opengl.dir/src/block.cpp.i: cmake_force
@@ -199,6 +213,7 @@ CMakeFiles/learn_opengl.dir/src/block.cpp.s: cmake_force
 learn_opengl_OBJECTS = \
 "CMakeFiles/learn_opengl.dir/src/glad.c.o" \
 "CMakeFiles/learn_opengl.dir/src/Main.cpp.o" \
+"CMakeFiles/learn_opengl.dir/src/Game.cpp.o" \
 "CMakeFiles/learn_opengl.dir/src/resource_manager.cpp.o" \
 "CMakeFiles/learn_opengl.dir/src/shader.cpp.o" \
 "CMakeFiles/learn_opengl.dir/src/texture.cpp.o" \
@@ -212,6 +227,7 @@ learn_opengl_EXTERNAL_OBJECTS =
 
 learn_opengl: CMakeFiles/learn_opengl.dir/src/glad.c.o
 learn_opengl: CMakeFiles/learn_opengl.dir/src/Main.cpp.o
+learn_opengl: CMakeFiles/learn_opengl.dir/src/Game.cpp.o
 learn_opengl: CMakeFiles/learn_opengl.dir/src/resource_manager.cpp.o
 learn_opengl: CMakeFiles/learn_opengl.dir/src/shader.cpp.o
 learn_opengl: CMakeFiles/learn_opengl.dir/src/texture.cpp.o
@@ -223,7 +239,7 @@ learn_opengl: CMakeFiles/learn_opengl.dir/build.make
 learn_opengl: libimgui.a
 learn_opengl: /usr/local/lib/libglm.a
 learn_opengl: CMakeFiles/learn_opengl.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/fantasy/Programming/openglStuff/openglMinicraft/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Linking CXX executable learn_opengl"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/fantasy/Programming/openglStuff/openglMinicraft/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Linking CXX executable learn_opengl"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/learn_opengl.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

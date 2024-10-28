@@ -226,20 +226,21 @@ void Chunk::setFace(int x, int y, int z, int face, bool active){
   data[z*HEIGHT_CHUNK*WIDTH_CHUNK + y*WIDTH_CHUNK + x].faces[face] = active;
 }
 void Chunk::setType(int x, int y, int z, BLOCK_TYPE type){
+
   if (x < 0){
-    if (this->leftChunk->isLoaded) this->leftChunk->setType(WIDTH_CHUNK-1, y, z, type);
+    if (this->leftChunk != nullptr && this->leftChunk->isLoaded) this->leftChunk->setType(WIDTH_CHUNK-1, y, z, type);
     return;
   }
   if (x >= WIDTH_CHUNK){
-    if (this->rightChunk->isLoaded) this->rightChunk->setType(0, y, z, type);
+    if (this->rightChunk != nullptr && this->rightChunk->isLoaded) this->rightChunk->setType(0, y, z, type);
     return;
   }
   if (z < 0){
-    if (this->bottomChunk->isLoaded) this->bottomChunk->setType(x, y, WIDTH_CHUNK-1, type);
+    if (this->bottomChunk != nullptr && this->bottomChunk->isLoaded) this->bottomChunk->setType(x, y, WIDTH_CHUNK-1, type);
     return;
   }
   if (z >= WIDTH_CHUNK){
-    if (this->upChunk->isLoaded) this->upChunk->setType(x, y, 0, type);
+    if (this->upChunk != nullptr && this->upChunk->isLoaded) this->upChunk->setType(x, y, 0, type);
     return;
   }
 

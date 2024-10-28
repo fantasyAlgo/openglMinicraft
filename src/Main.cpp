@@ -1,9 +1,9 @@
+#include "hFiles/Game.h"
 
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 
-#include <algorithm>
 #include <cstdlib>
 #include<glad/glad.h>
 #include<GLFW/glfw3.h>
@@ -11,53 +11,12 @@
 #include <glm/ext/quaternion_geometric.hpp>
 #include<iostream>
 
-#include "hFiles/camera.h"
-#include "hFiles/chunk.h"
-#include "hFiles/cube_renderer.h"
-#include "hFiles/resource_manager.h"
-#include <cmath>
-#include <cstddef>
-#include <glm/ext/matrix_float4x4.hpp>
-#include <glm/ext/matrix_transform.hpp>
-#include <glm/ext/vector_float2.hpp>
-#include <glm/ext/vector_float3.hpp>
-
-#include <PerlinNoise/PerlinNoise.hpp>
-#include <vector>
-#include "hFiles/block.h"
-#include "hFiles/UI.h"
-
-
-constexpr int WIDTH = 800;
-constexpr int HEIGHT = 800;
-// This is the number of chunks in the map
-constexpr int MAP_WIDTH = 20;
-constexpr int MAP_HEIGHT = 20;
-BLOCK_TYPE place_type = GRASS;
 
 float deltaTime, lastFrame;
 
-bool isInside(int i, int j);
-void processInput(GLFWwindow *window);
-
 int main(){
-  srand(1000);
-  const siv::PerlinNoise::seed_type seed = 123456u;
-	const siv::PerlinNoise perlin{ seed };
-
-  //std::vector<Block> cubePositions;
-  //Chunk chunk1 = Chunk();
-  std::vector<std::vector<Chunk>> map(MAP_WIDTH);
-  //Chunk map[MAP_WIDTH][MAP_HEIGHT];
-  for (int x = 0; x < MAP_WIDTH; x++) 
-    map[x].resize(MAP_HEIGHT);
-
-  int current_chunk_x = MAP_WIDTH/2;
-  int current_chunk_y = MAP_HEIGHT/2;
-
 	// Initialize GLFW
 	glfwInit();
-
 	// Tell GLFW what version of OpenGL we are using 
 	// In this case we are using OpenGL 3.3
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
@@ -81,40 +40,11 @@ int main(){
 	glClear(GL_COLOR_BUFFER_BIT);
 	glfwSwapBuffers(window);
 
-  ResourceManager::LoadShader("src/shaders/vertex.glsl", "src/shaders/fragment.glsl", nullptr, "main_shader");
-  ResourceManager::LoadTexture("src/Textures/blocksAtlas.png", true, "awesomeface");
-  Shader shaderR = ResourceManager::GetShader("main_shader");
-  Texture2D textureR = ResourceManager::GetTexture("awesomeface");
-
-  CubeRenderer cubeRenderer = CubeRenderer(shaderR, textureR);
-
-  Camera camera(WIDTH, HEIGHT);
-  camera.position = glm::vec3(MAP_WIDTH*WIDTH_CHUNK/4 - WIDTH_CHUNK/2, HEIGHT_CHUNK/2, MAP_HEIGHT*WIDTH_CHUNK/4 - WIDTH_CHUNK/2);
-
+  Game game;
   glEnable(GL_DEPTH_TEST);
 
-  glCullFace(GL_FRONT);
-  glCullFace(GL_BACK);
-  glFrontFace(GL_CCW);
-
-  glm::vec3 cameraPointer;
-  Block pointer_block;
-
-  glm::mat4 proj = glm::mat4(1.0f);
-	proj = glm::perspective(glm::radians(90.0f), (float)(WIDTH / HEIGHT), 0.1f, 100.0f);
-  ResourceManager::GetShader("main_shader").SetMatrix4("proj", proj, true);
   glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
-	// Main while loop
-  bool facesDye[] = {1,1,1,  1,1,1};
-  Block noBlock = Block();
-  noBlock.type = END_BLOCK;
-  std::fill(noBlock.faces, noBlock.faces+6, 1);
-
-  current_chunk_x = camera.position.x/WIDTH_CHUNK; current_chunk_y = camera.position.z/WIDTH_CHUNK;
-  //std::cout << current_chunk_x << " | " << current_chunk_y << std::endl;
-
-  //map[current_chunk_x][current_chunk_y].InitChunk(perlin, glm::vec2(current_chunk_x*WIDTH_CHUNK, current_chunk_y*WIDTH_CHUNK), );
 
   IMGUI_CHECKVERSION();
   ImGui::CreateContext();
@@ -125,22 +55,6 @@ int main(){
 
 
 	while (!glfwWindowShouldClose(window)){
-    camera.place_type = place_type;
-    current_chunk_x = camera.position.x/WIDTH_CHUNK; current_chunk_y = camera.position.z/WIDTH_CHUNK;
-    //std::cout << camera.position.x << " | " << camera.position.z << std::endl;
-    float currentFrame = glfwGetTime();
-    camera.updatePointer(map[current_chunk_x][current_chunk_y]);
-    //std::cout << camera.pointer_block.first.x
-    deltaTime = currentFrame - lastFrame;
-    lastFrame = currentFrame;
-    processInput(window);
-    camera.keyboardHandling(window, deltaTime);
-    camera.mouseHandling(window,
-                         !camera.active_pointer_block ? map[current_chunk_x][current_chunk_y] : map[(int) camera.pointer_block.chunk_pos.x][(int)camera.pointer_block.chunk_pos.y], 
-                         deltaTime);
-    //camera.mouseHandling(window, map[current_chunk_x][current_chunk_y], deltaTime);
-    //radius += 0.2;
-		// Specify the color of the background
 		glClearColor(0.5333, 0.8, 0.858823, 1.0f);
 		// Clean the back buffer and assign the new color to it
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -149,34 +63,15 @@ int main(){
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
 
-    ResourceManager::GetShader("main_shader").SetMatrix4("view", camera.CameraLookAt(), true);
-    //if (camera.active_pointer_block)
-    //  cubeRenderer.Render(camera.pointer_block.first +glm::vec3(map[current_chunk_x][current_chunk_y].offset.x, 0, map[current_chunk_x][current_chunk_y].offset.y) + 0.0f, noBlock);
-    
-    camera.active_pointer_block = false;
-    for (int i = -1; i < 2; i++){
-      for (int j = -1; j < 2; j++){
-        if (isInside(current_chunk_x+i, current_chunk_y+j) && !map[current_chunk_x+i][current_chunk_y+j].isLoaded){
-          map[current_chunk_x+i][current_chunk_y+j].InitChunk(perlin, glm::vec2(current_chunk_x+i, current_chunk_y+j),
-                                                            isInside(current_chunk_x+i, current_chunk_y+j+1) ? &map[current_chunk_x+i][current_chunk_y+j+1] : nullptr, 
-                                                            isInside(current_chunk_x+i, current_chunk_y+j-1) ? &map[current_chunk_x+i][current_chunk_y+j-1] : nullptr,
-                                                            isInside(current_chunk_x+i-1, current_chunk_y+j) ? &map[current_chunk_x+i-1][current_chunk_y+j] : nullptr, 
-                                                            isInside(current_chunk_x+i+1, current_chunk_y+j) ? &map[current_chunk_x+i+1][current_chunk_y+j] : nullptr);
-        }
-        if (isInside(current_chunk_x+i, current_chunk_y+j) && 
-          (glm::dot(glm::vec2(i, j), glm::vec2(camera.direction.x, camera.direction.z)) > -0.5 || (i == 0 && j == 0))){
-          map[current_chunk_x+i][current_chunk_y+j].updateFaces();
-          map[current_chunk_x+i][current_chunk_y+j].Render(cubeRenderer);
-        }
-      }
-    }
-  
-    cameraPointer = glm::vec3((int)cameraPointer.x, (int)cameraPointer.y + 1, (int)cameraPointer.z);
-
-    //UI::RenderUI();
-
-    UI::RenderUI(WIDTH, HEIGHT);
+    float currentFrame = glfwGetTime();
+    //std::cout << camera.pointer_block.first.x
+    deltaTime = currentFrame - lastFrame;
+    lastFrame = currentFrame;
+    game.ProcessInput(window, deltaTime);
+    game.Update(deltaTime);
+    game.Render();
     ImGui::Render();
+
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
 		// Swap the back buffer with the front buffer
@@ -193,17 +88,3 @@ int main(){
 	glfwTerminate();
 	return 0;
 }
-
-void processInput(GLFWwindow *window){
-  if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-      glfwSetWindowShouldClose(window, true);
-  for (int i = 0; i < (int)END_BLOCK; i++) {
-    if (glfwGetKey(window, GLFW_KEY_0 + i) == GLFW_PRESS) place_type = (BLOCK_TYPE) i;
-  }
-}
-bool isInside(int i, int j){
-  return i >= 0 && i < MAP_WIDTH &&
-         j >= 0 && j < MAP_HEIGHT;
-}
-
-

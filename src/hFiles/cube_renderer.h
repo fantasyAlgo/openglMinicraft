@@ -22,5 +22,7 @@ private:
   void initRenderData();
 public:
   CubeRenderer(Shader &shader, Texture2D &texture);
+  CubeRenderer();
+  void Init(Shader &shader, Texture2D &texture);
   void Render(glm::vec3 position, Block block);
 };

@@ -6,9 +6,13 @@ A copy of minecraft in c++ and opengl
 - [x] Add multiple textures (not just the stone one)
 - [x] Add a chunk system (has some problems)
 - [x] Setting up imgui and UI pointer
-- [ ] Making a better map
-- [ ] Light!
+- [x] Making a better map
+- [x] Trees
+- [ ] Light, ambient occlosion and so on
 - [ ] Add world/chunk saving
+- [ ] Infinite world
 - [ ] Optimize rendering (e.g using indexing)
-- [ ] Trees
 - [ ] Water!
+- [ ] Inventory
+- [ ] Block mining
+- [ ] Entities

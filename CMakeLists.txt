@@ -25,6 +25,7 @@ add_executable(learn_opengl
   src/glad.c
 
   src/Main.cpp 
+  src/Game.cpp
   src/resource_manager.cpp
   src/shader.cpp
   src/texture.cpp

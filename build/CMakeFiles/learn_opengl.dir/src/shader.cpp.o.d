@@ -336,8 +336,9 @@ CMakeFiles/learn_opengl.dir/src/shader.cpp.o: \
  /usr/local/include/glm/ext/vector_uint1_sized.hpp \
  /usr/include/c++/14.2.1/cstring /usr/include/string.h \
  /usr/include/strings.h /usr/local/include/glm/gtc/type_ptr.inl \
- /usr/include/c++/14.2.1/iostream /usr/include/c++/14.2.1/ostream \
- /usr/include/c++/14.2.1/ios /usr/include/c++/14.2.1/exception \
+ /usr/include/GL/gl.h /usr/include/c++/14.2.1/iostream \
+ /usr/include/c++/14.2.1/ostream /usr/include/c++/14.2.1/ios \
+ /usr/include/c++/14.2.1/exception \
  /usr/include/c++/14.2.1/bits/exception_ptr.h \
  /usr/include/c++/14.2.1/bits/cxxabi_init_exception.h \
  /usr/include/c++/14.2.1/bits/nested_exception.h \

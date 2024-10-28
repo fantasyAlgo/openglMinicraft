@@ -35,9 +35,23 @@ Camera::Camera(int WIDTH, int HEIGHT){
   this->HEIGHT = HEIGHT;
   this->pitch = 0;
   this->yaw = 0;
-  this->lastX = WIDTH/2;
-  this->lastY = HEIGHT/2;
+  this->lastX = WIDTH/2.0;
+  this->lastY = HEIGHT/2.0;
 }
+Camera::Camera(){
+  this->position = glm::vec3(0.0f, 16, 0.0f);
+  this->direction = glm::vec3(0.0f, 0.0f, 1.0f);
+  this->cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
+  this->pitch = 0;
+  this->yaw = 0;
+}
+void Camera::InitCamera(int WIDTH, int HEIGHT){
+  this->WIDTH = WIDTH;
+  this->HEIGHT = HEIGHT;
+  this->lastX = WIDTH/2.0;
+  this->lastY = HEIGHT/2.0;
+}
+
 glm::mat4 Camera::CameraLookAt(){
   return glm::lookAt(position, position + direction, this->cameraUp);
 }

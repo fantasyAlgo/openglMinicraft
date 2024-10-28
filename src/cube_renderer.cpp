@@ -1,5 +1,6 @@
 #include "hFiles/cube_renderer.h"
 #include "hFiles/block.h"
+#include <GL/gl.h>
 #include <glm/ext/matrix_transform.hpp>
 #include <glm/ext/vector_float3.hpp>
 #include <iostream>
@@ -12,6 +13,29 @@ float getPosAtlasY(int y){
 }
 
 CubeRenderer::CubeRenderer(Shader &shader, Texture2D &texture){
+  this->Init(shader, texture);
+  /*this->texture = texture;
+  this->shader = shader;
+
+  glm::vec3 faceOffsets[6] = {
+    glm::vec3(0.0, 0.0, 0.5),
+    glm::vec3(0.0, 0.0, -0.5),
+    glm::vec3(-0.5, 0.0, 0.0),
+    glm::vec3(0.5, 0.0, 0.0),
+    glm::vec3(0.0, 0.5, 0.0),
+    glm::vec3(0.0, -0.5, 0.0),
+  };
+  float faceRadiuses[6] = {0, 0, 90, 90, 90, 90};
+  bool faceAxis[6] = {0, 0, 0, 0, 1, 1};
+  for (int i = 0; i < 6; i++) {
+    this->faceOffsets[i] = faceOffsets[i];
+    this->faceRadiuses[i] = faceRadiuses[i];
+    this->faceAxis[i] = faceAxis[i];
+  }
+  this->initRenderData();*/
+}
+CubeRenderer::CubeRenderer(){}
+void CubeRenderer::Init(Shader &shader, Texture2D &texture){
   this->texture = texture;
   this->shader = shader;
 

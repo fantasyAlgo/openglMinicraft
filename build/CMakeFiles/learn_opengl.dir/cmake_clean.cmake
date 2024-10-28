@@ -1,4 +1,6 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/learn_opengl.dir/src/Game.cpp.o"
+  "CMakeFiles/learn_opengl.dir/src/Game.cpp.o.d"
   "CMakeFiles/learn_opengl.dir/src/Main.cpp.o"
   "CMakeFiles/learn_opengl.dir/src/Main.cpp.o.d"
   "CMakeFiles/learn_opengl.dir/src/block.cpp.o"

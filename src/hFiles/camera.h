@@ -43,6 +43,8 @@ public:
   BlockPointer pointer_block;
 
   Camera(int WIDTH, int HEIGHT);
+  Camera();
+  void InitCamera(int WIDTH, int HEIGHT);
 
   
   // updates active_pointer_block if a block was found, and finds the nearest pointer_block
