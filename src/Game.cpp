@@ -4,6 +4,7 @@
 #include "hFiles/block.h"
 #include "hFiles/resource_manager.h"
 #include <GL/gl.h>
+#include <glm/ext/vector_float3.hpp>
 
 bool isInside(int i, int j);
 
@@ -34,6 +35,7 @@ void Game::Init(){
 	proj = glm::perspective(glm::radians(90.0f), (float)(WIDTH / HEIGHT), 0.1f, 100.0f);
   Shader shader = ResourceManager::GetShader("main_shader");//.SetMatrix4("proj", proj, true);
   shader.SetMatrix4("proj", proj, true);
+  shader.SetVector3f("lightPos", glm::vec3(10, 10, 60));
   
 
   current_chunk_x = camera.position.x/WIDTH_CHUNK; current_chunk_y = camera.position.z/WIDTH_CHUNK;
@@ -62,7 +64,7 @@ void Game::Render(){
         }
       }
     }
-    UI::RenderUI(WIDTH, HEIGHT);
+    UI::RenderUI(WIDTH, HEIGHT, camera.direction);
 }
 
 void Game::ProcessInput(GLFWwindow *window, float dt){

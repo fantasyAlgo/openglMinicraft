@@ -7,6 +7,7 @@
 constexpr int WIDTH_CHUNK = 16;
 constexpr int HEIGHT_CHUNK = 64;
 constexpr int WATER_LEVEL = HEIGHT_CHUNK/3;
+constexpr int MOUNTAINS_HEIGHT = 2*HEIGHT_CHUNK/3;
 constexpr int SAND_LEVEL = 3;
 
 enum BLOCK_TYPE {
@@ -18,10 +19,11 @@ enum BLOCK_TYPE {
   TREE_BLOCK,
   LEAVES,
   WATER_BASIC,
+  SNOW,
   END_BLOCK
 };
 
-extern glm::vec2 type_position[9][3];
+extern glm::vec2 type_position[10][3];
 
 typedef struct Block{
   bool active = false;

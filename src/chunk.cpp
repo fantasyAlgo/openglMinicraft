@@ -107,8 +107,12 @@ void Chunk::MakeChunkData(const siv::PerlinNoise &perlin){
             this->setActive(x, y, z, true);
           }else{
             this->setType(x, y, z, STONE);
-            if (y > maxY-4) this->setType(x, y, z, DIRT);
-            if (y == maxY) this->setType(x, y, z, GRASS);
+            if (maxY > MOUNTAINS_HEIGHT){
+              if (maxY > MOUNTAINS_HEIGHT+5 && y > maxY-2) this->setType(x, y, z, SNOW);
+            }else{
+              if (y > maxY-4) this->setType(x, y, z, DIRT);
+              if (y == maxY) this->setType(x, y, z, GRASS);
+            }
             this->setActive(x, y, z, true);
           }
         }

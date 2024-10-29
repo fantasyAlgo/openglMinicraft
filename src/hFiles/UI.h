@@ -1,6 +1,7 @@
 #pragma once
 
 #include "imgui.h"
+#include <glm/ext/vector_float3.hpp>
 
 namespace UI {
   void DrawCross(ImVec2 center, float size, ImU32 color, float thickness){
@@ -17,10 +18,13 @@ namespace UI {
       draw_list->AddLine(vertical_start, vertical_end, color, thickness);
   }
 
-  void RenderUI(int WIDTH, int HEIGHT){
+  void RenderUI(int WIDTH, int HEIGHT, glm::vec3 direction){
     ImVec2 center(WIDTH/2, HEIGHT/2); 
     float size = 20.0f;
     ImU32 color = IM_COL32(255, 255, 255, 255); // Red color for the cross
     DrawCross(center, size, color, 3.0f);
+    ImGui::Text("FPS: %.1f", ImGui::GetIO().Framerate);
+    std::string s = (std::string)("dir: " + std::to_string(direction.x) + " " + std::to_string(direction.y) + " " + std::to_string(direction.z));
+    ImGui::Text(s.c_str());
   }
 }
