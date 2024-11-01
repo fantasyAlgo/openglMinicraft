@@ -1,8 +1,8 @@
 CMakeFiles/imgui.dir/imgui/imgui_demo.cpp.o: \
- /home/fantasy/Programming/openglStuff/openglMinicraft/imgui/imgui_demo.cpp \
+ //home/fantasy/Programming/openglStuff/openglMinicraft2/mini_instancing/openglMinicraft/imgui/imgui_demo.cpp \
  /usr/include/stdc-predef.h \
- /home/fantasy/Programming/openglStuff/openglMinicraft/imgui/imgui.h \
- /home/fantasy/Programming/openglStuff/openglMinicraft/imgui/imconfig.h \
+ //home/fantasy/Programming/openglStuff/openglMinicraft2/mini_instancing/openglMinicraft/imgui/imgui.h \
+ //home/fantasy/Programming/openglStuff/openglMinicraft2/mini_instancing/openglMinicraft/imgui/imconfig.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/float.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stdarg.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stddef.h \

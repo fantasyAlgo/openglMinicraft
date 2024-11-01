@@ -15,6 +15,7 @@ private:
 
 	const siv::PerlinNoise perlin{ seed };
   std::vector<std::vector<Chunk>> map;
+  Chunk chunk;
 
   Camera camera;
   CubeRenderer cubeRenderer; //= CubeRenderer(shaderR, textureR);

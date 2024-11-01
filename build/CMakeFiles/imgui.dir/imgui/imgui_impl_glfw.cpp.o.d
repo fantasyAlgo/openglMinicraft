@@ -1,8 +1,8 @@
 CMakeFiles/imgui.dir/imgui/imgui_impl_glfw.cpp.o: \
- /home/fantasy/Programming/openglStuff/openglMinicraft/imgui/imgui_impl_glfw.cpp \
+ //home/fantasy/Programming/openglStuff/openglMinicraft2/mini_instancing/openglMinicraft/imgui/imgui_impl_glfw.cpp \
  /usr/include/stdc-predef.h \
- /home/fantasy/Programming/openglStuff/openglMinicraft/imgui/imgui.h \
- /home/fantasy/Programming/openglStuff/openglMinicraft/imgui/imconfig.h \
+ //home/fantasy/Programming/openglStuff/openglMinicraft2/mini_instancing/openglMinicraft/imgui/imgui.h \
+ //home/fantasy/Programming/openglStuff/openglMinicraft2/mini_instancing/openglMinicraft/imgui/imconfig.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/float.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stdarg.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stddef.h \
@@ -13,7 +13,7 @@ CMakeFiles/imgui.dir/imgui/imgui_impl_glfw.cpp.o: \
  /usr/include/gnu/stubs.h /usr/include/gnu/stubs-64.h \
  /usr/include/bits/types/locale_t.h /usr/include/bits/types/__locale_t.h \
  /usr/include/strings.h /usr/include/assert.h \
- /home/fantasy/Programming/openglStuff/openglMinicraft/imgui/imgui_impl_glfw.h \
+ //home/fantasy/Programming/openglStuff/openglMinicraft2/mini_instancing/openglMinicraft/imgui/imgui_impl_glfw.h \
  /usr/include/GLFW/glfw3.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stdint.h \
  /usr/include/stdint.h /usr/include/bits/types.h \
@@ -21,7 +21,7 @@ CMakeFiles/imgui.dir/imgui/imgui_impl_glfw.cpp.o: \
  /usr/include/bits/wchar.h /usr/include/bits/stdint-intn.h \
  /usr/include/bits/stdint-uintn.h /usr/include/bits/stdint-least.h \
  /usr/include/GL/gl.h /usr/include/GL/glext.h \
- /home/fantasy/Programming/openglStuff/openglMinicraft/include/KHR/khrplatform.h \
+ //home/fantasy/Programming/openglStuff/openglMinicraft2/mini_instancing/openglMinicraft/include/KHR/khrplatform.h \
  /usr/include/unistd.h /usr/include/bits/posix_opt.h \
  /usr/include/bits/environments.h /usr/include/bits/confname.h \
  /usr/include/bits/getopt_posix.h /usr/include/bits/getopt_core.h \

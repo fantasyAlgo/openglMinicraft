@@ -13,6 +13,8 @@
 class CubeRenderer {
 private:
   uint cubeVAO;
+  uint cubeVBO;
+  uint instanceVBO;
   Shader shader;
   Texture2D texture;
 
@@ -25,4 +27,5 @@ public:
   CubeRenderer();
   void Init(Shader &shader, Texture2D &texture);
   void Render(glm::vec3 position, Block block);
+  void RenderChunk(glm::vec2 offset, int n_elements, int chunk_data[]);
 };

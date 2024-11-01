@@ -1,8 +1,8 @@
 CMakeFiles/imgui.dir/imgui/imgui_impl_opengl3.cpp.o: \
- /home/fantasy/Programming/openglStuff/openglMinicraft/imgui/imgui_impl_opengl3.cpp \
+ //home/fantasy/Programming/openglStuff/openglMinicraft2/mini_instancing/openglMinicraft/imgui/imgui_impl_opengl3.cpp \
  /usr/include/stdc-predef.h \
- /home/fantasy/Programming/openglStuff/openglMinicraft/imgui/imgui.h \
- /home/fantasy/Programming/openglStuff/openglMinicraft/imgui/imconfig.h \
+ //home/fantasy/Programming/openglStuff/openglMinicraft2/mini_instancing/openglMinicraft/imgui/imgui.h \
+ //home/fantasy/Programming/openglStuff/openglMinicraft2/mini_instancing/openglMinicraft/imgui/imconfig.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/float.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stdarg.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stddef.h \
@@ -13,7 +13,7 @@ CMakeFiles/imgui.dir/imgui/imgui_impl_opengl3.cpp.o: \
  /usr/include/gnu/stubs.h /usr/include/gnu/stubs-64.h \
  /usr/include/bits/types/locale_t.h /usr/include/bits/types/__locale_t.h \
  /usr/include/strings.h /usr/include/assert.h \
- /home/fantasy/Programming/openglStuff/openglMinicraft/imgui/imgui_impl_opengl3.h \
+ //home/fantasy/Programming/openglStuff/openglMinicraft2/mini_instancing/openglMinicraft/imgui/imgui_impl_opengl3.h \
  /usr/include/stdio.h /usr/include/bits/types.h \
  /usr/include/bits/typesizes.h /usr/include/bits/time64.h \
  /usr/include/bits/types/__fpos_t.h /usr/include/bits/types/__mbstate_t.h \
@@ -26,7 +26,7 @@ CMakeFiles/imgui.dir/imgui/imgui_impl_opengl3.cpp.o: \
  /usr/include/stdint.h /usr/include/bits/wchar.h \
  /usr/include/bits/stdint-intn.h /usr/include/bits/stdint-uintn.h \
  /usr/include/bits/stdint-least.h \
- /home/fantasy/Programming/openglStuff/openglMinicraft/imgui/imgui_impl_opengl3_loader.h \
+ //home/fantasy/Programming/openglStuff/openglMinicraft2/mini_instancing/openglMinicraft/imgui/imgui_impl_opengl3_loader.h \
  /usr/include/c++/14.2.1/stdlib.h /usr/include/c++/14.2.1/cstdlib \
  /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/c++config.h \
  /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/os_defines.h \

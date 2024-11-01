@@ -1,7 +1,7 @@
 CMakeFiles/learn_opengl.dir/src/block.cpp.o: \
- /home/fantasy/Programming/openglStuff/openglMinicraft/src/block.cpp \
+ //home/fantasy/Programming/openglStuff/openglMinicraft2/mini_instancing/openglMinicraft/src/block.cpp \
  /usr/include/stdc-predef.h \
- /home/fantasy/Programming/openglStuff/openglMinicraft/src/hFiles/block.h \
+ //home/fantasy/Programming/openglStuff/openglMinicraft2/mini_instancing/openglMinicraft/src/hFiles/block.h \
  /usr/include/c++/14.2.1/algorithm \
  /usr/include/c++/14.2.1/bits/stl_algobase.h \
  /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/c++config.h \

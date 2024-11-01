@@ -8,6 +8,7 @@ constexpr int HEIGHT = 800;
 constexpr int MAP_WIDTH = 20;
 constexpr int MAP_HEIGHT = 20;
 
+constexpr int CHUNK_RAD = 4;
 
 const siv::PerlinNoise::seed_type seed = 123456u;
 

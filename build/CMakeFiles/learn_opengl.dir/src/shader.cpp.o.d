@@ -1,7 +1,7 @@
 CMakeFiles/learn_opengl.dir/src/shader.cpp.o: \
- /home/fantasy/Programming/openglStuff/openglMinicraft/src/shader.cpp \
+ //home/fantasy/Programming/openglStuff/openglMinicraft2/mini_instancing/openglMinicraft/src/shader.cpp \
  /usr/include/stdc-predef.h \
- /home/fantasy/Programming/openglStuff/openglMinicraft/src/hFiles/shader.h \
+ //home/fantasy/Programming/openglStuff/openglMinicraft2/mini_instancing/openglMinicraft/src/hFiles/shader.h \
  /usr/include/c++/14.2.1/string \
  /usr/include/c++/14.2.1/bits/requires_hosted.h \
  /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/c++config.h \
@@ -105,8 +105,8 @@ CMakeFiles/learn_opengl.dir/src/shader.cpp.o: \
  /usr/include/c++/14.2.1/bits/uses_allocator.h \
  /usr/include/c++/14.2.1/bits/uses_allocator_args.h \
  /usr/include/c++/14.2.1/tuple \
- /home/fantasy/Programming/openglStuff/openglMinicraft/include/glad/glad.h \
- /home/fantasy/Programming/openglStuff/openglMinicraft/include/KHR/khrplatform.h \
+ //home/fantasy/Programming/openglStuff/openglMinicraft2/mini_instancing/openglMinicraft/include/glad/glad.h \
+ //home/fantasy/Programming/openglStuff/openglMinicraft2/mini_instancing/openglMinicraft/include/KHR/khrplatform.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stdint.h \
  /usr/include/stdint.h /usr/include/bits/stdint-uintn.h \
  /usr/include/bits/stdint-least.h /usr/local/include/glm/glm.hpp \

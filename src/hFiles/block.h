@@ -4,7 +4,7 @@
 #include <glm/ext/vector_float2.hpp>
 #include <glm/ext/vector_float3.hpp>
 
-constexpr int WIDTH_CHUNK = 16;
+constexpr int WIDTH_CHUNK = 32;
 constexpr int HEIGHT_CHUNK = 64;
 constexpr int WATER_LEVEL = HEIGHT_CHUNK/3;
 constexpr int MOUNTAINS_HEIGHT = 2*HEIGHT_CHUNK/3;

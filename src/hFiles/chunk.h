@@ -7,10 +7,7 @@
 #include <string>
 #include <PerlinNoise/PerlinNoise.hpp>
 #include <vector>
-
-// Helpers
-
-
+#include "Settings.h"
 
 class Chunk {
 public:
@@ -22,6 +19,8 @@ public:
 
   //Block data[WIDTH_CHUNK][HEIGHT_CHUNK][WIDTH_CHUNK];
   std::vector<Block> data;
+  int n_packed_data;
+  int packed_data[WIDTH_CHUNK*WIDTH_CHUNK*HEIGHT_CHUNK*6];
   Chunk *upChunk, *bottomChunk, *leftChunk, *rightChunk;
 
   Chunk();
@@ -31,6 +30,9 @@ public:
   void MakeChunkData(const siv::PerlinNoise &perlin);
   void Render(CubeRenderer &cubeRenderer);
 
+  // update calls updatePackedData and updateFaces;
+  void update();
+  void updatePackedData();
   void updateFaces();
   void AddBlock(glm::vec3 position, BLOCK_TYPE type);
   void RemoveBlock(glm::vec3 position);
