@@ -38,16 +38,6 @@ Chunk::Chunk(): active(false), isLoaded(false), offset(glm::vec2(0.0f, 0.0f)){
 }
 void Chunk::Render(CubeRenderer &cubeRenderer){
   cubeRenderer.RenderChunk(this->offset, this->n_packed_data, this->packed_data);
-  /*
-  for (int x = 0; x < WIDTH_CHUNK; x++) {
-    for (int y = 0; y < HEIGHT_CHUNK; y++) {
-      for (int z = 0; z < WIDTH_CHUNK; z++) {
-        if (this->getActive(x, y, z))
-          cubeRenderer.Render(glm::vec3(x+offset.x, y, z+offset.y) + 0.5f, this->get(x,y,z));
-      }
-    }
-  }
-  */
 }
 
 void Chunk::AddBlock(glm::vec3 position, BLOCK_TYPE type){
@@ -55,15 +45,7 @@ void Chunk::AddBlock(glm::vec3 position, BLOCK_TYPE type){
   //std::cout << "pos: " << x << " | " << y << " | " << z << std::endl;
   this->setActive(x, y, z, true);
   this->setType(x, y, z, type);
-  bool new_faces[] = {
-    !this->getActive(x, y, z+1),
-    !this->getActive(x, y, z-1),
-    !this->getActive(x-1, y, z),
-    !this->getActive(x+1, y, z),
-    !this->getActive(x, y+1, z),
-    !this->getActive(x, y-1, z)
-  };
-  this->setFaces(x, y, z, new_faces);
+  this->updateFace(x, y, z);
 
   if (x-1 >= 0) this->setFace(x-1, y, z, 3, false);
   if (x+1 < WIDTH_CHUNK) this->setFace(x+1,y, z, 2, false);
@@ -110,20 +92,22 @@ void Chunk::InitChunk(const siv::PerlinNoise &perlin, glm::vec2 chunk_pos, Chunk
 
 void Chunk::MakeTrees(int x, int startY, int z){
   int howTall = rand()%6+ 4;
-  int width = 3;
+  int width = 2;
   int heightLeaves = 3;
-  for (int y = startY; y < (int)startY+howTall; y++) {
+  for (int k = 0; k < heightLeaves; k++) {
+    for (int i = -width+k; i <= width-k; i++) {
+      for (int j = -width+k; j <= width-k; j++) {
+        if (abs(i) == width && abs(j) == width) continue;
+        this->setType(x+i, startY+howTall+k, z+j, LEAVES);
+        this->setActive(x+i, startY+howTall+k, z+j, true);
+        }
+      }
+  }
+  for (int y = startY; y < (int)startY+howTall+1; y++) {
     this->setType(x, y, z, TREE_BLOCK);
     this->setActive(x, y, z, true);
   }
-  for (int i = -width/2; i <= width/2; i++) {
-    for (int j = -width/2 ; j <= width/2; j++) {
-      for (int k = 0; k < heightLeaves; k++) {
-        this->setType(x+i, startY+howTall+k, z+j, LEAVES);
-        this->setActive(x+i, startY+howTall+k, z+j, true);
-      }
-    }
-  }
+
 }
 
 void Chunk::MakeChunkData(const siv::PerlinNoise &perlin){
@@ -187,20 +171,22 @@ void Chunk::updatePackedData(){
   this->n_packed_data = indx;
 }
 
+void Chunk::updateFace(int x, int y, int z){
+  bool new_faces[] = {
+      get(x,y,z+1).type == LEAVES || !getActive(x, y, z+1),
+      get(x,y,z-1).type == LEAVES || !this->getActive(x, y, z-1),
+      get(x-1,y,z).type == LEAVES || !this->getActive(x-1, y, z),
+      get(x+1,y,z).type == LEAVES || !this->getActive(x+1, y, z),
+      get(x,y+1,z).type == LEAVES || !this->getActive(x, y+1, z),
+      get(x,y-1,z).type == LEAVES || !this->getActive(x, y-1, z)
+    };
+    this->setFaces(x, y, z, new_faces);
+}
 void Chunk::updateFaces(){
   for (int x = 0; x < WIDTH_CHUNK; x++) {
     for (int z = 0; z < WIDTH_CHUNK; z++) {
       for (int y = 0; y < HEIGHT_CHUNK; y++) {
-        bool new_faces[] = {
-          !this->getActive(x, y, z+1),
-          !this->getActive(x, y, z-1),
-          !this->getActive(x-1, y, z),
-          !this->getActive(x+1, y, z),
-          !this->getActive(x, y+1, z),
-          !this->getActive(x, y-1, z)
-        };
-        this->setFaces(x, y, z, new_faces);
-
+        this->updateFace(x, y, z);
       }
     }
   }

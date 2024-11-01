@@ -33,6 +33,7 @@ public:
   // update calls updatePackedData and updateFaces;
   void update();
   void updatePackedData();
+  void updateFace(int x, int y, int z);
   void updateFaces();
   void AddBlock(glm::vec3 position, BLOCK_TYPE type);
   void RemoveBlock(glm::vec3 position);

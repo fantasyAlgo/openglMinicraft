@@ -1,8 +1,8 @@
 CMakeFiles/imgui.dir/imgui/imgui_draw.cpp.o: \
- //home/fantasy/Programming/openglStuff/openglMinicraft2/mini_instancing/openglMinicraft/imgui/imgui_draw.cpp \
+ /home/fantasy/Programming/openglStuff/openglMinicraft/imgui/imgui_draw.cpp \
  /usr/include/stdc-predef.h \
- //home/fantasy/Programming/openglStuff/openglMinicraft2/mini_instancing/openglMinicraft/imgui/imgui.h \
- //home/fantasy/Programming/openglStuff/openglMinicraft2/mini_instancing/openglMinicraft/imgui/imconfig.h \
+ /home/fantasy/Programming/openglStuff/openglMinicraft/imgui/imgui.h \
+ /home/fantasy/Programming/openglStuff/openglMinicraft/imgui/imconfig.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/float.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stdarg.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stddef.h \
@@ -13,7 +13,7 @@ CMakeFiles/imgui.dir/imgui/imgui_draw.cpp.o: \
  /usr/include/gnu/stubs.h /usr/include/gnu/stubs-64.h \
  /usr/include/bits/types/locale_t.h /usr/include/bits/types/__locale_t.h \
  /usr/include/strings.h /usr/include/assert.h \
- //home/fantasy/Programming/openglStuff/openglMinicraft2/mini_instancing/openglMinicraft/imgui/imgui_internal.h \
+ /home/fantasy/Programming/openglStuff/openglMinicraft/imgui/imgui_internal.h \
  /usr/include/stdio.h /usr/include/bits/types.h \
  /usr/include/bits/typesizes.h /usr/include/bits/time64.h \
  /usr/include/bits/types/__fpos_t.h /usr/include/bits/types/__mbstate_t.h \
@@ -189,5 +189,5 @@ CMakeFiles/imgui.dir/imgui/imgui_draw.cpp.o: \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/prfchwintrin.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/keylockerintrin.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/amxfp16intrin.h \
- //home/fantasy/Programming/openglStuff/openglMinicraft2/mini_instancing/openglMinicraft/imgui/imstb_rectpack.h \
- //home/fantasy/Programming/openglStuff/openglMinicraft2/mini_instancing/openglMinicraft/imgui/imstb_truetype.h
+ /home/fantasy/Programming/openglStuff/openglMinicraft/imgui/imstb_rectpack.h \
+ /home/fantasy/Programming/openglStuff/openglMinicraft/imgui/imstb_truetype.h

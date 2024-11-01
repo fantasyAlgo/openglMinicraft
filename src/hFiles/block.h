@@ -20,15 +20,17 @@ enum BLOCK_TYPE {
   LEAVES,
   WATER_BASIC,
   SNOW,
+  FLOWER,
   END_BLOCK
 };
 
-extern glm::vec2 type_position[10][3];
+extern glm::vec2 type_position[11][3];
 
 typedef struct Block{
   bool active = false;
   bool faces[6] = {0,0,0,0,0,0};
   BLOCK_TYPE type;
-  Block() : active(false), type(GRASS) { std::fill(faces, faces+6, 0);}
+  bool billboard;
+  Block() : active(false), type(GRASS), billboard(false) { std::fill(faces, faces+6, 0);}
 } Block;
 

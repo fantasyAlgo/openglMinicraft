@@ -22,5 +22,7 @@ void main(){
   vec3 diffuse = diff * lightColor;
 
   vec4 texture_color = vec4(diffuse+ambient, 1.0f)*texture(ourTexture, TexCoord);
+  if (texture_color.a < 0.01)
+    discard;
   FragColor = texture_color;//vec4(TexCoord.xy, 0.0f, 1.0f);
 }

@@ -1,4 +1,4 @@
-//home/fantasy/Programming/openglStuff/openglMinicraft2/mini_instancing/openglMinicraft/build/CMakeFiles/imgui.dir
-//home/fantasy/Programming/openglStuff/openglMinicraft2/mini_instancing/openglMinicraft/build/CMakeFiles/learn_opengl.dir
-//home/fantasy/Programming/openglStuff/openglMinicraft2/mini_instancing/openglMinicraft/build/CMakeFiles/edit_cache.dir
-//home/fantasy/Programming/openglStuff/openglMinicraft2/mini_instancing/openglMinicraft/build/CMakeFiles/rebuild_cache.dir
+/home/fantasy/Programming/openglStuff/openglMinicraft/build/CMakeFiles/imgui.dir
+/home/fantasy/Programming/openglStuff/openglMinicraft/build/CMakeFiles/learn_opengl.dir
+/home/fantasy/Programming/openglStuff/openglMinicraft/build/CMakeFiles/edit_cache.dir
+/home/fantasy/Programming/openglStuff/openglMinicraft/build/CMakeFiles/rebuild_cache.dir
