@@ -27,36 +27,42 @@ const vec3 normals[6] = vec3[6](
 );
 
 vec3 packedPos;
-int face; vec2 texture_pos;
+int face; vec2 texture_pos; bool isBillBoard;
 void unpack(int packedData){
   packedPos.x = (packedData >> 0) & 0x3F;
   packedPos.y = (packedData >> 6) & 0x3F;
   packedPos.z = (packedData >> 12) & 0x3F;
   face = (packedData >> 18) & 0x0F;
   int texPos = (packedData >> 22) & 0x7F;
+  isBillBoard = bool((packedData >> 29) & 0x01);
+
   texture_pos.x = int(texPos/16);
   texture_pos.y = texPos%16;
 }
 void main(){
   unpack(data);
   vec3 pos = aPos;
-  if (face == 0){
-    pos.z += 1.0;
-  }
-  if (face == 2){
-    pos.xyz = pos.zyx;
-    pos.xz += vec2(-0.5, 0.5);
-  }
-  if (face == 3){
-    pos.xyz = pos.zyx;
-    pos.xz += vec2(0.5, 0.5);
-  }
-  if (face == 4){
-    pos.xyz = pos.yzx;
-    pos.zy += 0.5;
-  }else if (face == 5){
-    pos.xyz = pos.yzx;
-    pos.zy += vec2(0.5, -0.5);
+  if (isBillBoard){
+    if (face == 0)
+      pos.z = pos.x;
+    else pos.z = 1.0f-pos.x;
+    pos.z += (face == 0 ? 0.5 : -0.5);
+  }else{
+    if (face == 0)
+      pos.z += 1.0;
+    else if (face == 2){
+      pos.xyz = pos.zyx;
+      pos.xz += vec2(-0.5, 0.5);
+    }else if (face == 3){
+      pos.xyz = pos.zyx;
+      pos.xz += vec2(0.5, 0.5);
+    }else if (face == 4){
+      pos.xyz = pos.yzx;
+      pos.zy += 0.5;
+    }else if (face == 5){
+      pos.xyz = pos.yzx;
+      pos.zy += vec2(0.5, -0.5);
+    }
   }
   pos.xy += 0.5;
   vec3 model = packedPos + vec3(chunk_offset.x, 0, chunk_offset.y);

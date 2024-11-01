@@ -9,6 +9,7 @@ constexpr int HEIGHT_CHUNK = 64;
 constexpr int WATER_LEVEL = HEIGHT_CHUNK/3;
 constexpr int MOUNTAINS_HEIGHT = 2*HEIGHT_CHUNK/3;
 constexpr int SAND_LEVEL = 3;
+constexpr int N_TYPES = 12;
 
 enum BLOCK_TYPE {
   GRASS,
@@ -21,16 +22,17 @@ enum BLOCK_TYPE {
   WATER_BASIC,
   SNOW,
   FLOWER,
+  GRASS_FLOWER,
   END_BLOCK
 };
 
-extern glm::vec2 type_position[11][3];
+extern glm::vec2 type_position[N_TYPES][3];
+extern bool isBillBoard[N_TYPES];
 
 typedef struct Block{
   bool active = false;
   bool faces[6] = {0,0,0,0,0,0};
   BLOCK_TYPE type;
-  bool billboard;
-  Block() : active(false), type(GRASS), billboard(false) { std::fill(faces, faces+6, 0);}
+  Block() : active(false), type(GRASS) { std::fill(faces, faces+6, 0);}
 } Block;
 

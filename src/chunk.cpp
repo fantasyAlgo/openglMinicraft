@@ -3,6 +3,7 @@
 #include "hFiles/block.h"
 #include <algorithm>
 #include <any>
+#include <climits>
 #include <cstdlib>
 #include <glm/ext/vector_float2.hpp>
 #include <glm/ext/vector_float3.hpp>
@@ -12,7 +13,10 @@
 #include <cassert>
 #include <iostream>
 
-uint32_t packInstanceData(uint8_t x, uint8_t y, uint8_t z, uint8_t face, uint8_t texture) {
+#include <cstdint>
+#include <cassert>
+
+uint32_t packInstanceData(uint8_t x, uint8_t y, uint8_t z, uint8_t face, uint8_t texture, bool isBillBoard = false) {
     // Check each parameter to ensure it fits within the specified bit limits
     assert(x <= 0x3F && "x must fit in 6 bits (0-63)");
     assert(y <= 0x3F && "y must fit in 6 bits (0-63)");
@@ -20,16 +24,21 @@ uint32_t packInstanceData(uint8_t x, uint8_t y, uint8_t z, uint8_t face, uint8_t
     assert(face >= 0 && face <= 5 && "face must fit in 4 bits (0-15)");
     assert(texture <= 0x7F && "texture must fit in 7 bits (0-127)");
 
-
     // Pack the data
     uint32_t packedData = 0;
-    packedData |= (x & 0x3F) << 0;      // 6 bits for x
-    packedData |= (y & 0x3F) << 6;      // 6 bits for y
-    packedData |= (z & 0x3F) << 12;     // 6 bits for z
-    packedData |= (face & 0x0F) << 18;  // 4 bits for face
+    packedData |= (x & 0x3F) << 0;        // 6 bits for x
+    packedData |= (y & 0x3F) << 6;        // 6 bits for y
+    packedData |= (z & 0x3F) << 12;       // 6 bits for z
+    packedData |= (face & 0x0F) << 18;    // 4 bits for face
     packedData |= (texture & 0x7F) << 22; // 7 bits for texture
+    packedData |= (isBillBoard ? 1 : 0) << 29; // 1 bit for isBillBoard
+
     return packedData;
 }
+bool isTransparent(Block block){
+  return block.type == LEAVES || block.type == FLOWER || block.type == GRASS_FLOWER;
+}
+
 void Chunk::update(){ this->updateFaces(); this->updatePackedData();}
 
 
@@ -116,8 +125,14 @@ void Chunk::MakeChunkData(const siv::PerlinNoise &perlin){
   for (int x = 0; x < WIDTH_CHUNK; x++) {
     for (int z = 0; z < WIDTH_CHUNK; z++) {
       maxY = (int) (HEIGHT_CHUNK*perlin.octave2D_01(((float)(x+offset.x) * 0.025), ((float)(z+offset.y) * 0.025), 4));
-      if (maxY >= WATER_LEVEL+SAND_LEVEL && rand()/100000000.0f < 0.4)
+      if (maxY >= WATER_LEVEL+SAND_LEVEL && maxY < MOUNTAINS_HEIGHT && rand()/100000000.0f < 0.4)
         this->MakeTrees(x, maxY, z);
+      else if (maxY > WATER_LEVEL+SAND_LEVEL && maxY < MOUNTAINS_HEIGHT && (rand()%10000)/10000.0 < 0.1){
+        if (rand()%2 == 0)
+          this->setType(x, maxY+1, z, GRASS_FLOWER);
+        else this->setType(x, maxY+1, z, FLOWER);
+        this->setActive(x, maxY+1, z, true);
+      }
       for (int y = 0; y <= HEIGHT_CHUNK; y++) {
         //cavePerlin = perlin.octave2D_01(((float)(x+offset.x) * 0.04), ((float)(z+offset.y) * 0.04), y*0.1);
         //std::cout << cavePerlin << std::endl;
@@ -153,16 +168,17 @@ void Chunk::updatePackedData(){
   glm::vec2 text;
   Block curr;
   bool foundTree = false;
+  int max_faces;
   for (int x = 0; x < WIDTH_CHUNK; x++) {
     for (int y = 0; y < HEIGHT_CHUNK; y++) {
       for (int z = 0; z < WIDTH_CHUNK; z++) {
         curr = get(x,y,z);
         if (!curr.active) continue;
-        for (int f = 0; f < 6; f++) {
-          //if (curr.type == TREE_BLOCK) std::cout << "face of tree: " << (int)curr.faces[f] << " indx: " << indx << std::endl;
+        max_faces = isBillBoard[(int)curr.type] ? 2 : 6;
+        for (int f = 0; f < max_faces; f++) {
           if (!curr.faces[f]) continue;
           text = type_position[(int)curr.type][f < 4 ? 0 : f-3];
-          packed_data[indx] = packInstanceData(x, y, z, f, text.x*16 + text.y);
+          packed_data[indx] = packInstanceData(x, y, z, f, text.x*16 + text.y, isBillBoard[(int)curr.type]);
           indx++;
         }
       }
@@ -173,23 +189,20 @@ void Chunk::updatePackedData(){
 
 void Chunk::updateFace(int x, int y, int z){
   bool new_faces[] = {
-      get(x,y,z+1).type == LEAVES || !getActive(x, y, z+1),
-      get(x,y,z-1).type == LEAVES || !this->getActive(x, y, z-1),
-      get(x-1,y,z).type == LEAVES || !this->getActive(x-1, y, z),
-      get(x+1,y,z).type == LEAVES || !this->getActive(x+1, y, z),
-      get(x,y+1,z).type == LEAVES || !this->getActive(x, y+1, z),
-      get(x,y-1,z).type == LEAVES || !this->getActive(x, y-1, z)
+      isTransparent(get(x,y,z+1)) || !getActive(x, y, z+1),
+      isTransparent(get(x, y, z-1)) || !this->getActive(x, y, z-1),
+      isTransparent(get(x-1, y, z)) || !this->getActive(x-1, y, z),
+      isTransparent(get(x+1, y, z)) || !this->getActive(x+1, y, z),
+      isTransparent(get(x, y+1, z)) || !this->getActive(x, y+1, z),
+      isTransparent(get(x, y-1, z)) || !this->getActive(x, y-1, z)
     };
     this->setFaces(x, y, z, new_faces);
 }
 void Chunk::updateFaces(){
-  for (int x = 0; x < WIDTH_CHUNK; x++) {
-    for (int z = 0; z < WIDTH_CHUNK; z++) {
-      for (int y = 0; y < HEIGHT_CHUNK; y++) {
+  for (int x = 0; x < WIDTH_CHUNK; x++)
+    for (int z = 0; z < WIDTH_CHUNK; z++) 
+      for (int y = 0; y < HEIGHT_CHUNK; y++) 
         this->updateFace(x, y, z);
-      }
-    }
-  }
 }
 
 bool Chunk::getActive(int x, int y, int z){
