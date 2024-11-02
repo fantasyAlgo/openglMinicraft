@@ -9,7 +9,7 @@ constexpr int HEIGHT_CHUNK = 64;
 constexpr int WATER_LEVEL = HEIGHT_CHUNK/3;
 constexpr int MOUNTAINS_HEIGHT = 2*HEIGHT_CHUNK/3;
 constexpr int SAND_LEVEL = 3;
-constexpr int N_TYPES = 12;
+constexpr int N_TYPES = 13;
 
 enum BLOCK_TYPE {
   GRASS,
@@ -21,6 +21,7 @@ enum BLOCK_TYPE {
   LEAVES,
   WATER_BASIC,
   SNOW,
+  PLANKS,
   FLOWER,
   GRASS_FLOWER,
   END_BLOCK

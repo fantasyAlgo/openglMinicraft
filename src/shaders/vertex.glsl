@@ -16,6 +16,7 @@ uniform mat4 proj;
 out vec2 TexCoord;
 out vec3 Normal;
 out vec3 FragPos;
+out float Visibility;
 
 const vec3 normals[6] = vec3[6](
     vec3(0.0, 0.0, 1.0),  // FRONT: Normal along +Z axis
@@ -39,6 +40,8 @@ void unpack(int packedData){
   texture_pos.x = int(texPos/16);
   texture_pos.y = texPos%16;
 }
+float gradient = 3.0;
+float density = 0.009;
 void main(){
   unpack(data);
   vec3 pos = aPos;
@@ -66,14 +69,16 @@ void main(){
   }
   pos.xy += 0.5;
   vec3 model = packedPos + vec3(chunk_offset.x, 0, chunk_offset.y);
-  vec4 end_f = proj * view * vec4(pos+model, 1.0);
-  gl_Position = end_f;//vec4(aPos, 1.0f);
+  vec4 positionRelativeToCam = view * vec4(pos+model, 1.0);
+  gl_Position = proj * positionRelativeToCam;
 
   float offset = 1.0f/16.0f;
   float blockX = offset*texture_pos.x + offset;
   float blockY = 1-offset*texture_pos.y;
   TexCoord = vec2(aTexCoord.x*blockX + (1-aTexCoord.x)*(blockX-offset),
                   aTexCoord.y*blockY + (1-aTexCoord.y)*(blockY-offset));
+  float distanceFog = length(positionRelativeToCam.xyz);
+  Visibility = clamp(exp(-pow((distanceFog*density), gradient)), 0.0, 1.0);
   Normal = normals[int(face)];
   FragPos = vec3( vec4(aPos+model, 1.0));
 }

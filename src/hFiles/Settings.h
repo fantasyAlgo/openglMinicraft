@@ -9,6 +9,8 @@ constexpr int MAP_WIDTH = 20;
 constexpr int MAP_HEIGHT = 20;
 
 constexpr int CHUNK_RAD = 4;
+constexpr int INVENTORY_COLUMNS = 3;
+constexpr int INVENTORY_ROWS = 10;
 
 const siv::PerlinNoise::seed_type seed = 123456u;
 

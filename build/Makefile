@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/fantasy/Programming/openglStuff/openglMinicraft2/openglMinicraft
+CMAKE_SOURCE_DIR = /home/fantasy/Programming/openglStuff/openglMinicraft
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/fantasy/Programming/openglStuff/openglMinicraft2/openglMinicraft/build
+CMAKE_BINARY_DIR = /home/fantasy/Programming/openglStuff/openglMinicraft/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,9 +87,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/fantasy/Programming/openglStuff/openglMinicraft2/openglMinicraft/build/CMakeFiles /home/fantasy/Programming/openglStuff/openglMinicraft2/openglMinicraft/build//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/fantasy/Programming/openglStuff/openglMinicraft/build/CMakeFiles /home/fantasy/Programming/openglStuff/openglMinicraft/build//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/fantasy/Programming/openglStuff/openglMinicraft2/openglMinicraft/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/fantasy/Programming/openglStuff/openglMinicraft/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -358,6 +358,30 @@ src/Main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/learn_opengl.dir/build.make CMakeFiles/learn_opengl.dir/src/Main.cpp.s
 .PHONY : src/Main.cpp.s
 
+src/Player.o: src/Player.cpp.o
+.PHONY : src/Player.o
+
+# target to build an object file
+src/Player.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/learn_opengl.dir/build.make CMakeFiles/learn_opengl.dir/src/Player.cpp.o
+.PHONY : src/Player.cpp.o
+
+src/Player.i: src/Player.cpp.i
+.PHONY : src/Player.i
+
+# target to preprocess a source file
+src/Player.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/learn_opengl.dir/build.make CMakeFiles/learn_opengl.dir/src/Player.cpp.i
+.PHONY : src/Player.cpp.i
+
+src/Player.s: src/Player.cpp.s
+.PHONY : src/Player.s
+
+# target to generate assembly for a file
+src/Player.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/learn_opengl.dir/build.make CMakeFiles/learn_opengl.dir/src/Player.cpp.s
+.PHONY : src/Player.cpp.s
+
 src/block.o: src/block.cpp.o
 .PHONY : src/block.o
 
@@ -587,6 +611,9 @@ help:
 	@echo "... src/Main.o"
 	@echo "... src/Main.i"
 	@echo "... src/Main.s"
+	@echo "... src/Player.o"
+	@echo "... src/Player.i"
+	@echo "... src/Player.s"
 	@echo "... src/block.o"
 	@echo "... src/block.i"
 	@echo "... src/block.s"

@@ -1,6 +1,7 @@
 #pragma once
 
-#include "camera.h"
+#include "Player.h"
+//#include "camera.h"
 #include "chunk.h"
 #include "Settings.h"
 #include <GLFW/glfw3.h>
@@ -17,7 +18,8 @@ private:
   std::vector<std::vector<Chunk>> map;
   Chunk chunk;
 
-  Camera camera;
+  Player player;
+  //Camera camera;
   CubeRenderer cubeRenderer; //= CubeRenderer(shaderR, textureR);
   Shader shaderR; //= ResourceManager::GetShader("main_shader");
   Texture2D textureR; //= ResourceManager::GetTexture("awesomeface");

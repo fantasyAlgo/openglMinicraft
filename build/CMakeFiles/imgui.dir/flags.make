@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/fantasy/Programming/openglStuff/openglMinicraft2/openglMinicraft/imgui -I/home/fantasy/Programming/openglStuff/openglMinicraft2/openglMinicraft/imgui/backends -I/home/fantasy/Programming/openglStuff/openglMinicraft2/openglMinicraft/include
+CXX_INCLUDES = -I/home/fantasy/Programming/openglStuff/openglMinicraft/imgui -I/home/fantasy/Programming/openglStuff/openglMinicraft/imgui/backends -I/home/fantasy/Programming/openglStuff/openglMinicraft/include
 
 CXX_FLAGS = -g -std=gnu++17
 

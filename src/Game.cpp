@@ -26,28 +26,27 @@ void Game::Init(){
 
   this->current_chunk_x = MAP_WIDTH/2;
   this->current_chunk_y = MAP_HEIGHT/2;
-  this->camera.InitCamera(WIDTH, HEIGHT);
   shaderR = ResourceManager::GetShader("main_shader");
   textureR = ResourceManager::GetTexture("awesomeface");
 
   cubeRenderer.Init(shaderR, textureR);
-  camera.position = glm::vec3(MAP_WIDTH*WIDTH_CHUNK/4 - WIDTH_CHUNK/2, HEIGHT_CHUNK/2, MAP_HEIGHT*WIDTH_CHUNK/4 - WIDTH_CHUNK/2);
+  player.setPosition(glm::vec3(MAP_WIDTH*WIDTH_CHUNK/4 - WIDTH_CHUNK/2, HEIGHT_CHUNK/2, MAP_HEIGHT*WIDTH_CHUNK/4 - WIDTH_CHUNK/2));
   //camera.position = glm::vec3(0, 40, 0);
 
   glm::mat4 proj = glm::mat4(1.0f);
-	proj = glm::perspective(glm::radians(90.0f), (float)(WIDTH / HEIGHT), 0.1f, 100.0f);
+	proj = glm::perspective(glm::radians(90.0f), (float)(WIDTH / HEIGHT), 0.1f, 110.0f);
   Shader shader = ResourceManager::GetShader("main_shader");//.SetMatrix4("proj", proj, true);
   shader.SetMatrix4("proj", proj, true);
   shader.SetVector3f("lightPos", glm::vec3(10, 10, 60));
   
 
-  current_chunk_x = camera.position.x/WIDTH_CHUNK; current_chunk_y = camera.position.z/WIDTH_CHUNK;
-  camera.place_type = GRASS;
+  current_chunk_x = player.camera.position.x/WIDTH_CHUNK; current_chunk_y = player.camera.position.z/WIDTH_CHUNK;
+  player.camera.place_type = GRASS;
 }
 void Game::Update(float dt){
-    current_chunk_x = camera.position.x/WIDTH_CHUNK; current_chunk_y = camera.position.z/WIDTH_CHUNK;
-    camera.updatePointer(map[current_chunk_x][current_chunk_y]);
-    ResourceManager::GetShader("main_shader").SetMatrix4("view", camera.CameraLookAt(), true);
+    current_chunk_x = player.camera.position.x/WIDTH_CHUNK; current_chunk_y = player.camera.position.z/WIDTH_CHUNK;
+    player.camera.updatePointer(map[current_chunk_x][current_chunk_y]);
+    ResourceManager::GetShader("main_shader").SetMatrix4("view", player.camera.CameraLookAt(), true);
     //camera.active_pointer_block = false;
 }
 void Game::Render(){
@@ -61,7 +60,7 @@ void Game::Render(){
                                                           isInside(current_chunk_x+i+1, current_chunk_y+j) ? &map[current_chunk_x+i+1][current_chunk_y+j] : nullptr);
       }
       if (isInside(current_chunk_x+i, current_chunk_y+j) && 
-        (glm::dot(glm::vec2(i, j), glm::vec2(camera.direction.x, camera.direction.z)) > -0.5 || (i == 0 && j == 0))){
+        (glm::dot(glm::vec2(i, j), glm::vec2(player.camera.direction.x, player.camera.direction.z)) > -0.5 || (i == 0 && j == 0))){
         map[current_chunk_x+i][current_chunk_y+j].Render(cubeRenderer);
       }
     }
@@ -69,26 +68,27 @@ void Game::Render(){
   for (int i = -CHUNK_RAD/2; i <= CHUNK_RAD/2; i++){
     for (int j = -CHUNK_RAD/2; j <= CHUNK_RAD/2; j++){
       if (isInside(current_chunk_x+i, current_chunk_y+j) && 
-        (glm::dot(glm::vec2(i, j), glm::vec2(camera.direction.x, camera.direction.z)) > -0.5 || (i == 0 && j == 0))){
+        (glm::dot(glm::vec2(i, j), glm::vec2(player.camera.direction.x, player.camera.direction.z)) > -0.5 || (i == 0 && j == 0))){
         //map[current_chunk_x+i][current_chunk_y+j].updateFaces();
         map[current_chunk_x+i][current_chunk_y+j].RenderWater(cubeRenderer);
       }
     }
   }
 
-  UI::RenderUI(WIDTH, HEIGHT, camera.direction);
+  UI::RenderUI(WIDTH, HEIGHT, player.camera.direction);
+  player.RenderInventory(this->textureR.ID);
 }
 
 void Game::ProcessInput(GLFWwindow *window, float dt){
-    camera.keyboardHandling(window, dt);
-    camera.mouseHandling(window,
-                         !camera.active_pointer_block ? map[current_chunk_x][current_chunk_y] : map[(int) camera.pointer_block.chunk_pos.x][(int)camera.pointer_block.chunk_pos.y], 
+    player.camera.keyboardHandling(window, dt);
+    player.camera.mouseHandling(window,
+                         !player.camera.active_pointer_block ? map[current_chunk_x][current_chunk_y] : map[(int) player.camera.pointer_block.chunk_pos.x][(int)player.camera.pointer_block.chunk_pos.y], 
                          dt);
 
   if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
       glfwSetWindowShouldClose(window, true);
   for (int i = 0; i < (int)END_BLOCK; i++) {
-    if (glfwGetKey(window, GLFW_KEY_0 + i) == GLFW_PRESS) camera.place_type = (BLOCK_TYPE) i;
+    if (glfwGetKey(window, GLFW_KEY_0 + i) == GLFW_PRESS) player.setPickedItem(i);
   }
 }
 

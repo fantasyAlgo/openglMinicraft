@@ -31,6 +31,7 @@ add_executable(learn_opengl
   src/texture.cpp
   src/cube_renderer.cpp
   src/camera.cpp
+  src/Player.cpp
   src/chunk.cpp
   src/block.cpp
 )

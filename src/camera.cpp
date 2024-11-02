@@ -67,8 +67,6 @@ void Camera::updatePointer(Chunk &initialChunk){
   glm::vec3 unitStepSize = glm::vec3(sqrt(1 + (direction.y/direction.x)*(direction.y/direction.x) + (direction.z/direction.x)*(direction.z/direction.x) ),
                                      sqrt(1 + (direction.x/direction.y)*(direction.x/direction.y) + (direction.z/direction.y)*(direction.z/direction.y) ),
                                      sqrt(1 + (direction.x/direction.z)*(direction.x/direction.z) + (direction.y/direction.z)*(direction.y/direction.z) ));
-  //glm::vec3 unitStepSize = glm::vec3(abs(1.0f/direction.x), abs(1.0f/direction.y), abs(1.0f/direction.z));
-  //;std::cout << "unitStep: " << unitStepSize.x << " " << unitStepSize.y << " " << unitStepSize.z << std::endl;
   glm::vec3 vMapCheck = glm::vec3((int)cameraPointer.x, (int)cameraPointer.y, (int)cameraPointer.z);
   //std::cout << "pos: " << vMapCheck.x << " " << vMapCheck.y << " " << vMapCheck.z << std::endl;
   glm::vec3 vRayLength1D;
@@ -166,10 +164,6 @@ void Camera::updatePointer(Chunk &initialChunk){
 void Camera::mouseHandling(GLFWwindow* window, Chunk &chunk, float deltaTime){
   // Hides mouse cursor
   if (!firstClick && !rightPressed && this->active_pointer_block && glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS){
-    //std::cout << "Right pressed!" << std::endl;
-    //std::cout << this->pointer_block.pos.x << " " << this->pointer_block.pos.y << " " << this->pointer_block.pos.z << std::endl;
-    //std::cout << "chunk:  " << this->pointer_block.chunk_pos.x << " " << this->pointer_block.chunk_pos.y << std::endl;
-    //std::cout << "taken pos: " << chunk.map_pos.x << " " << chunk.map_pos.y << std::endl;
     if (this->pointer_block.pos.x == 0 && this->pointer_block.face == RIGHT){
       this->pointer_block.pos.x = WIDTH_CHUNK-1;
       this->pointer_block.face = NO_FACE;

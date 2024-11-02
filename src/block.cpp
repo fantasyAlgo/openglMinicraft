@@ -11,11 +11,13 @@ glm::vec2 type_position[N_TYPES][3] = {
   {glm::vec2(6.0f, 3.0f), glm::vec2(6.0f, 3.0f), glm::vec2(6.0f, 3.0f)},
   {glm::vec2(0.0f, 15.0f), glm::vec2(0.0f, 15.0f), glm::vec2(0.0f, 15.0f)},
   {glm::vec2(3.0f, 2.0f), glm::vec2(3.0f, 2.0f), glm::vec2(3.0f, 2.0f)},
+  {glm::vec2(6.0f, 1.0f), glm::vec2(6.0f, 1.0f), glm::vec2(6.0f, 1.0f)},
   {glm::vec2(0.0f, 3.0f), glm::vec2(0.0f, 3.0f), glm::vec2(0.0f, 3.0f)},
   {glm::vec2(2.0f, 3.0f), glm::vec2(0.0f, 3.0f), glm::vec2(0.0f, 3.0f)},
   {glm::vec2(5.0f, 5.0f), glm::vec2(5.0f, 5.0f), glm::vec2(5.0f, 5.0f)},
 };
 bool isBillBoard[N_TYPES] = {
+ 0,
  0,
  0,
  0,
