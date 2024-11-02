@@ -8,11 +8,13 @@ A copy of minecraft in c++ and opengl
 - [x] Setting up imgui and UI pointer
 - [x] Making a better map
 - [x] Trees
-- [ ] Light, ambient occlosion and so on
-- [ ] Add world/chunk saving
-- [ ] Infinite world
-- [ ] Optimize rendering (e.g using indexing)
-- [ ] Water!
+- [x] Light
+- [ ] Ambient occlusion and minecraft day/night system
+- [ ] world/chunk saving
+- [x] Optimize rendering (e.g using indexing)
+- [x] Water!
 - [ ] Inventory
-- [ ] Block mining
+- [ ] Block mining and crafting
 - [ ] Entities
+- [ ] Survival mode
+- [ ] GUI

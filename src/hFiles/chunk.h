@@ -19,8 +19,9 @@ public:
 
   //Block data[WIDTH_CHUNK][HEIGHT_CHUNK][WIDTH_CHUNK];
   std::vector<Block> data;
-  int n_packed_data;
+  int n_packed_data, n_packed_data_water;
   int packed_data[WIDTH_CHUNK*WIDTH_CHUNK*HEIGHT_CHUNK*6];
+  int packed_data_water[WIDTH_CHUNK*WIDTH_CHUNK*WIDTH_CHUNK];
   Chunk *upChunk, *bottomChunk, *leftChunk, *rightChunk;
 
   Chunk();
@@ -28,7 +29,9 @@ public:
   void InitChunk(const siv::PerlinNoise &perlin, glm::vec2 offset, Chunk *up, Chunk *down, Chunk *left, Chunk *right);
   void MakeTrees(int x, int startY, int z);
   void MakeChunkData(const siv::PerlinNoise &perlin);
+
   void Render(CubeRenderer &cubeRenderer);
+  void RenderWater(CubeRenderer &cubeRenderer);
 
   // update calls updatePackedData and updateFaces;
   void update();

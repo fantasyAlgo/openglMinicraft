@@ -62,12 +62,20 @@ void Game::Render(){
       }
       if (isInside(current_chunk_x+i, current_chunk_y+j) && 
         (glm::dot(glm::vec2(i, j), glm::vec2(camera.direction.x, camera.direction.z)) > -0.5 || (i == 0 && j == 0))){
-        //map[current_chunk_x+i][current_chunk_y+j].updateFaces();
-        //map[current_chunk_x+i][current_chunk_y+j].updatePackedData();
         map[current_chunk_x+i][current_chunk_y+j].Render(cubeRenderer);
       }
     }
   }
+  for (int i = -CHUNK_RAD/2; i <= CHUNK_RAD/2; i++){
+    for (int j = -CHUNK_RAD/2; j <= CHUNK_RAD/2; j++){
+      if (isInside(current_chunk_x+i, current_chunk_y+j) && 
+        (glm::dot(glm::vec2(i, j), glm::vec2(camera.direction.x, camera.direction.z)) > -0.5 || (i == 0 && j == 0))){
+        //map[current_chunk_x+i][current_chunk_y+j].updateFaces();
+        map[current_chunk_x+i][current_chunk_y+j].RenderWater(cubeRenderer);
+      }
+    }
+  }
+
   UI::RenderUI(WIDTH, HEIGHT, camera.direction);
 }
 

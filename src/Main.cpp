@@ -4,6 +4,7 @@
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 
+#include <GL/gl.h>
 #include <cstdlib>
 #include<glad/glad.h>
 #include<GLFW/glfw3.h>
@@ -42,6 +43,8 @@ int main(){
 
   Game game;
   glEnable(GL_DEPTH_TEST);
+  glEnable(GL_BLEND);
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
   glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 

@@ -48,6 +48,9 @@ Chunk::Chunk(): active(false), isLoaded(false), offset(glm::vec2(0.0f, 0.0f)){
 void Chunk::Render(CubeRenderer &cubeRenderer){
   cubeRenderer.RenderChunk(this->offset, this->n_packed_data, this->packed_data);
 }
+void Chunk::RenderWater(CubeRenderer &cubeRenderer){
+  cubeRenderer.RenderChunk(this->offset, this->n_packed_data_water, this->packed_data_water);
+}
 
 void Chunk::AddBlock(glm::vec3 position, BLOCK_TYPE type){
   int x = position.x; int y = position.y; int z = position.z;
@@ -67,6 +70,7 @@ void Chunk::RemoveBlock(glm::vec3 position){
   int x = position.x; int y = position.y; int z = position.z;
   //std::cout << x << " | " << y << " | " << z << std::endl;
   this->setActive(x, y, z, false);
+  this->setType(x, y, z, END_BLOCK);
   this->setFace(x-1, y, z, 3, true);
   this->setFace(x+1, y, z, 2, true);
   this->setFace(x, y-1, z, 4, true);
@@ -155,6 +159,9 @@ void Chunk::MakeChunkData(const siv::PerlinNoise &perlin){
             this->setActive(x, y, z, true);
           }
         }
+        if (!this->get(x, y, z).active){
+          this->setType(x, y, z, END_BLOCK);
+        }
       }
     }
   }
@@ -165,6 +172,7 @@ void Chunk::updatePackedData(){
   int size = data.size();
   this->n_packed_data = 0;
   int indx = 0;
+  int indx_water = 0;
   glm::vec2 text;
   Block curr;
   bool foundTree = false;
@@ -178,25 +186,34 @@ void Chunk::updatePackedData(){
         for (int f = 0; f < max_faces; f++) {
           if (!curr.faces[f]) continue;
           text = type_position[(int)curr.type][f < 4 ? 0 : f-3];
-          packed_data[indx] = packInstanceData(x, y, z, f, text.x*16 + text.y, isBillBoard[(int)curr.type]);
-          indx++;
+          if (curr.type != WATER_BASIC)
+            packed_data[indx++] = packInstanceData(x, y, z, f, text.x*16 + text.y, isBillBoard[(int)curr.type]);
+          else
+            packed_data_water[indx_water++] = packInstanceData(x, y, z, f, text.x*16 + text.y, isBillBoard[(int)curr.type]);
         }
       }
     }
   }
   this->n_packed_data = indx;
+  this->n_packed_data_water = indx_water;
 }
 
+bool isFaceVisible(Block originalBlock, Block block){
+  if (isTransparent(block)) return true;
+  if (originalBlock.type == WATER_BASIC) return block.type == END_BLOCK;
+  else return block.type == WATER_BASIC || !block.active;
+}
 void Chunk::updateFace(int x, int y, int z){
+  Block curr = get(x,y,z);
   bool new_faces[] = {
-      isTransparent(get(x,y,z+1)) || !getActive(x, y, z+1),
-      isTransparent(get(x, y, z-1)) || !this->getActive(x, y, z-1),
-      isTransparent(get(x-1, y, z)) || !this->getActive(x-1, y, z),
-      isTransparent(get(x+1, y, z)) || !this->getActive(x+1, y, z),
-      isTransparent(get(x, y+1, z)) || !this->getActive(x, y+1, z),
-      isTransparent(get(x, y-1, z)) || !this->getActive(x, y-1, z)
-    };
-    this->setFaces(x, y, z, new_faces);
+    isFaceVisible(curr, get(x,y,z+1)),
+    isFaceVisible(curr, get(x,y,z-1)),
+    isFaceVisible(curr, get(x-1,y,z)),
+    isFaceVisible(curr, get(x+1,y,z)),
+    isFaceVisible(curr, get(x,y+1,z)),
+    isFaceVisible(curr, get(x,y-1,z))
+  };
+  this->setFaces(x, y, z, new_faces);
 }
 void Chunk::updateFaces(){
   for (int x = 0; x < WIDTH_CHUNK; x++)
