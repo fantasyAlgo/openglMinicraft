@@ -89,7 +89,6 @@ void Chunk::InitChunk(const siv::PerlinNoise &perlin, glm::vec2 chunk_pos, Chunk
   this->map_pos = chunk_pos;
   this->offset = (float)WIDTH_CHUNK*chunk_pos;
   this->MakeChunkData(perlin);
-  this->isLoaded = true;
 
   this->update();
   if (up != nullptr)
@@ -100,6 +99,8 @@ void Chunk::InitChunk(const siv::PerlinNoise &perlin, glm::vec2 chunk_pos, Chunk
     left->update();
   if (right != nullptr)
     right->update();
+
+  this->isLoaded = true;
 }
 
 
@@ -220,8 +221,13 @@ void Chunk::updateFace(int x, int y, int z){
 void Chunk::updateFaces(){
   for (int x = 0; x < WIDTH_CHUNK; x++)
     for (int z = 0; z < WIDTH_CHUNK; z++) 
-      for (int y = 0; y < HEIGHT_CHUNK; y++) 
+      for (int y = 0; y < HEIGHT_CHUNK; y++){
+        if (this->leftChunk != nullptr && x == 0) this->leftChunk->updateFace(WIDTH_CHUNK-1, y, z);
+        if (this->rightChunk != nullptr && x == WIDTH_CHUNK-1) this->rightChunk->updateFace(0, y, z);
+        if (this->bottomChunk != nullptr && z == 0) this->bottomChunk->updateFace(x, y, WIDTH_CHUNK-1);
+        if (this->upChunk != nullptr && z == WIDTH_CHUNK-1) this->upChunk->updateFace(x, y, 0);
         this->updateFace(x, y, z);
+      }
 }
 
 bool Chunk::getActive(int x, int y, int z){

@@ -5,8 +5,8 @@
 constexpr int WIDTH = 800;
 constexpr int HEIGHT = 800;
 // This is the number of chunks in the map
-constexpr int MAP_WIDTH = 20;
-constexpr int MAP_HEIGHT = 20;
+constexpr int MAP_WIDTH = 40;
+constexpr int MAP_HEIGHT = 40;
 
 constexpr int CHUNK_RAD = 4;
 constexpr int INVENTORY_COLUMNS = 3;

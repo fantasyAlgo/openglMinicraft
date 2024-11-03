@@ -397,7 +397,22 @@ CMakeFiles/learn_opengl.dir/src/Main.cpp.o: \
  /usr/include/strings.h /usr/local/include/glm/gtc/type_ptr.inl \
  /home/fantasy/Programming/openglStuff/openglMinicraft/src/hFiles/texture.h \
  /usr/include/GLFW/glfw3.h /usr/include/c++/14.2.1/utility \
- /usr/include/c++/14.2.1/bits/stl_relops.h \
+ /usr/include/c++/14.2.1/bits/stl_relops.h /usr/include/c++/14.2.1/future \
+ /usr/include/c++/14.2.1/mutex /usr/include/c++/14.2.1/bits/chrono.h \
+ /usr/include/c++/14.2.1/ratio /usr/include/c++/14.2.1/ctime \
+ /usr/include/c++/14.2.1/bits/parse_numbers.h \
+ /usr/include/c++/14.2.1/bits/std_mutex.h \
+ /usr/include/c++/14.2.1/bits/unique_lock.h \
+ /usr/include/c++/14.2.1/condition_variable \
+ /usr/include/c++/14.2.1/bits/shared_ptr.h \
+ /usr/include/c++/14.2.1/bits/shared_ptr_base.h \
+ /usr/include/c++/14.2.1/bits/allocated_ptr.h \
+ /usr/include/c++/14.2.1/bits/unique_ptr.h \
+ /usr/include/c++/14.2.1/ext/concurrence.h \
+ /usr/include/c++/14.2.1/bits/atomic_base.h \
+ /usr/include/c++/14.2.1/bits/atomic_lockfree_defines.h \
+ /usr/include/c++/14.2.1/bits/atomic_futex.h \
+ /usr/include/c++/14.2.1/atomic /usr/include/c++/14.2.1/bits/std_thread.h \
  /home/fantasy/Programming/openglStuff/openglMinicraft/imgui/imgui.h \
  /home/fantasy/Programming/openglStuff/openglMinicraft/imgui/imconfig.h \
  /home/fantasy/Programming/openglStuff/openglMinicraft/imgui/imgui_impl_glfw.h \

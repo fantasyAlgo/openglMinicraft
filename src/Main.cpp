@@ -82,6 +82,7 @@ int main(){
 		// Take care of all GLFW events
 		glfwPollEvents();
 	}
+  game.is_running = false;
 
   ImGui_ImplOpenGL3_Shutdown();
   ImGui_ImplGlfw_Shutdown();

@@ -5,6 +5,7 @@
 #include "chunk.h"
 #include "Settings.h"
 #include <GLFW/glfw3.h>
+#include <future>
 #include <glm/ext/vector_float3.hpp>
 
 class Game {
@@ -23,12 +24,16 @@ private:
   CubeRenderer cubeRenderer; //= CubeRenderer(shaderR, textureR);
   Shader shaderR; //= ResourceManager::GetShader("main_shader");
   Texture2D textureR; //= ResourceManager::GetTexture("awesomeface");
+  std::future<bool> chunk_loader_thread;
+
 
 public:
+  bool is_running;
   Game();
   //~Game();
   void Init();
   void ProcessInput(GLFWwindow *window, float dt);
   void Update(float dt);
+  bool ChunkLoader();
   void Render();
 };
