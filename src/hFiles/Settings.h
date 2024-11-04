@@ -8,7 +8,7 @@ constexpr int HEIGHT = 800;
 constexpr int MAP_WIDTH = 40;
 constexpr int MAP_HEIGHT = 40;
 
-constexpr int CHUNK_RAD = 4;
+constexpr int CHUNK_RAD = 5;
 constexpr int INVENTORY_COLUMNS = 3;
 constexpr int INVENTORY_ROWS = 10;
 

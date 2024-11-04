@@ -117,7 +117,7 @@ void Camera::updatePointer(Chunk &initialChunk){
       if (chunk->leftChunk != nullptr && chunk->leftChunk->isLoaded) chunk = chunk->leftChunk;
       else break;
     }
-    if (vMapCheck.x > WIDTH_CHUNK){
+    if (vMapCheck.x >= WIDTH_CHUNK){
       vMapCheck.x = 0;
       //std::cout << chunk->rightChunk
       if (chunk->rightChunk != nullptr && chunk->rightChunk->isLoaded) chunk = chunk->rightChunk;
@@ -129,7 +129,7 @@ void Camera::updatePointer(Chunk &initialChunk){
       else break;
     }
 
-    if (vMapCheck.z > WIDTH_CHUNK){
+    if (vMapCheck.z >= WIDTH_CHUNK){
       vMapCheck.z = 0;
       if (chunk->upChunk != nullptr && chunk->upChunk->isLoaded){
         chunk = chunk->upChunk;
@@ -143,11 +143,9 @@ void Camera::updatePointer(Chunk &initialChunk){
   }
   
   if (!bTileFound){
-    //std::cout << "############### Not found ############" << std::endl;
     return;
   }//else std::cout << "############### Found! ############" << std::endl;
   glm::vec3 intrx = cameraPointer + direction*fDistance;
-  //std::cout << "intersection: " << intrx.x << " " << intrx.y << " " << intrx.z << std::endl;
   if (lastAxisCollided == 0) this->pointer_block.face = (Face) (vStep.x == 1 ? 3 : 2);
   if (lastAxisCollided == 1) this->pointer_block.face = (Face) (vStep.y == 1 ? 5 : 4);
   if (lastAxisCollided == 2) this->pointer_block.face = (Face) (vStep.z == 1 ? 1 : 0);
@@ -169,24 +167,28 @@ void Camera::mouseHandling(GLFWwindow* window, Chunk &chunk, float deltaTime){
       this->pointer_block.face = NO_FACE;
       chunk.leftChunk->AddBlock(this->pointer_block.pos, place_type);
       chunk.leftChunk->update();
+      chunk.leftChunk->needsUpdate = false;
     }
     else if (this->pointer_block.pos.x == WIDTH_CHUNK-1 && this->pointer_block.face == LEFT){
       this->pointer_block.pos.x = 0;
       this->pointer_block.face = NO_FACE;
       chunk.rightChunk->AddBlock(this->pointer_block.pos, place_type);
       chunk.rightChunk->update();
+      chunk.rightChunk->needsUpdate = false;
     }
     if (this->pointer_block.pos.z == 0 && this->pointer_block.face == BACK){
       this->pointer_block.pos.z = WIDTH_CHUNK-1;
       this->pointer_block.face = NO_FACE;
       chunk.bottomChunk->AddBlock(this->pointer_block.pos, place_type);
       chunk.bottomChunk->update();
+      chunk.bottomChunk->needsUpdate = false;
     }
     else if (this->pointer_block.pos.z == WIDTH_CHUNK-1 && this->pointer_block.face == FRONT){
       this->pointer_block.pos.z = 0;
       this->pointer_block.face = NO_FACE;
       chunk.upChunk->AddBlock(this->pointer_block.pos, place_type);
       chunk.upChunk->update();
+      chunk.upChunk->needsUpdate = false;
     }else{
       chunk.AddBlock(this->pointer_block.pos + 2.0f*facesPosition[(int)this->pointer_block.face], place_type);
       chunk.update();
@@ -199,6 +201,11 @@ void Camera::mouseHandling(GLFWwindow* window, Chunk &chunk, float deltaTime){
     //std::cout << "pos: " << this->pointer_block.pos.x << " " << this->pointer_block.pos.y << " " << this->pointer_block.pos.z << std::endl;
     chunk.RemoveBlock(this->pointer_block.pos);
     chunk.update();
+    if (chunk.leftChunk->needsUpdate){chunk.leftChunk->update(); chunk.leftChunk->needsUpdate = false;}
+    if (chunk.rightChunk->needsUpdate){chunk.rightChunk->update(); chunk.rightChunk->needsUpdate = false;}
+    if (chunk.bottomChunk->needsUpdate){chunk.bottomChunk->update(); chunk.bottomChunk->needsUpdate = false;}
+    if (chunk.upChunk->needsUpdate){chunk.upChunk->update(); chunk.upChunk->needsUpdate = false;}
+
     leftPressed = true;
   }
 

@@ -11,11 +11,8 @@
 
 class Chunk {
 public:
-  glm::vec2 offset;
-  glm::vec2 map_pos;
-  bool active;
-  bool isLoaded;
-
+  glm::vec2 offset, map_pos;
+  bool active, isLoaded, needsUpdate;
 
   //Block data[WIDTH_CHUNK][HEIGHT_CHUNK][WIDTH_CHUNK];
   std::vector<Block> data;
@@ -49,7 +46,6 @@ public:
   void setFaces(int x, int y, int z, bool faces[]);
   void setFace(int x, int y, int z, int face, bool active);
   void setType(int x, int y, int z, BLOCK_TYPE type);
-
 
   bool isInside(glm::vec3 pos){
     return pos.x >= 0 && pos.x < WIDTH_CHUNK &&

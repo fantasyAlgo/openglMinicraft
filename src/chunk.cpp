@@ -66,9 +66,12 @@ void Chunk::AddBlock(glm::vec3 position, BLOCK_TYPE type){
   if (z-1 >= 0) this->setFace(x, y, z-1, 0, false);
   if (z+1 < WIDTH_CHUNK) this->setFace(x, y, z+1, 1, false);
 }
+
 void Chunk::RemoveBlock(glm::vec3 position){
   int x = position.x; int y = position.y; int z = position.z;
   //std::cout << x << " | " << y << " | " << z << std::endl;
+  //std::cout << "chunks: " << this->leftChunk->isLoaded << " " << this->rightChunk->isLoaded << " " << this->bottomChunk->isLoaded << " " << this->upChunk->isLoaded << std::endl;
+  //std::cout << "block z+1: " << this->get(x, y, z+1).faces[0] << this->get(x, y, z+1).faces[1] << this->get(x, y, z+1).faces[2]  << this->get(x, y, z+1).faces[3] << this->get(x, y, z+1).faces[4] << this->get(x, y, z+1).faces[5] << std::endl;
   this->setActive(x, y, z, false);
   this->setType(x, y, z, END_BLOCK);
   this->setFace(x-1, y, z, 3, true);
@@ -77,6 +80,8 @@ void Chunk::RemoveBlock(glm::vec3 position){
   this->setFace(x, y+1, z, 5, true);
   this->setFace(x, y, z-1, 0, true);
   this->setFace(x, y, z+1, 1, true);
+  //std::cout << "block z+1: " << this->get(x, y, z+1).faces[0] << this->get(x, y, z+1).faces[1] << this->get(x, y, z+1).faces[2]  << this->get(x, y, z+1).faces[3] << this->get(x, y, z+1).faces[4] << this->get(x, y, z+1).faces[5] << std::endl;
+
 }
 
 
@@ -275,7 +280,7 @@ void Chunk::setActive(int x, int y, int z, bool active){
     if (this->upChunk  != nullptr && this->upChunk->isLoaded) this->upChunk->setActive(x, y, 0, active);
     return;
   }
-
+  this->needsUpdate = true;
   data[z*HEIGHT_CHUNK*WIDTH_CHUNK + y*WIDTH_CHUNK + x].active = active;
 }
 void Chunk::setFaces(int x, int y, int z, bool faces[]){
@@ -295,7 +300,7 @@ void Chunk::setFaces(int x, int y, int z, bool faces[]){
     if (this->upChunk != nullptr && this->upChunk->isLoaded) this->upChunk->setFaces(x, y, 0, faces);
     return;
   }
-
+  this->needsUpdate = true;
   for (int i = 0; i < 6; i++) 
       data[z * HEIGHT_CHUNK * WIDTH_CHUNK + y * WIDTH_CHUNK + x].faces[i] = faces[i];
 }
@@ -316,10 +321,10 @@ void Chunk::setFace(int x, int y, int z, int face, bool active){
     if (this->upChunk != nullptr && this->upChunk->isLoaded) this->upChunk->setFace(x, y, 0, face, active);
     return;
   }
+  this->needsUpdate = true;
   data[z*HEIGHT_CHUNK*WIDTH_CHUNK + y*WIDTH_CHUNK + x].faces[face] = active;
 }
 void Chunk::setType(int x, int y, int z, BLOCK_TYPE type){
-
   if (x < 0){
     if (this->leftChunk != nullptr && this->leftChunk->isLoaded) this->leftChunk->setType(WIDTH_CHUNK-1, y, z, type);
     return;
@@ -336,7 +341,7 @@ void Chunk::setType(int x, int y, int z, BLOCK_TYPE type){
     if (this->upChunk != nullptr && this->upChunk->isLoaded) this->upChunk->setType(x, y, 0, type);
     return;
   }
-
+  this->needsUpdate = true;
   data[z*HEIGHT_CHUNK*WIDTH_CHUNK + y*WIDTH_CHUNK + x].type = type;
 }
 
