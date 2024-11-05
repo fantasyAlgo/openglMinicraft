@@ -15,6 +15,7 @@
 
 #include <cstdint>
 #include <cassert>
+#include <string>
 
 uint32_t packInstanceData(uint8_t x, uint8_t y, uint8_t z, uint8_t face, uint8_t texture, bool isBillBoard = false) {
     // Check each parameter to ensure it fits within the specified bit limits
@@ -93,6 +94,8 @@ void Chunk::InitChunk(const siv::PerlinNoise &perlin, glm::vec2 chunk_pos, Chunk
 
   this->map_pos = chunk_pos;
   this->offset = (float)WIDTH_CHUNK*chunk_pos;
+  //std::string path = "Worlds/" + world_name + "/chunk" + std::to_string((int)chunk_pos.x) + "_" + std::to_string((int)chunk_pos.y) + ".dat"; 
+  //if (fs::exists(path)){}
   this->MakeChunkData(perlin);
 
   this->update();

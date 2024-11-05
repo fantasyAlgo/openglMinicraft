@@ -56,25 +56,26 @@ int main(){
   ImGui_ImplGlfw_InitForOpenGL(window, true);
   ImGui_ImplOpenGL3_Init("#version 330");
 
+  io.Fonts->AddFontFromFileTTF("src/Assets/MinecraftRegular-Bmg3.otf", 26.0f);  // Specify font path and size
 
-	while (!glfwWindowShouldClose(window)){
+	while (!glfwWindowShouldClose(window) && game.is_running){
 		glClearColor(0.5333, 0.8, 0.858823, 1.0f);
 		// Clean the back buffer and assign the new color to it
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
+
+
     ImGui::NewFrame();
 
     float currentFrame = glfwGetTime();
-    //std::cout << camera.pointer_block.first.x
     deltaTime = currentFrame - lastFrame;
     lastFrame = currentFrame;
     game.ProcessInput(window, deltaTime);
     game.Update(deltaTime);
     game.Render();
     ImGui::Render();
-
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
 		// Swap the back buffer with the front buffer
@@ -83,6 +84,7 @@ int main(){
 		glfwPollEvents();
 	}
   game.is_running = false;
+  game.saveWorld(game.world_name);
 
   ImGui_ImplOpenGL3_Shutdown();
   ImGui_ImplGlfw_Shutdown();

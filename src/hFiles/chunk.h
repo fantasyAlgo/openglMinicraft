@@ -26,6 +26,7 @@ public:
   void InitChunk(const siv::PerlinNoise &perlin, glm::vec2 offset, Chunk *up, Chunk *down, Chunk *left, Chunk *right);
   void MakeTrees(int x, int startY, int z);
   void MakeChunkData(const siv::PerlinNoise &perlin);
+  void LoadChunkData(std::string world_name);
 
   void Render(CubeRenderer &cubeRenderer);
   void RenderWater(CubeRenderer &cubeRenderer);
@@ -51,7 +52,7 @@ public:
     return pos.x >= 0 && pos.x < WIDTH_CHUNK &&
            pos.y >= 0 && pos.y < HEIGHT_CHUNK &&
            pos.z >= 0 && pos.z < WIDTH_CHUNK;
-  }
+  } 
 
 };
 

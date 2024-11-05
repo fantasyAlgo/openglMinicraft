@@ -421,4 +421,20 @@ CMakeFiles/learn_opengl.dir/src/Game.cpp.o: \
  /usr/include/c++/14.2.1/bits/stl_map.h \
  /usr/include/c++/14.2.1/bits/stl_multimap.h /usr/include/GL/gl.h \
  /usr/include/c++/14.2.1/thread \
- /usr/include/c++/14.2.1/bits/this_thread_sleep.h
+ /usr/include/c++/14.2.1/bits/this_thread_sleep.h \
+ /usr/include/c++/14.2.1/filesystem /usr/include/c++/14.2.1/bits/fs_fwd.h \
+ /usr/include/c++/14.2.1/bits/fs_path.h /usr/include/c++/14.2.1/locale \
+ /usr/include/c++/14.2.1/bits/locale_facets_nonio.h \
+ /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/time_members.h \
+ /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/messages_members.h \
+ /usr/include/libintl.h /usr/include/c++/14.2.1/bits/codecvt.h \
+ /usr/include/c++/14.2.1/bits/locale_facets_nonio.tcc \
+ /usr/include/c++/14.2.1/bits/locale_conv.h \
+ /usr/include/c++/14.2.1/iomanip \
+ /usr/include/c++/14.2.1/bits/quoted_string.h \
+ /usr/include/c++/14.2.1/sstream /usr/include/c++/14.2.1/bits/sstream.tcc \
+ /usr/include/c++/14.2.1/codecvt /usr/include/c++/14.2.1/bits/fs_dir.h \
+ /usr/include/c++/14.2.1/bits/fs_ops.h /usr/include/c++/14.2.1/fstream \
+ /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/basic_file.h \
+ /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/c++io.h \
+ /usr/include/c++/14.2.1/bits/fstream.tcc /usr/include/c++/14.2.1/format

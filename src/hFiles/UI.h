@@ -23,6 +23,7 @@ namespace UI {
     float size = 20.0f;
     ImU32 color = IM_COL32(255, 255, 255, 255); // Red color for the cross
     DrawCross(center, size, color, 3.0f);
+    ImGui::SetWindowFontScale(0.7);
     ImGui::Text("FPS: %.1f", ImGui::GetIO().Framerate);
     std::string s = (std::string)("dir: " + std::to_string(direction.x) + " " + std::to_string(direction.y) + " " + std::to_string(direction.z));
     ImGui::Text(s.c_str());

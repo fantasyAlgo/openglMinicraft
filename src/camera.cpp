@@ -131,9 +131,7 @@ void Camera::updatePointer(Chunk &initialChunk){
 
     if (vMapCheck.z >= WIDTH_CHUNK){
       vMapCheck.z = 0;
-      if (chunk->upChunk != nullptr && chunk->upChunk->isLoaded){
-        chunk = chunk->upChunk;
-      }
+      if (chunk->upChunk != nullptr && chunk->upChunk->isLoaded) chunk = chunk->upChunk;
       else break;
     }
 
@@ -142,9 +140,7 @@ void Camera::updatePointer(Chunk &initialChunk){
     }
   }
   
-  if (!bTileFound){
-    return;
-  }//else std::cout << "############### Found! ############" << std::endl;
+  if (!bTileFound) return;
   glm::vec3 intrx = cameraPointer + direction*fDistance;
   if (lastAxisCollided == 0) this->pointer_block.face = (Face) (vStep.x == 1 ? 3 : 2);
   if (lastAxisCollided == 1) this->pointer_block.face = (Face) (vStep.y == 1 ? 5 : 4);
