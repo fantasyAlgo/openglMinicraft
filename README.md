@@ -10,11 +10,11 @@ A copy of minecraft in c++ and opengl
 - [x] Trees
 - [x] Light
 - [ ] Ambient occlusion and minecraft day/night system
-- [ ] GUI
-- [ ] world/chunk saving
+- [x] GUI
+- [x] world/chunk saving
 - [x] Optimize rendering (e.g using indexing)
 - [x] Water!
 - [ ] Inventory
-- [ ] Block mining and crafting
+- [ ] crafting
 - [ ] Entities
 - [ ] Survival mode

@@ -17,6 +17,12 @@
 #include <cassert>
 #include <string>
 
+#include <fstream>
+#include <filesystem>
+
+namespace fs = std::filesystem;
+
+
 uint32_t packInstanceData(uint8_t x, uint8_t y, uint8_t z, uint8_t face, uint8_t texture, bool isBillBoard = false) {
     // Check each parameter to ensure it fits within the specified bit limits
     assert(x <= 0x3F && "x must fit in 6 bits (0-63)");
@@ -86,7 +92,7 @@ void Chunk::RemoveBlock(glm::vec3 position){
 }
 
 
-void Chunk::InitChunk(const siv::PerlinNoise &perlin, glm::vec2 chunk_pos, Chunk *up, Chunk *down, Chunk *left, Chunk *right){
+void Chunk::InitChunk(const siv::PerlinNoise &perlin, std::string world_name, glm::vec2 chunk_pos, Chunk *up, Chunk *down, Chunk *left, Chunk *right){
   this->upChunk = up;
   this->bottomChunk = down;
   this->leftChunk = left;
@@ -94,9 +100,20 @@ void Chunk::InitChunk(const siv::PerlinNoise &perlin, glm::vec2 chunk_pos, Chunk
 
   this->map_pos = chunk_pos;
   this->offset = (float)WIDTH_CHUNK*chunk_pos;
-  //std::string path = "Worlds/" + world_name + "/chunk" + std::to_string((int)chunk_pos.x) + "_" + std::to_string((int)chunk_pos.y) + ".dat"; 
-  //if (fs::exists(path)){}
-  this->MakeChunkData(perlin);
+  std::string path = world_name + "/chunk" + std::to_string((int)chunk_pos.x) + "_" + std::to_string((int)chunk_pos.y) + ".dat"; 
+  //std::cout << "path:  " << path << std::endl;
+  if (fs::exists(path)){
+    this->LoadChunkData(path);
+    /*std::ifstream inputFileStream;
+    inputFileStream.open(path, std::ios::in|std::ios::binary);
+    inputFileStream.read((char*) &this->packed_data, WIDTH_CHUNK*WIDTH_CHUNK*HEIGHT_CHUNK*sizeof(float));
+    std::streamsize bytesRead = inputFileStream.gcount();
+    this->n_packed_data = bytesRead/4;
+    //std::cout << "Bytes read: " << bytesRead/4 << std::endl;
+    this->updateFromPackedData();*/
+  }else{
+    this->MakeChunkData(perlin);
+  }
 
   this->update();
   if (up != nullptr)
@@ -182,6 +199,7 @@ void Chunk::MakeChunkData(const siv::PerlinNoise &perlin){
 void Chunk::updatePackedData(){
   int size = data.size();
   this->n_packed_data = 0;
+  this->n_file_data = 0;
   int indx = 0;
   int indx_water = 0;
   glm::vec2 text;
@@ -192,6 +210,9 @@ void Chunk::updatePackedData(){
     for (int y = 0; y < HEIGHT_CHUNK; y++) {
       for (int z = 0; z < WIDTH_CHUNK; z++) {
         curr = get(x,y,z);
+        all_packed_data[this->n_file_data] = curr.active;
+        all_packed_data[this->n_file_data++] |= ((int)curr.type << 1);
+
         if (!curr.active) continue;
         max_faces = isBillBoard[(int)curr.type] ? 2 : 6;
         for (int f = 0; f < max_faces; f++) {
@@ -208,6 +229,7 @@ void Chunk::updatePackedData(){
   this->n_packed_data = indx;
   this->n_packed_data_water = indx_water;
 }
+
 
 bool isFaceVisible(Block originalBlock, Block block){
   if (isTransparent(block)) return true;
@@ -347,4 +369,35 @@ void Chunk::setType(int x, int y, int z, BLOCK_TYPE type){
   this->needsUpdate = true;
   data[z*HEIGHT_CHUNK*WIDTH_CHUNK + y*WIDTH_CHUNK + x].type = type;
 }
+
+void Chunk::LoadChunkData(std::string path){
+  std::ifstream inputFileStream;
+  inputFileStream.open(path, std::ios::in|std::ios::binary);
+  inputFileStream.read((char*) &this->all_packed_data, WIDTH_CHUNK*WIDTH_CHUNK*HEIGHT_CHUNK*sizeof(float));
+  std::streamsize bytesRead = inputFileStream.gcount();
+  this->n_packed_data = bytesRead;
+  int i = 0;
+  for (int x = 0; x < WIDTH_CHUNK; x++)
+    for (int y = 0; y < HEIGHT_CHUNK; y++)
+      for (int z = 0; z < WIDTH_CHUNK; z++){
+        this->setActive(x, y, z, this->all_packed_data[i]&0b1);
+        this->setType(x, y, z, (BLOCK_TYPE)((all_packed_data[i++] >> 1) & 0b01111111));
+      }
+}
+
+/*void Chunk::updateFromPackedData(){
+  int x, y, z, face, texPos;
+  for (int i = 0; i < this->n_packed_data; i++) {
+    x = (this->packed_data[i] >> 0) & 0x3F;
+    y = (this->packed_data[i]  >> 6) & 0x3F;
+    z = (this->packed_data[i]  >> 12) & 0x3F;
+    face = (this->packed_data[i] >> 18) & 0x0F;
+    texPos = pos_to_type[(this->packed_data[i] >> 22) & 0x7F];
+    this->setActive(x, y, z, true);
+    this->setFace(x, y, z, face, true);
+    this->setType(x, y, z, (BLOCK_TYPE)texPos);
+  }
+}*/
+
+
 

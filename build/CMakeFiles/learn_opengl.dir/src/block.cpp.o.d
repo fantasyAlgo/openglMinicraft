@@ -112,4 +112,7 @@ CMakeFiles/learn_opengl.dir/src/block.cpp.o: \
  /usr/include/c++/14.2.1/bits/stl_bvector.h \
  /usr/include/c++/14.2.1/bits/vector.tcc /usr/include/c++/14.2.1/array \
  /usr/include/c++/14.2.1/compare \
- /usr/local/include/glm/detail/_vectorize.hpp
+ /usr/local/include/glm/detail/_vectorize.hpp /usr/include/c++/14.2.1/map \
+ /usr/include/c++/14.2.1/bits/stl_tree.h \
+ /usr/include/c++/14.2.1/bits/stl_map.h \
+ /usr/include/c++/14.2.1/bits/stl_multimap.h

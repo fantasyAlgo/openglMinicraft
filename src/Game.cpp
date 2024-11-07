@@ -16,10 +16,7 @@
 #include <filesystem>
 #include <fstream>
 #include <format>
-
-
 namespace fs = std::filesystem;
-
 
 bool isInside(int i, int j);
 Game::Game(){
@@ -64,6 +61,7 @@ void Game::Init(){
       this->files_list.push_back(entry.path().string());
   }
 }
+
 void Game::Update(float dt){
   if (state != GameState::PLAY) return;
   current_chunk_x = player.camera.position.x/WIDTH_CHUNK; current_chunk_y = player.camera.position.z/WIDTH_CHUNK;
@@ -100,11 +98,19 @@ void Game::renderWorldPanel(){
   {
     static bool selection[16] = { false };
     for (int i = 0; i < world_list_size; i++) {
+      ImGui::SetNextItemAllowOverlap();
       if (ImGui::Selectable(this->files_list[i].c_str(), selection[i], ImGuiSelectableFlags_AllowDoubleClick)){
         if (ImGui::IsMouseDoubleClicked(0)){
           this->world_name = this->files_list[i];
           this->state = GameState::PLAY;
         }
+      }
+      ImGui::SameLine();
+      std::string delete_label = "Delete##" + std::to_string(i);
+      if (ImGui::SmallButton(delete_label.c_str())){
+        fs::remove_all(this->files_list[i]);
+        this->files_list.erase(this->files_list.begin() + i);
+        i--;
       }
     }
     ImGui::TreePop();
@@ -124,8 +130,6 @@ void Game::renderWorldPanel(){
     this->state = GameState::HOME_PAGE;
 
   //ImGui::ShowDemoWindow();
-
-
   ImGui::End();
 }
 void Game::renderHome(){
@@ -177,7 +181,7 @@ void Game::ProcessInput(GLFWwindow *window, float dt){
   if (state != GameState::PLAY){
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
     return;
-  };
+  }
 
   player.camera.keyboardHandling(window, dt);
   player.camera.mouseHandling(window,
@@ -194,7 +198,6 @@ bool isInside(int i, int j){
   return i >= 0 && i < MAP_WIDTH &&
          j >= 0 && j < MAP_HEIGHT;
 }
-
 
 bool Game::ChunkLoader(){
   std::cout << "Chunk loader thread" << std::endl;
@@ -215,9 +218,9 @@ bool Game::ChunkLoader(){
       dMax = 1;
     }
     if (abs(pos.x-current_chunk_x) >= CHUNK_RAD+2) continue;
-    std::cout << "Chunk " << pos.x << " " << pos.y << " loaded, with: " << currD << " " << dir << std::endl;
+    //std::cout << "Chunk " << pos.x << " " << pos.y << " loaded, with: " << currD << " " << dir << std::endl;
     if (isInside(pos.x, pos.y) && !this->map[(int)pos.x][(int)pos.y].isLoaded){
-      this->map[(int)pos.x][(int)pos.y].InitChunk(perlin, pos,
+      this->map[(int)pos.x][(int)pos.y].InitChunk(perlin, this->world_name, pos,
                                                   isInside((int)pos.x, (int)pos.y+1) ? &map[(int)pos.x][(int)pos.y+1] : nullptr, 
                                                   isInside((int)pos.x, (int)pos.y-1) ? &map[(int)pos.x][(int)pos.y-1] : nullptr,
                                                   isInside((int)pos.x-1, (int)pos.y) ? &map[(int)pos.x-1][(int)pos.y] : nullptr, 
@@ -236,15 +239,20 @@ bool Game::ChunkLoader(){
   return true;
 }
 
-void Game::saveWorld(std::string name){
+
+void Game::saveWorld(){
+  std::string name = this->world_name;
+  if (!(name[0] == 'W' && name[1] == 'o' && name[2] == 'r' && name[3] == 'l' && name[4] == 'd'))
+    name = "Worlds/" + name;
   std::string path;
   std::ofstream outputFileStream;
   for (int i = 0; i < MAP_WIDTH; i++) {
     for (int j = 0; j < MAP_HEIGHT; j++) {
       if (map[i][j].isLoaded){
-        path = "Worlds/" + name + "/chunk" + std::to_string(i) + "_" + std::to_string(j) + ".dat";
+        path = name + "/chunk" + std::to_string(i) + "_" + std::to_string(j) + ".dat";
+        //std::cout << "path: " << path << std::endl;
         outputFileStream.open(path.c_str(), std::ios::out|std::ios::binary);
-        outputFileStream.write((char*)map[i][j].packed_data, map[i][j].n_packed_data*sizeof(int));
+        outputFileStream.write((char*)map[i][j].all_packed_data, WIDTH_CHUNK*WIDTH_CHUNK*HEIGHT_CHUNK*sizeof(unsigned char));
         outputFileStream.close();
       }
     }

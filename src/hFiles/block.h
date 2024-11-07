@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <glm/ext/vector_float2.hpp>
 #include <glm/ext/vector_float3.hpp>
+#include <map>
 
 constexpr int WIDTH_CHUNK = 32;
 constexpr int HEIGHT_CHUNK = 64;
@@ -28,7 +29,9 @@ enum BLOCK_TYPE {
 };
 
 extern glm::vec2 type_position[N_TYPES][3];
+extern std::map<int, int> pos_to_type;
 extern bool isBillBoard[N_TYPES];
+void initMapType();
 
 typedef struct Block{
   bool active = false;

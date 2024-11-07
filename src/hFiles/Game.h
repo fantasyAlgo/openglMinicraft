@@ -50,7 +50,7 @@ public:
   void renderWorldPanel();
   void Render();
 
-  void saveWorld(std::string name);
+  void saveWorld();
 };
 
 

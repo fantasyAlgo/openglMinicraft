@@ -197,10 +197,10 @@ void Camera::mouseHandling(GLFWwindow* window, Chunk &chunk, float deltaTime){
     //std::cout << "pos: " << this->pointer_block.pos.x << " " << this->pointer_block.pos.y << " " << this->pointer_block.pos.z << std::endl;
     chunk.RemoveBlock(this->pointer_block.pos);
     chunk.update();
-    if (chunk.leftChunk->needsUpdate){chunk.leftChunk->update(); chunk.leftChunk->needsUpdate = false;}
-    if (chunk.rightChunk->needsUpdate){chunk.rightChunk->update(); chunk.rightChunk->needsUpdate = false;}
-    if (chunk.bottomChunk->needsUpdate){chunk.bottomChunk->update(); chunk.bottomChunk->needsUpdate = false;}
-    if (chunk.upChunk->needsUpdate){chunk.upChunk->update(); chunk.upChunk->needsUpdate = false;}
+    if (chunk.leftChunk != nullptr && chunk.leftChunk->needsUpdate){chunk.leftChunk->update(); chunk.leftChunk->needsUpdate = false;}
+    if (chunk.rightChunk != nullptr && chunk.rightChunk->needsUpdate){chunk.rightChunk->update(); chunk.rightChunk->needsUpdate = false;}
+    if (chunk.bottomChunk != nullptr && chunk.bottomChunk->needsUpdate){chunk.bottomChunk->update(); chunk.bottomChunk->needsUpdate = false;}
+    if (chunk.upChunk != nullptr && chunk.upChunk->needsUpdate){chunk.upChunk->update(); chunk.upChunk->needsUpdate = false;}
 
     leftPressed = true;
   }

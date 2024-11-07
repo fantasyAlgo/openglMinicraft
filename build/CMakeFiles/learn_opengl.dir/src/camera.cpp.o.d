@@ -113,7 +113,10 @@ CMakeFiles/learn_opengl.dir/src/camera.cpp.o: \
  /usr/include/c++/14.2.1/bits/stl_bvector.h \
  /usr/include/c++/14.2.1/bits/vector.tcc /usr/include/c++/14.2.1/array \
  /usr/include/c++/14.2.1/compare \
- /usr/local/include/glm/detail/_vectorize.hpp \
+ /usr/local/include/glm/detail/_vectorize.hpp /usr/include/c++/14.2.1/map \
+ /usr/include/c++/14.2.1/bits/stl_tree.h \
+ /usr/include/c++/14.2.1/bits/stl_map.h \
+ /usr/include/c++/14.2.1/bits/stl_multimap.h \
  /home/fantasy/Programming/openglStuff/openglMinicraft/src/hFiles/chunk.h \
  /home/fantasy/Programming/openglStuff/openglMinicraft/src/hFiles/cube_renderer.h \
  /usr/include/c++/14.2.1/iostream /usr/include/c++/14.2.1/ostream \

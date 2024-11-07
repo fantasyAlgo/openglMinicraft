@@ -199,7 +199,10 @@ CMakeFiles/learn_opengl.dir/src/Game.cpp.o: \
  /usr/include/c++/14.2.1/bits/enable_special_members.h \
  /usr/include/c++/14.2.1/bits/node_handle.h \
  /usr/include/c++/14.2.1/bits/erase_if.h \
- /usr/local/include/glm/detail/_vectorize.hpp \
+ /usr/local/include/glm/detail/_vectorize.hpp /usr/include/c++/14.2.1/map \
+ /usr/include/c++/14.2.1/bits/stl_tree.h \
+ /usr/include/c++/14.2.1/bits/stl_map.h \
+ /usr/include/c++/14.2.1/bits/stl_multimap.h \
  /home/fantasy/Programming/openglStuff/openglMinicraft/src/hFiles/camera.h \
  /home/fantasy/Programming/openglStuff/openglMinicraft/src/hFiles/chunk.h \
  /home/fantasy/Programming/openglStuff/openglMinicraft/src/hFiles/cube_renderer.h \
@@ -417,10 +420,7 @@ CMakeFiles/learn_opengl.dir/src/Game.cpp.o: \
  /home/fantasy/Programming/openglStuff/openglMinicraft/imgui/imgui.h \
  /home/fantasy/Programming/openglStuff/openglMinicraft/imgui/imconfig.h \
  /home/fantasy/Programming/openglStuff/openglMinicraft/src/hFiles/resource_manager.h \
- /usr/include/c++/14.2.1/map /usr/include/c++/14.2.1/bits/stl_tree.h \
- /usr/include/c++/14.2.1/bits/stl_map.h \
- /usr/include/c++/14.2.1/bits/stl_multimap.h /usr/include/GL/gl.h \
- /usr/include/c++/14.2.1/thread \
+ /usr/include/GL/gl.h /usr/include/c++/14.2.1/thread \
  /usr/include/c++/14.2.1/bits/this_thread_sleep.h \
  /usr/include/c++/14.2.1/filesystem /usr/include/c++/14.2.1/bits/fs_fwd.h \
  /usr/include/c++/14.2.1/bits/fs_path.h /usr/include/c++/14.2.1/locale \

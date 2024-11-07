@@ -4,7 +4,6 @@
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 
-#include <GL/gl.h>
 #include <cstdlib>
 #include<glad/glad.h>
 #include<GLFW/glfw3.h>
@@ -16,6 +15,7 @@
 float deltaTime, lastFrame;
 
 int main(){
+  initMapType();
 	// Initialize GLFW
 	glfwInit();
 	// Tell GLFW what version of OpenGL we are using 
@@ -84,7 +84,7 @@ int main(){
 		glfwPollEvents();
 	}
   game.is_running = false;
-  game.saveWorld(game.world_name);
+  game.saveWorld();
 
   ImGui_ImplOpenGL3_Shutdown();
   ImGui_ImplGlfw_Shutdown();

@@ -380,7 +380,10 @@ CMakeFiles/learn_opengl.dir/src/cube_renderer.cpp.o: \
  /usr/include/c++/14.2.1/bits/uniform_int_dist.h \
  /usr/include/c++/14.2.1/bits/stl_tempbuf.h \
  /usr/include/c++/14.2.1/pstl/glue_algorithm_defs.h \
- /usr/include/c++/14.2.1/pstl/execution_defs.h /usr/include/GLFW/glfw3.h \
+ /usr/include/c++/14.2.1/pstl/execution_defs.h \
+ /usr/include/c++/14.2.1/map /usr/include/c++/14.2.1/bits/stl_tree.h \
+ /usr/include/c++/14.2.1/bits/stl_map.h \
+ /usr/include/c++/14.2.1/bits/stl_multimap.h /usr/include/GLFW/glfw3.h \
  /home/fantasy/Programming/openglStuff/openglMinicraft/src/hFiles/Settings.h \
  /home/fantasy/Programming/openglStuff/openglMinicraft/include/PerlinNoise/PerlinNoise.hpp \
  /usr/include/c++/14.2.1/iterator \
