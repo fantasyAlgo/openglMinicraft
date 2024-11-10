@@ -162,45 +162,40 @@ void Camera::mouseHandling(GLFWwindow* window, Chunk &chunk, float deltaTime){
       this->pointer_block.pos.x = WIDTH_CHUNK-1;
       this->pointer_block.face = NO_FACE;
       chunk.leftChunk->AddBlock(this->pointer_block.pos, place_type);
-      chunk.leftChunk->update();
-      chunk.leftChunk->needsUpdate = false;
+      chunk.leftChunk->needsUpdate = true;
     }
     else if (this->pointer_block.pos.x == WIDTH_CHUNK-1 && this->pointer_block.face == LEFT){
       this->pointer_block.pos.x = 0;
       this->pointer_block.face = NO_FACE;
       chunk.rightChunk->AddBlock(this->pointer_block.pos, place_type);
-      chunk.rightChunk->update();
-      chunk.rightChunk->needsUpdate = false;
+      chunk.rightChunk->needsUpdate = true;
     }
-    if (this->pointer_block.pos.z == 0 && this->pointer_block.face == BACK){
+    else if (this->pointer_block.pos.z == 0 && this->pointer_block.face == BACK){
       this->pointer_block.pos.z = WIDTH_CHUNK-1;
       this->pointer_block.face = NO_FACE;
       chunk.bottomChunk->AddBlock(this->pointer_block.pos, place_type);
-      chunk.bottomChunk->update();
-      chunk.bottomChunk->needsUpdate = false;
+      chunk.bottomChunk->needsUpdate = true;
     }
     else if (this->pointer_block.pos.z == WIDTH_CHUNK-1 && this->pointer_block.face == FRONT){
       this->pointer_block.pos.z = 0;
       this->pointer_block.face = NO_FACE;
       chunk.upChunk->AddBlock(this->pointer_block.pos, place_type);
-      chunk.upChunk->update();
-      chunk.upChunk->needsUpdate = false;
+      chunk.upChunk->needsUpdate = true;
     }else{
       chunk.AddBlock(this->pointer_block.pos + 2.0f*facesPosition[(int)this->pointer_block.face], place_type);
-      chunk.update();
+      chunk.needsUpdate = true;
     }
-
     rightPressed = true;
   }
   if (!firstClick && !leftPressed && this->active_pointer_block && glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS){
     //std::cout << "Left pressed!" << std::endl;
     //std::cout << "pos: " << this->pointer_block.pos.x << " " << this->pointer_block.pos.y << " " << this->pointer_block.pos.z << std::endl;
     chunk.RemoveBlock(this->pointer_block.pos);
-    chunk.update();
-    if (chunk.leftChunk != nullptr && chunk.leftChunk->needsUpdate){chunk.leftChunk->update(); chunk.leftChunk->needsUpdate = false;}
-    if (chunk.rightChunk != nullptr && chunk.rightChunk->needsUpdate){chunk.rightChunk->update(); chunk.rightChunk->needsUpdate = false;}
-    if (chunk.bottomChunk != nullptr && chunk.bottomChunk->needsUpdate){chunk.bottomChunk->update(); chunk.bottomChunk->needsUpdate = false;}
-    if (chunk.upChunk != nullptr && chunk.upChunk->needsUpdate){chunk.upChunk->update(); chunk.upChunk->needsUpdate = false;}
+    chunk.needsUpdate = true;
+    if (chunk.leftChunk != nullptr) chunk.leftChunk->needsUpdate = true;
+    if (chunk.rightChunk != nullptr) chunk.rightChunk->needsUpdate = true;
+    if (chunk.bottomChunk != nullptr) chunk.bottomChunk->needsUpdate = true;
+    if (chunk.upChunk != nullptr) chunk.upChunk->needsUpdate = true;
 
     leftPressed = true;
   }

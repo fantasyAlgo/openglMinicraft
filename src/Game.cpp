@@ -10,6 +10,7 @@
 #include <glm/ext/vector_float2.hpp>
 #include <glm/ext/vector_float3.hpp>
 #include <iterator>
+#include <ostream>
 #include <string>
 #include <thread>
 #include <type_traits>
@@ -162,8 +163,10 @@ void Game::renderGame(){
     for (int j = -CHUNK_RAD/2; j <= CHUNK_RAD/2; j++)
       if (isInside(current_chunk_x+i, current_chunk_y+j) && 
         (glm::dot(glm::vec2(i, j), glm::vec2(player.camera.direction.x, player.camera.direction.z)) > -0.5 || (i == 0 && j == 0)) &&
-          map[current_chunk_x+i][current_chunk_y+j].isLoaded)
+          map[current_chunk_x+i][current_chunk_y+j].isLoaded){
+        while (map[current_chunk_x+i][current_chunk_y+j].isUpdating); //std::cout << "whoops" << std::endl;
         map[current_chunk_x+i][current_chunk_y+j].Render(cubeRenderer);
+      }
   for (int i = -CHUNK_RAD/2; i <= CHUNK_RAD/2; i++)
     for (int j = -CHUNK_RAD/2; j <= CHUNK_RAD/2; j++)
       if (isInside(current_chunk_x+i, current_chunk_y+j) && 
@@ -208,6 +211,21 @@ bool Game::ChunkLoader(){
   int currD = 0;
   int dir = 0;
   while (is_running){
+    if (!this->chunk_updates.empty()){
+      this->map[(int)this->chunk_updates.front().x][(int)this->chunk_updates.front().y].update();
+      this->chunk_updates.pop();
+    }
+    for (int i = -CHUNK_RAD/2; i < CHUNK_RAD/2; i++) {
+      for (int j = -CHUNK_RAD/2; j < CHUNK_RAD/2; j++) {
+        if (isInside(current_chunk_x+i, current_chunk_y+j) && (this->map[current_chunk_x+i][current_chunk_y+j].needsUpdate ||
+          this->map[current_chunk_x+i][current_chunk_y+j].firstRendered)){
+            this->map[current_chunk_x+i][current_chunk_y+j].update();
+            this->chunk_updates.push(glm::vec2(current_chunk_x+i, current_chunk_y+j));
+            this->map[current_chunk_x+i][current_chunk_y+j].needsUpdate = false;
+            this->map[current_chunk_x+i][current_chunk_y+j].firstRendered = false;
+        }
+      }
+    }
     if (this->state != GameState::PLAY) continue;
     // place the correct stuff
     if ((int)current_chunk.x != current_chunk_x || (int)current_chunk.y != current_chunk_y){

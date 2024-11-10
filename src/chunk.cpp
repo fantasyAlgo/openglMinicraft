@@ -53,6 +53,8 @@ Chunk::Chunk(): active(false), isLoaded(false), offset(glm::vec2(0.0f, 0.0f)){
   data.resize(WIDTH_CHUNK*WIDTH_CHUNK*HEIGHT_CHUNK);
 }
 void Chunk::Render(CubeRenderer &cubeRenderer){
+  if (this->isUpdating)
+    cubeRenderer.RenderChunk(this->offset, this->n_back_packed_data, this->back_packed_data);
   cubeRenderer.RenderChunk(this->offset, this->n_packed_data, this->packed_data);
 }
 void Chunk::RenderWater(CubeRenderer &cubeRenderer){
@@ -76,9 +78,6 @@ void Chunk::AddBlock(glm::vec3 position, BLOCK_TYPE type){
 
 void Chunk::RemoveBlock(glm::vec3 position){
   int x = position.x; int y = position.y; int z = position.z;
-  //std::cout << x << " | " << y << " | " << z << std::endl;
-  //std::cout << "chunks: " << this->leftChunk->isLoaded << " " << this->rightChunk->isLoaded << " " << this->bottomChunk->isLoaded << " " << this->upChunk->isLoaded << std::endl;
-  //std::cout << "block z+1: " << this->get(x, y, z+1).faces[0] << this->get(x, y, z+1).faces[1] << this->get(x, y, z+1).faces[2]  << this->get(x, y, z+1).faces[3] << this->get(x, y, z+1).faces[4] << this->get(x, y, z+1).faces[5] << std::endl;
   this->setActive(x, y, z, false);
   this->setType(x, y, z, END_BLOCK);
   this->setFace(x-1, y, z, 3, true);
@@ -87,8 +86,6 @@ void Chunk::RemoveBlock(glm::vec3 position){
   this->setFace(x, y+1, z, 5, true);
   this->setFace(x, y, z-1, 0, true);
   this->setFace(x, y, z+1, 1, true);
-  //std::cout << "block z+1: " << this->get(x, y, z+1).faces[0] << this->get(x, y, z+1).faces[1] << this->get(x, y, z+1).faces[2]  << this->get(x, y, z+1).faces[3] << this->get(x, y, z+1).faces[4] << this->get(x, y, z+1).faces[5] << std::endl;
-
 }
 
 
@@ -97,6 +94,7 @@ void Chunk::InitChunk(const siv::PerlinNoise &perlin, std::string world_name, gl
   this->bottomChunk = down;
   this->leftChunk = left;
   this->rightChunk = right;
+  this->firstRendered = true;
 
   this->map_pos = chunk_pos;
   this->offset = (float)WIDTH_CHUNK*chunk_pos;
@@ -197,15 +195,20 @@ void Chunk::MakeChunkData(const siv::PerlinNoise &perlin){
 }
 
 void Chunk::updatePackedData(){
+  while (this->isUpdating);
   int size = data.size();
   this->n_packed_data = 0;
   this->n_file_data = 0;
+
+  memcpy(this->back_packed_data, this->packed_data, this->n_packed_data*sizeof(int));
+  this->n_back_packed_data = this->n_packed_data;
   int indx = 0;
   int indx_water = 0;
   glm::vec2 text;
   Block curr;
   bool foundTree = false;
   int max_faces;
+  this->isUpdating = true;
   for (int x = 0; x < WIDTH_CHUNK; x++) {
     for (int y = 0; y < HEIGHT_CHUNK; y++) {
       for (int z = 0; z < WIDTH_CHUNK; z++) {
@@ -228,6 +231,7 @@ void Chunk::updatePackedData(){
   }
   this->n_packed_data = indx;
   this->n_packed_data_water = indx_water;
+  this->isUpdating = false;
 }
 
 
@@ -305,7 +309,6 @@ void Chunk::setActive(int x, int y, int z, bool active){
     if (this->upChunk  != nullptr && this->upChunk->isLoaded) this->upChunk->setActive(x, y, 0, active);
     return;
   }
-  this->needsUpdate = true;
   data[z*HEIGHT_CHUNK*WIDTH_CHUNK + y*WIDTH_CHUNK + x].active = active;
 }
 void Chunk::setFaces(int x, int y, int z, bool faces[]){
@@ -325,7 +328,6 @@ void Chunk::setFaces(int x, int y, int z, bool faces[]){
     if (this->upChunk != nullptr && this->upChunk->isLoaded) this->upChunk->setFaces(x, y, 0, faces);
     return;
   }
-  this->needsUpdate = true;
   for (int i = 0; i < 6; i++) 
       data[z * HEIGHT_CHUNK * WIDTH_CHUNK + y * WIDTH_CHUNK + x].faces[i] = faces[i];
 }
@@ -346,7 +348,6 @@ void Chunk::setFace(int x, int y, int z, int face, bool active){
     if (this->upChunk != nullptr && this->upChunk->isLoaded) this->upChunk->setFace(x, y, 0, face, active);
     return;
   }
-  this->needsUpdate = true;
   data[z*HEIGHT_CHUNK*WIDTH_CHUNK + y*WIDTH_CHUNK + x].faces[face] = active;
 }
 void Chunk::setType(int x, int y, int z, BLOCK_TYPE type){
@@ -366,7 +367,6 @@ void Chunk::setType(int x, int y, int z, BLOCK_TYPE type){
     if (this->upChunk != nullptr && this->upChunk->isLoaded) this->upChunk->setType(x, y, 0, type);
     return;
   }
-  this->needsUpdate = true;
   data[z*HEIGHT_CHUNK*WIDTH_CHUNK + y*WIDTH_CHUNK + x].type = type;
 }
 

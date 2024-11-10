@@ -6,7 +6,9 @@
 #include "Settings.h"
 #include <GLFW/glfw3.h>
 #include <future>
+#include <glm/ext/vector_float2.hpp>
 #include <glm/ext/vector_float3.hpp>
+#include <queue>
 #include <string>
 #include <vector>
 
@@ -35,6 +37,7 @@ private:
   Shader shaderR; //= ResourceManager::GetShader("main_shader");
   Texture2D textureR; //= ResourceManager::GetTexture("awesomeface");
   std::future<bool> chunk_loader_thread;
+  std::queue<glm::vec2> chunk_updates;
 
 public:
   bool is_running;

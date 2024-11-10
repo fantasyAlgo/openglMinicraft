@@ -5,13 +5,13 @@
 # compile CXX with /usr/bin/c++
 C_DEFINES = 
 
-C_INCLUDES = -I/home/fantasy/Programming/openglStuff/openglMinicraft/include -I/home/fantasy/Programming/openglStuff/openglMinicraft/imgui -I/home/fantasy/Programming/openglStuff/openglMinicraft/imgui/backends
+C_INCLUDES = -I/home/fantasy/Programming/openglStuff/openglMinicraft2/openglMinicraft/include -I/home/fantasy/Programming/openglStuff/openglMinicraft2/openglMinicraft/imgui -I/home/fantasy/Programming/openglStuff/openglMinicraft2/openglMinicraft/imgui/backends
 
 C_FLAGS = -g
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/fantasy/Programming/openglStuff/openglMinicraft/include -I/home/fantasy/Programming/openglStuff/openglMinicraft/imgui -I/home/fantasy/Programming/openglStuff/openglMinicraft/imgui/backends
+CXX_INCLUDES = -I/home/fantasy/Programming/openglStuff/openglMinicraft2/openglMinicraft/include -I/home/fantasy/Programming/openglStuff/openglMinicraft2/openglMinicraft/imgui -I/home/fantasy/Programming/openglStuff/openglMinicraft2/openglMinicraft/imgui/backends
 
 CXX_FLAGS = -g -std=gnu++17
 

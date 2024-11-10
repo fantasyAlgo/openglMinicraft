@@ -12,11 +12,12 @@
 class Chunk {
 public:
   glm::vec2 offset, map_pos;
-  bool active, isLoaded, needsUpdate;
+  bool active, isLoaded, firstRendered, needsUpdate, isUpdating;
 
   //Block data[WIDTH_CHUNK][HEIGHT_CHUNK][WIDTH_CHUNK];
   std::vector<Block> data;
-  int n_packed_data, n_packed_data_water, n_file_data;
+  int n_packed_data, n_packed_data_water, n_file_data, n_back_packed_data;
+  int back_packed_data[WIDTH_CHUNK*WIDTH_CHUNK*HEIGHT_CHUNK*6];
   int packed_data[WIDTH_CHUNK*WIDTH_CHUNK*HEIGHT_CHUNK*6];
   int packed_data_water[WIDTH_CHUNK*WIDTH_CHUNK*HEIGHT_CHUNK/2];
   unsigned char all_packed_data[WIDTH_CHUNK*WIDTH_CHUNK*HEIGHT_CHUNK];

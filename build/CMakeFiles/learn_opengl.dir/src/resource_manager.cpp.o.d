@@ -1,7 +1,7 @@
 CMakeFiles/learn_opengl.dir/src/resource_manager.cpp.o: \
- /home/fantasy/Programming/openglStuff/openglMinicraft/src/resource_manager.cpp \
+ /home/fantasy/Programming/openglStuff/openglMinicraft2/openglMinicraft/src/resource_manager.cpp \
  /usr/include/stdc-predef.h \
- /home/fantasy/Programming/openglStuff/openglMinicraft/src/hFiles/resource_manager.h \
+ /home/fantasy/Programming/openglStuff/openglMinicraft2/openglMinicraft/src/hFiles/resource_manager.h \
  /usr/include/c++/14.2.1/map \
  /usr/include/c++/14.2.1/bits/requires_hosted.h \
  /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/c++config.h \
@@ -111,13 +111,13 @@ CMakeFiles/learn_opengl.dir/src/resource_manager.cpp.o: \
  /usr/include/bits/types/error_t.h \
  /usr/include/c++/14.2.1/bits/charconv.h \
  /usr/include/c++/14.2.1/bits/basic_string.tcc \
- /home/fantasy/Programming/openglStuff/openglMinicraft/include/glad/glad.h \
- /home/fantasy/Programming/openglStuff/openglMinicraft/include/KHR/khrplatform.h \
+ /home/fantasy/Programming/openglStuff/openglMinicraft2/openglMinicraft/include/glad/glad.h \
+ /home/fantasy/Programming/openglStuff/openglMinicraft2/openglMinicraft/include/KHR/khrplatform.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stdint.h \
  /usr/include/stdint.h /usr/include/bits/stdint-uintn.h \
  /usr/include/bits/stdint-least.h \
- /home/fantasy/Programming/openglStuff/openglMinicraft/src/hFiles/texture.h \
- /home/fantasy/Programming/openglStuff/openglMinicraft/src/hFiles/shader.h \
+ /home/fantasy/Programming/openglStuff/openglMinicraft2/openglMinicraft/src/hFiles/texture.h \
+ /home/fantasy/Programming/openglStuff/openglMinicraft2/openglMinicraft/src/hFiles/shader.h \
  /usr/local/include/glm/glm.hpp /usr/local/include/glm/detail/_fixes.hpp \
  /usr/include/c++/14.2.1/cmath /usr/include/math.h \
  /usr/include/bits/math-vector.h /usr/include/bits/libm-simd-decl-stubs.h \
@@ -342,7 +342,7 @@ CMakeFiles/learn_opengl.dir/src/resource_manager.cpp.o: \
  /usr/local/include/glm/ext/vector_uint1_sized.hpp \
  /usr/include/c++/14.2.1/cstring /usr/include/string.h \
  /usr/include/strings.h /usr/local/include/glm/gtc/type_ptr.inl \
- /home/fantasy/Programming/openglStuff/openglMinicraft/include/stb_image/stb_image.h \
+ /home/fantasy/Programming/openglStuff/openglMinicraft2/openglMinicraft/include/stb_image/stb_image.h \
  /usr/include/c++/14.2.1/stdlib.h /usr/include/c++/14.2.1/math.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/emmintrin.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/xmmintrin.h \

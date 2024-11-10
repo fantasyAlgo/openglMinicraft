@@ -1,8 +1,8 @@
 CMakeFiles/learn_opengl.dir/src/camera.cpp.o: \
- /home/fantasy/Programming/openglStuff/openglMinicraft/src/camera.cpp \
+ /home/fantasy/Programming/openglStuff/openglMinicraft2/openglMinicraft/src/camera.cpp \
  /usr/include/stdc-predef.h \
- /home/fantasy/Programming/openglStuff/openglMinicraft/src/hFiles/camera.h \
- /home/fantasy/Programming/openglStuff/openglMinicraft/src/hFiles/block.h \
+ /home/fantasy/Programming/openglStuff/openglMinicraft2/openglMinicraft/src/hFiles/camera.h \
+ /home/fantasy/Programming/openglStuff/openglMinicraft2/openglMinicraft/src/hFiles/block.h \
  /usr/include/c++/14.2.1/algorithm \
  /usr/include/c++/14.2.1/bits/stl_algobase.h \
  /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/c++config.h \
@@ -117,8 +117,8 @@ CMakeFiles/learn_opengl.dir/src/camera.cpp.o: \
  /usr/include/c++/14.2.1/bits/stl_tree.h \
  /usr/include/c++/14.2.1/bits/stl_map.h \
  /usr/include/c++/14.2.1/bits/stl_multimap.h \
- /home/fantasy/Programming/openglStuff/openglMinicraft/src/hFiles/chunk.h \
- /home/fantasy/Programming/openglStuff/openglMinicraft/src/hFiles/cube_renderer.h \
+ /home/fantasy/Programming/openglStuff/openglMinicraft2/openglMinicraft/src/hFiles/chunk.h \
+ /home/fantasy/Programming/openglStuff/openglMinicraft2/openglMinicraft/src/hFiles/cube_renderer.h \
  /usr/include/c++/14.2.1/iostream /usr/include/c++/14.2.1/ostream \
  /usr/include/c++/14.2.1/ios /usr/include/c++/14.2.1/iosfwd \
  /usr/include/c++/14.2.1/bits/stringfwd.h \
@@ -184,9 +184,9 @@ CMakeFiles/learn_opengl.dir/src/camera.cpp.o: \
  /usr/include/c++/14.2.1/bits/basic_ios.tcc \
  /usr/include/c++/14.2.1/bits/ostream.tcc /usr/include/c++/14.2.1/istream \
  /usr/include/c++/14.2.1/bits/istream.tcc \
- /home/fantasy/Programming/openglStuff/openglMinicraft/src/hFiles/shader.h \
- /home/fantasy/Programming/openglStuff/openglMinicraft/include/glad/glad.h \
- /home/fantasy/Programming/openglStuff/openglMinicraft/include/KHR/khrplatform.h \
+ /home/fantasy/Programming/openglStuff/openglMinicraft2/openglMinicraft/src/hFiles/shader.h \
+ /home/fantasy/Programming/openglStuff/openglMinicraft2/openglMinicraft/include/glad/glad.h \
+ /home/fantasy/Programming/openglStuff/openglMinicraft2/openglMinicraft/include/KHR/khrplatform.h \
  /usr/local/include/glm/glm.hpp /usr/local/include/glm/detail/_fixes.hpp \
  /usr/include/c++/14.2.1/cmath /usr/include/math.h \
  /usr/include/bits/math-vector.h /usr/include/bits/libm-simd-decl-stubs.h \
@@ -384,9 +384,9 @@ CMakeFiles/learn_opengl.dir/src/camera.cpp.o: \
  /usr/local/include/glm/ext/vector_uint1_sized.hpp \
  /usr/include/c++/14.2.1/cstring /usr/include/string.h \
  /usr/include/strings.h /usr/local/include/glm/gtc/type_ptr.inl \
- /home/fantasy/Programming/openglStuff/openglMinicraft/src/hFiles/texture.h \
+ /home/fantasy/Programming/openglStuff/openglMinicraft2/openglMinicraft/src/hFiles/texture.h \
  /usr/include/GLFW/glfw3.h \
- /home/fantasy/Programming/openglStuff/openglMinicraft/include/PerlinNoise/PerlinNoise.hpp \
+ /home/fantasy/Programming/openglStuff/openglMinicraft2/openglMinicraft/include/PerlinNoise/PerlinNoise.hpp \
  /usr/include/c++/14.2.1/iterator \
  /usr/include/c++/14.2.1/bits/stream_iterator.h \
  /usr/include/c++/14.2.1/numeric \
@@ -395,7 +395,7 @@ CMakeFiles/learn_opengl.dir/src/camera.cpp.o: \
  /usr/include/c++/14.2.1/random /usr/include/c++/14.2.1/bits/random.h \
  /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/opt_random.h \
  /usr/include/c++/14.2.1/bits/random.tcc \
- /home/fantasy/Programming/openglStuff/openglMinicraft/src/hFiles/Settings.h \
+ /home/fantasy/Programming/openglStuff/openglMinicraft2/openglMinicraft/src/hFiles/Settings.h \
  /usr/include/c++/14.2.1/utility \
  /usr/include/c++/14.2.1/bits/stl_relops.h \
  /usr/include/c++/14.2.1/complex /usr/include/c++/14.2.1/sstream \

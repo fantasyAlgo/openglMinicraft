@@ -34,12 +34,19 @@ int main(){
 		glfwTerminate();
 		return -1;
 	}
+
+
 	glfwMakeContextCurrent(window);
 	gladLoadGL();
 	glViewport(0, 0, WIDTH, HEIGHT);
 	glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 	glfwSwapBuffers(window);
+
+  //glEnable(GL_CULL_FACE); // Enable face culling
+  //glFrontFace(GL_CCW);
+  //glCullFace(GL_BACK);    // Cull back-facing polygons
+
 
   Game game;
   glEnable(GL_DEPTH_TEST);
