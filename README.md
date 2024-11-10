@@ -1,4 +1,5 @@
-# openglMinicraft
+# Opengl Minicraft
+![inGameScreenshot](https://github.com/user-attachments/assets/b8f0fd02-3fb1-4706-8b61-22c49ffdfeb1)
 A copy of minecraft in c++ and opengl.
 ### How to run
 ```bash
