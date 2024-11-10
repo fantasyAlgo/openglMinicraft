@@ -1,4 +1,0 @@
-/home/fantasy/Programming/openglStuff/openglMinicraft2/openglMinicraft/build/CMakeFiles/imgui.dir
-/home/fantasy/Programming/openglStuff/openglMinicraft2/openglMinicraft/build/CMakeFiles/learn_opengl.dir
-/home/fantasy/Programming/openglStuff/openglMinicraft2/openglMinicraft/build/CMakeFiles/edit_cache.dir
-/home/fantasy/Programming/openglStuff/openglMinicraft2/openglMinicraft/build/CMakeFiles/rebuild_cache.dir

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(learn_opengl)
+project(Minicraft)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_BUILD_TYPE Debug)
@@ -21,7 +21,7 @@ target_link_libraries(imgui PUBLIC glfw GL)
 
 
 include_directories(include)
-add_executable(learn_opengl
+add_executable(Minicraft
   src/glad.c
 
   src/Main.cpp 
@@ -38,5 +38,5 @@ add_executable(learn_opengl
 
 
 find_package(glm CONFIG REQUIRED)
-target_link_libraries(learn_opengl imgui glfw GL dl glm::glm)
+target_link_libraries(Minicraft imgui glfw GL dl glm::glm)
 

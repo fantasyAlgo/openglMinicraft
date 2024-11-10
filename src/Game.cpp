@@ -87,7 +87,7 @@ void Game::renderWorldPanel(){
   ImGui::SetNextWindowSize(ImVec2(WIDTH, HEIGHT));
   
   // Set window flags to make it fixed and fullscreen
-  ImGuiWindowFlags windowFlags = ImGuiWindowFlags_NoTitleBar;
+  ImGuiWindowFlags windowFlags = ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize;
   ImGui::Begin("Fullscreen Window", nullptr, windowFlags);
 
   ImGui::SetCursorPos(ImVec2(WIDTH/2-WIDTH/4, start_height-offset));
@@ -142,7 +142,7 @@ void Game::renderHome(){
   ImGui::SetNextWindowSize(ImVec2(WIDTH, HEIGHT));
   
   // Set window flags to make it fixed and fullscreen
-  ImGuiWindowFlags windowFlags = ImGuiWindowFlags_NoTitleBar;
+  ImGuiWindowFlags windowFlags = ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize;
   ImGui::Begin("Fullscreen Window", nullptr, windowFlags);
   // Add UI elements here
   ImGui::SetCursorPos(ImVec2(WIDTH/2-WIDTH/4, start_height-offset));
