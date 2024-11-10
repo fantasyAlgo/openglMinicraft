@@ -21,6 +21,7 @@ enum class GameState {
 
 class Game {
 private:
+  bool isFullWindow = false;
   GameState state;
   int current_chunk_x, current_chunk_y;
   BLOCK_TYPE place_type = GRASS;

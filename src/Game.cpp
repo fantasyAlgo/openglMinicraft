@@ -6,10 +6,13 @@
 #include "hFiles/resource_manager.h"
 #include <GL/gl.h>
 #include <GLFW/glfw3.h>
+#include <cstddef>
 #include <cstdlib>
+#include <ctime>
 #include <glm/ext/vector_float2.hpp>
 #include <glm/ext/vector_float3.hpp>
 #include <iterator>
+#include <memory_resource>
 #include <ostream>
 #include <string>
 #include <thread>
@@ -26,7 +29,7 @@ Game::Game(){
 void Game::Init(){
   is_running = true;
   state = GameState::HOME_PAGE;
-  srand(1000);
+  srand((unsigned)time(0));
 
   for (int i = 0; i < MAP_WIDTH; i++) 
     map.push_back({});
@@ -47,7 +50,7 @@ void Game::Init(){
   //camera.position = glm::vec3(0, 40, 0);
 
   glm::mat4 proj = glm::mat4(1.0f);
-	proj = glm::perspective(glm::radians(90.0f), (float)(WIDTH / HEIGHT), 0.1f, 110.0f);
+	proj = glm::perspective(glm::radians(90.0f), (float)((float)WIDTH/(float)HEIGHT), 0.1f, 200.0f);
   Shader shader = ResourceManager::GetShader("main_shader");//.SetMatrix4("proj", proj, true);
   shader.SetMatrix4("proj", proj, true);
   shader.SetVector3f("lightPos", glm::vec3(10, 10, 60));
@@ -174,13 +177,29 @@ void Game::renderGame(){
           map[current_chunk_x+i][current_chunk_y+j].isLoaded)
         //map[current_chunk_x+i][current_chunk_y+j].updateFaces();
         map[current_chunk_x+i][current_chunk_y+j].RenderWater(cubeRenderer);
-  UI::RenderUI(WIDTH, HEIGHT, player.camera.direction);
-  player.RenderInventory(this->textureR.ID);
+  if (!this->isFullWindow){
+    UI::RenderUI(WIDTH, HEIGHT, player.camera.direction);
+    player.RenderInventory(WIDTH, HEIGHT, this->textureR.ID);
+  }else {
+    UI::RenderUI(WINDOW_WIDTH, WINDOW_HEIGHT, player.camera.direction);
+    player.RenderInventory(WINDOW_WIDTH, WINDOW_HEIGHT, this->textureR.ID);
+  }
 }
 
 void Game::ProcessInput(GLFWwindow *window, float dt){
   if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
       glfwSetWindowShouldClose(window, true);
+  if (glfwGetKey(window, GLFW_KEY_F11) == GLFW_PRESS){
+    if (!isFullWindow){
+      glfwSetWindowMonitor(window, glfwGetPrimaryMonitor(), 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, 144);
+      glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+    }else{
+      glfwSetWindowMonitor(window, NULL, WIDTH/2 - WIDTH/8, HEIGHT/2-HEIGHT/8, WIDTH, HEIGHT, 144);
+      glViewport(0, 0, WIDTH, HEIGHT);
+    }
+    isFullWindow = !isFullWindow;
+  }
+
   if (state != GameState::PLAY){
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
     return;

@@ -16,7 +16,7 @@ public:
   int picked_item;
   HAND_BLOCK inventory[INVENTORY_COLUMNS][INVENTORY_ROWS];
   Player();
-  void RenderInventory(GLuint atlasTexture);
+  void RenderInventory(int WIDTH, int HEIGHT, GLuint atlasTexture);
 
   // Get|set stuff America needs!
   void setPosition(glm::vec3 position);

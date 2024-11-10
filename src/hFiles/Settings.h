@@ -2,8 +2,12 @@
 
 #include <PerlinNoise/PerlinNoise.hpp>
 
-constexpr int WIDTH = 800;
-constexpr int HEIGHT = 800;
+constexpr int WINDOW_WIDTH = 1920;
+constexpr int WINDOW_HEIGHT = 1080;
+constexpr int WIDTH = WINDOW_WIDTH/2;
+constexpr int HEIGHT = WINDOW_HEIGHT/2;
+
+
 // This is the number of chunks in the map
 constexpr int MAP_WIDTH = 40;
 constexpr int MAP_HEIGHT = 40;

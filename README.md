@@ -25,7 +25,7 @@ Then run it by going the parent directory and:
 - [x] Making a better map
 - [x] Trees
 - [x] Light
-- [ ] Resize the screen
+- [x] Resize the screen
 - [ ] Ambient occlusion and minecraft day/night system
 - [x] GUI
 - [x] world/chunk saving

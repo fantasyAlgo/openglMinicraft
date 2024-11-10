@@ -29,11 +29,14 @@ UVCoords GetUVForBlockType(BLOCK_TYPE type) {
   float blockY = 1-offset*texture_pos.y;
   return {{blockX, blockY}, {blockX-offset, blockY-offset}};
 }
-void Player::RenderInventory(GLuint atlasTexture) {
-    ImGui::Begin("Inventory", nullptr, ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoDecoration);
-    ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(4, 0));
+void Player::RenderInventory(int WIDTH, int HEIGHT, GLuint atlasTexture) {
     glm::vec2 slotSize = glm::vec2(50, 50);
     glm::vec2 imageSize = glm::vec2(40, 40);
+
+    ImVec2 vec = ImVec2(WIDTH/2 - slotSize.x*5, HEIGHT-slotSize.y-HEIGHT/32);
+    ImGui::SetNextWindowPos(vec);
+    ImGui::Begin("Inventory", nullptr, ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoDecoration);
+    ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(4, 0));
 
 
     for (int i = 0; i < INVENTORY_ROWS; i++) {
