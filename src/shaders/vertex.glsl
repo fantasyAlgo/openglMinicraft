@@ -17,6 +17,7 @@ out vec2 TexCoord;
 out vec3 Normal;
 out vec3 FragPos;
 out float Visibility;
+flat out int lightValue;
 
 const vec3 normals[6] = vec3[6](
     vec3(0.0, 0.0, 1.0),  // FRONT: Normal along +Z axis
@@ -28,17 +29,19 @@ const vec3 normals[6] = vec3[6](
 );
 
 vec3 packedPos;
-int face; vec2 texture_pos; bool isBillBoard;
+int face; vec2 texture_pos; bool isBillBoard; int light_value;
 void unpack(int packedData){
-  packedPos.x = (packedData >> 0) & 0x3F;
-  packedPos.y = (packedData >> 6) & 0x3F;
-  packedPos.z = (packedData >> 12) & 0x3F;
-  face = (packedData >> 18) & 0x0F;
-  int texPos = (packedData >> 22) & 0x7F;
-  isBillBoard = bool((packedData >> 29) & 0x01);
+  packedPos.x = (packedData >> 0) & 0x1F;
+  packedPos.y = (packedData >> 5) & 0x3F;
+  packedPos.z = (packedData >> 11) & 0x1F;
+  face = (packedData >> 16) & 0x07;
+  int texPos = (packedData >> 19) & 0x7F;
+  isBillBoard = bool((packedData >> 26) & 0x01);
 
   texture_pos.x = int(texPos/16);
   texture_pos.y = texPos%16;
+
+  light_value = (packedData >> 27) & 15;
 }
 float gradient = 3.0;
 float density = 0.009;
@@ -78,7 +81,9 @@ void main(){
   TexCoord = vec2(aTexCoord.x*blockX + (1-aTexCoord.x)*(blockX-offset),
                   aTexCoord.y*blockY + (1-aTexCoord.y)*(blockY-offset));
   float distanceFog = length(positionRelativeToCam.xyz);
+
   Visibility = clamp(exp(-pow((distanceFog*density), gradient)), 0.0, 1.0);
   Normal = normals[int(face)];
   FragPos = vec3( vec4(aPos+model, 1.0));
+  lightValue = light_value;
 }

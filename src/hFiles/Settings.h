@@ -4,8 +4,8 @@
 
 constexpr int WINDOW_WIDTH = 1920;
 constexpr int WINDOW_HEIGHT = 1080;
-constexpr int WIDTH = WINDOW_WIDTH/2;
-constexpr int HEIGHT = WINDOW_HEIGHT/2;
+constexpr int WIDTH = WINDOW_WIDTH/1.5;
+constexpr int HEIGHT = WINDOW_HEIGHT/1.5;
 
 
 // This is the number of chunks in the map

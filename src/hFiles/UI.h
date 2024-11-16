@@ -26,6 +26,7 @@ namespace UI {
     ImGui::SetWindowFontScale(0.7);
     ImGui::Text("FPS: %.1f", ImGui::GetIO().Framerate);
     std::string s = (std::string)("dir: " + std::to_string(direction.x) + " " + std::to_string(direction.y) + " " + std::to_string(direction.z));
+
     ImGui::Text(s.c_str());
   }
 }

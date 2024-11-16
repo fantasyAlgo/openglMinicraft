@@ -5,24 +5,25 @@
 #include <glm/ext/vector_float3.hpp>
 #include <map>
 
-constexpr int WIDTH_CHUNK = 32;
+constexpr int WIDTH_CHUNK = 31;
 constexpr int HEIGHT_CHUNK = 64;
 constexpr int WATER_LEVEL = HEIGHT_CHUNK/3;
 constexpr int MOUNTAINS_HEIGHT = 2*HEIGHT_CHUNK/3;
 constexpr int SAND_LEVEL = 3;
-constexpr int N_TYPES = 13;
+constexpr int N_TYPES = 14;
 
 enum BLOCK_TYPE {
   GRASS,
   DIRT,
   STONE,
+  PLANKS,
+  TORCH,
   MINED_STONE,
   SAND,
   TREE_BLOCK,
   LEAVES,
   WATER_BASIC,
   SNOW,
-  PLANKS,
   FLOWER,
   GRASS_FLOWER,
   END_BLOCK
@@ -37,6 +38,7 @@ typedef struct Block{
   bool active = false;
   bool faces[6] = {0,0,0,0,0,0};
   BLOCK_TYPE type;
-  Block() : active(false), type(GRASS) { std::fill(faces, faces+6, 0);}
+  char light_value;
+  Block() : active(false), type(GRASS), light_value(0) { std::fill(faces, faces+6, 0);}
 } Block;
 

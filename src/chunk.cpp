@@ -23,7 +23,7 @@
 namespace fs = std::filesystem;
 
 
-uint32_t packInstanceData(uint8_t x, uint8_t y, uint8_t z, uint8_t face, uint8_t texture, bool isBillBoard = false) {
+uint32_t packInstanceData(uint8_t x, uint8_t y, uint8_t z, uint8_t face, uint8_t texture, bool isBillBoard = false, char light_value = 0) {
     // Check each parameter to ensure it fits within the specified bit limits
     assert(x <= 0x3F && "x must fit in 6 bits (0-63)");
     assert(y <= 0x3F && "y must fit in 6 bits (0-63)");
@@ -33,21 +33,22 @@ uint32_t packInstanceData(uint8_t x, uint8_t y, uint8_t z, uint8_t face, uint8_t
 
     // Pack the data
     uint32_t packedData = 0;
-    packedData |= (x & 0x3F) << 0;        // 6 bits for x
-    packedData |= (y & 0x3F) << 6;        // 6 bits for y
-    packedData |= (z & 0x3F) << 12;       // 6 bits for z
-    packedData |= (face & 0x0F) << 18;    // 4 bits for face
-    packedData |= (texture & 0x7F) << 22; // 7 bits for texture
-    packedData |= (isBillBoard ? 1 : 0) << 29; // 1 bit for isBillBoard
+    packedData |= (x & 31) << 0;        // 6 bits for x
+    packedData |= (y & 63) << 5;        // 6 bits for y
+    packedData |= (z & 31) << 11;       // 6 bits for z
+    packedData |= (face & 7) << 16;    // 3 bits for face
+    packedData |= (texture & 127) << 19; // 7 bits for texture
+    packedData |= (isBillBoard ? 1 : 0) << 26; // 1 bit for isBillBoard
+    packedData |= (light_value & 15) << 27;
 
     return packedData;
 }
+
 bool isTransparent(Block block){
-  return block.type == LEAVES || block.type == FLOWER || block.type == GRASS_FLOWER;
+  return block.type == LEAVES || block.type == FLOWER || block.type == GRASS_FLOWER || block.type == TORCH;
 }
 
-void Chunk::update(){ this->updateFaces(); this->updatePackedData();}
-
+void Chunk::update(){ this->updateFaces(); this->updateLight(15); this->updatePackedData();}
 
 Chunk::Chunk(): active(false), isLoaded(false), offset(glm::vec2(0.0f, 0.0f)){
   data.resize(WIDTH_CHUNK*WIDTH_CHUNK*HEIGHT_CHUNK);
@@ -63,6 +64,7 @@ void Chunk::RenderWater(CubeRenderer &cubeRenderer){
 
 void Chunk::AddBlock(glm::vec3 position, BLOCK_TYPE type){
   int x = position.x; int y = position.y; int z = position.z;
+  lights_pos.push_back(position);
   //std::cout << "pos: " << x << " | " << y << " | " << z << std::endl;
   this->setActive(x, y, z, true);
   this->setType(x, y, z, type);
@@ -222,9 +224,9 @@ void Chunk::updatePackedData(){
           if (!curr.faces[f]) continue;
           text = type_position[(int)curr.type][f < 4 ? 0 : f-3];
           if (curr.type != WATER_BASIC)
-            packed_data[indx++] = packInstanceData(x, y, z, f, text.x*16 + text.y, isBillBoard[(int)curr.type]);
+            packed_data[indx++] = packInstanceData(x, y, z, f, text.x*16 + text.y, isBillBoard[(int)curr.type], curr.light_value);
           else
-            packed_data_water[indx_water++] = packInstanceData(x, y, z, f, text.x*16 + text.y, isBillBoard[(int)curr.type]);
+            packed_data_water[indx_water++] = packInstanceData(x, y, z, f, text.x*16 + text.y, isBillBoard[(int)curr.type], curr.light_value);
         }
       }
     }
@@ -276,6 +278,20 @@ bool Chunk::getActive(int x, int y, int z){
 
   return data[z*HEIGHT_CHUNK*WIDTH_CHUNK + y*WIDTH_CHUNK + x].active;
 }
+
+char Chunk::getLightValue(int x, int y, int z){
+  if (!this->isLoaded) return 0;
+  if (x < 0) return            this->leftChunk != nullptr && this->leftChunk->isLoaded ? this->leftChunk->getLightValue(WIDTH_CHUNK-x, y, z): true;
+  if (x >= WIDTH_CHUNK) return this->rightChunk != nullptr && this->rightChunk->isLoaded ? this->rightChunk->getLightValue(x-WIDTH_CHUNK, y, z): true;
+  if (z < 0) return            this->bottomChunk != nullptr && this->bottomChunk->isLoaded ? this->bottomChunk->getLightValue(x, y, WIDTH_CHUNK-z): true;
+  if (z >= WIDTH_CHUNK) return this->upChunk != nullptr && this->upChunk->isLoaded ? this->upChunk->getLightValue(x, y, z-WIDTH_CHUNK): true;
+
+  if (y < 0) return true;
+  if (y >= HEIGHT_CHUNK) return false;
+
+  return data[z*HEIGHT_CHUNK*WIDTH_CHUNK + y*WIDTH_CHUNK + x].light_value;
+}
+
 
 Block Chunk::get(int x, int y, int z){
   Block block; block.active = true;
@@ -368,6 +384,28 @@ void Chunk::setType(int x, int y, int z, BLOCK_TYPE type){
     return;
   }
   data[z*HEIGHT_CHUNK*WIDTH_CHUNK + y*WIDTH_CHUNK + x].type = type;
+}
+
+
+void Chunk::setLightValue(int x, int y, int z, char val){
+  if (x < 0){
+    if (this->leftChunk != nullptr && this->leftChunk->isLoaded) this->leftChunk->setLightValue(WIDTH_CHUNK+x, y, z, val);
+    return;
+  }
+  if (x >= WIDTH_CHUNK){
+    if (this->rightChunk != nullptr && this->rightChunk->isLoaded) this->rightChunk->setLightValue(x-WIDTH_CHUNK, y, z, val);
+    return;
+  }
+  if (z < 0){
+    if (this->bottomChunk != nullptr && this->bottomChunk->isLoaded) this->bottomChunk->setLightValue(x, y, WIDTH_CHUNK-z, val);
+    return;
+  }
+  if (z >= WIDTH_CHUNK){
+    if (this->upChunk != nullptr && this->upChunk->isLoaded) this->upChunk->setLightValue(x, y, z-WIDTH_CHUNK, val);
+    return;
+  }
+
+  data[z*HEIGHT_CHUNK*WIDTH_CHUNK + y*WIDTH_CHUNK + x].light_value = val;
 }
 
 void Chunk::LoadChunkData(std::string path){

@@ -16,6 +16,7 @@ public:
 
   //Block data[WIDTH_CHUNK][HEIGHT_CHUNK][WIDTH_CHUNK];
   std::vector<Block> data;
+  std::vector<glm::vec3> lights_pos;
   int n_packed_data, n_packed_data_water, n_file_data, n_back_packed_data;
   int back_packed_data[WIDTH_CHUNK*WIDTH_CHUNK*HEIGHT_CHUNK*6];
   int packed_data[WIDTH_CHUNK*WIDTH_CHUNK*HEIGHT_CHUNK*6];
@@ -38,6 +39,7 @@ public:
   // update calls updatePackedData and updateFaces;
   void update();
   void updatePackedData();
+  void updateLight(char ambient_light);
   //void updateFromPackedData();
   //void updateAllPacked();
 
@@ -49,11 +51,13 @@ public:
   Block get(int x, int y, int z);
   Block get(glm::vec3 vec);
   bool getActive(int x, int y, int z);
+  char getLightValue(int x, int y, int z);
 
   void setActive(int x, int y, int z, bool active);
   void setFaces(int x, int y, int z, bool faces[]);
   void setFace(int x, int y, int z, int face, bool active);
   void setType(int x, int y, int z, BLOCK_TYPE type);
+  void setLightValue(int x, int y, int z, char val);
 
   bool isInside(glm::vec3 pos){
     return pos.x >= 0 && pos.x < WIDTH_CHUNK &&

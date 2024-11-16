@@ -22,17 +22,19 @@ Then run it by going the parent directory and:
 - [x] Add multiple textures (not just the stone one)
 - [x] Add a chunk system (has some problems)
 - [x] Setting up imgui and UI pointer
-- [x] Making a better map
 - [x] Trees
 - [x] Light
 - [x] Resize the screen
-- [ ] Ambient occlusion and minecraft day/night system
 - [x] GUI
-- [x] world/chunk saving
+- [x] World/chunk saving
 - [x] Optimize rendering
-- [x] Water!
+- [x] Transparent water!
+- [ ] Ambient occlusion and minecraft day/night system
+- [ ] Use instancing
+- [ ] Skybox
+- [ ] Entities
+- [ ] Bioms
 - [ ] Inventory
 - [ ] crafting
-- [ ] Entities
 - [ ] Survival mode
 - [ ] Physics

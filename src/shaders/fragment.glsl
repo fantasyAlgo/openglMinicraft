@@ -7,6 +7,7 @@ in vec2 TexCoord;
 in vec3 Normal;
 in vec3 FragPos;
 in float Visibility;
+flat in int lightValue;
 
 uniform sampler2D ourTexture;
 uniform vec3 lightPos;
@@ -24,7 +25,7 @@ void main(){
   float diff = max(dot(norm, lightDir), 0.0);
   vec3 diffuse = diff * lightColor;
 
-  vec4 texture_color = vec4(diffuse+ambient, 1.0f)*texture(ourTexture, TexCoord);
+  vec4 texture_color = vec4((float(lightValue)/15.0f)*(diffuse+ambient), 1.0f)*texture(ourTexture, TexCoord);
   if (texture_color.a < 0.01)
     discard;
   FragColor = mix(skyColor, texture_color, Visibility); //vec4(TexCoord.xy, 0.0f, 1.0f);

@@ -156,7 +156,6 @@ void Camera::updatePointer(Chunk &initialChunk){
 }
 
 void Camera::mouseHandling(GLFWwindow* window, Chunk &chunk, float deltaTime){
-  // Hides mouse cursor
   if (!firstClick && !rightPressed && this->active_pointer_block && glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS){
     if (this->pointer_block.pos.x == 0 && this->pointer_block.face == RIGHT){
       this->pointer_block.pos.x = WIDTH_CHUNK-1;

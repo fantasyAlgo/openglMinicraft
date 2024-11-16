@@ -34,6 +34,7 @@ add_executable(Minicraft
   src/Player.cpp
   src/chunk.cpp
   src/block.cpp
+  src/light.cpp
 )
 
 
